@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.mariadb:r2dbc-mariadb:0.8.4-rc">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/mariadb/r2dbc-mariadb/0.8.4-rc/r2dbc-mariadb-0.8.4-rc.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/mariadb/r2dbc-mariadb/0.8.4-rc/r2dbc-mariadb-0.8.4-rc-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/mariadb/r2dbc-mariadb/0.8.4-rc/r2dbc-mariadb-0.8.4-rc-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
