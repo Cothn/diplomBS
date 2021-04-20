@@ -1,7 +1,7 @@
-package com.example.demo.controller;
+package org.atsynthesizer.demo.controller;
 
-import com.example.demo.entity.*;
-import com.example.demo.service.*;
+import org.atsynthesizer.demo.entity.*;
+import org.atsynthesizer.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
