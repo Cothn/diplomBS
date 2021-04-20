@@ -1,0 +1,102 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bank</title>
+
+    <style>
+        th, td {
+            padding: 5px;
+        }
+        /* Pagination links */
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+        /* Style the active/current link */
+        .pagination a.active {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        /* Add a grey background color on mouse-over */
+        .pagination a:hover:not(.active) {background-color: #ddd;}
+    </style>
+
+</head>
+
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+<h2>Accounts</h2>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Surname</th>
+        <th>Patronymic</th>
+        <th  style="min-width: 100px">BirthDate     </th>
+        <th>passportSeries</th>
+        <th>passportNumber</th>
+        <th>passportOrganization</th>
+        <th>passportIssueDate</th>
+        <th>identificationNumber</th>
+        <th>birthPlace</th>
+        <th>residenceTown</th>
+        <th>townPhone</th>
+        <th style="min-width: 120px">mobilePhone</th>
+        <th>email</th>
+        <th>workPlace</th>
+        <th>workPosition</th>
+        <th>registrationTown</th>
+        <th>familyStatus</th>
+        <th>nationality</th>
+        <th>disability</th>
+        <th>pensioner</th>
+        <th>monthlyIncome</th>
+    </tr>
+    <tr th:each="clientsInfo : ${clientsInfos}">
+        <td th:utext="${clientsInfo.id}">..</td>
+        <td th:utext="${clientsInfo.name}">..</td>
+        <td th:utext="${clientsInfo.surname}">..</td>
+        <td th:utext="${clientsInfo.patronymic}">..</td>
+        <td th:utext="${clientsInfo.birthDate}">..</td>
+        <td th:utext="${clientsInfo.passportSeries}">..</td>
+        <td th:utext="${clientsInfo.passportNumber}">..</td>
+        <td th:utext="${clientsInfo.passportOrganization}">..</td>
+        <td th:utext="${clientsInfo.passportIssueDate}">..</td>
+        <td th:utext="${clientsInfo.identificationNumber}">..</td>
+        <td th:utext="${clientsInfo.birthPlace}">..</td>
+        <td th:utext="${clientsInfo.residenceTown.title}">..</td>
+        <td th:utext="${clientsInfo.townPhone}">..</td>
+        <td th:utext="${clientsInfo.mobilePhone}">..</td>
+        <td th:utext="${clientsInfo.email}">..</td>
+        <td th:utext="${clientsInfo.workPlace}">..</td>
+        <td th:utext="${clientsInfo.workPosition}">..</td>
+        <td th:utext="${clientsInfo.registrationTown.title}">..</td>
+        <td th:utext="${clientsInfo.familyStatus.title}">..</td>
+        <td th:utext="${clientsInfo.nationality.title}">..</td>
+        <td th:utext="${clientsInfo.disability.title}">..</td>
+        <td th:utext="(${clientsInfo.pensioner} ? 'Yes' : 'No')">..</td>
+        <td th:utext="${clientsInfo.monthlyIncome}">..</td>
+        <td>
+            <a th:href="@{/clients/edit/{clientsId}(clientsId=${clientsInfo.id})}">edit</a>
+            <a th:href="@{/clients/delete/{clientsId}(clientsId=${clientsInfo.id})}">delete</a>
+        </td>
+
+    </tr>
+
+</table>
+<h2>Add</h2>
+    <a th:href="@{/clients/add}">Add new Client</a>
+</body>
+<div class="pagination" th:each ="cl,stat : ${pages}">
+    <a th:href="@{/clients(page=${stat.index+1})}"> <p th:text="${stat.index+1}"></p></a>
+</div>
+
+</body>
+</html>

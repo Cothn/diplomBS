@@ -1,0 +1,137 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Bank</title>
+
+    <style>
+        th, td {
+            padding: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- Подключение библиотеки jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- Подключение jQuery плагина Masked Input -->
+<script src="/js/jquery.maskedinput.min.js"></script>
+
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+<h2>Edit client</h2>
+
+<script th:if="${message}" th:inline="javascript">
+    var message = /*[[${message}]]*/ 'default';
+    alert(message);
+</script>
+
+
+    <form th:action="@{/clients/edit}" th:object="${clientInfo}" method="POST">
+        <input type="hidden" required name="id" th:field="*{id}"><br>
+        <label for="name">Name</label>
+        <input type="text" pattern="^[A-Za-zА-Яа-я]+$" required id="name" th:field="*{name}"><br>
+        <label for="surname">Surname</label>
+        <input type="text" pattern="^[A-Za-zА-Яа-я]+$" required id="surname" th:field="*{surname}"><br>
+        <label for="patronymic">Patronymic</label>
+        <input type="text" pattern="^[A-Za-zА-Яа-я]+$" required id="patronymic" th:field="*{patronymic}"><br>
+        <label for="birthDate">BirthDate</label>
+        <input type="date" required id="birthDate" th:field="*{birthDate}"><br>
+        <label for="passportSeries">passportSeries</label>
+        <input type="text" required id="passportSeries" th:field="*{passportSeries}"><br>
+        <label for="passportNumber">passportNumber</label>
+        <input type="text" required id="passportNumber"
+               th:field="*{passportNumber}"><br>
+        <script>
+            //Код jQuery, установливающий маску для ввода элементу input
+            //1. После загрузки страницы,  когда все элементы будут доступны выполнить...
+            $(function(){
+                //2. Получить элемент, к которому необходимо добавить маску
+                $("#passportNumber").mask("9999999", {placeholder: "-" });
+            });
+        </script>
+        <label for="passportOrganization">passportOrganization</label>
+        <input type="text" required id="passportOrganization" th:field="*{passportOrganization}"><br>
+        <label for="passportIssueDate">passportIssueDate</label>
+        <input type="date" required id="passportIssueDate" th:field="*{passportIssueDate}"><br>
+        <label for="identificationNumber">identificationNumber</label>
+        <input type="text" pattern="^[1-7]\d{6}[ABCHKEM]\d{3}(PB|BI|BA)\d$"required id="identificationNumber" th:field="*{identificationNumber}"><br>
+        <script>
+            //Код jQuery, установливающий маску для ввода элементу input
+            //1. После загрузки страницы,  когда все элементы будут доступны выполнить...
+            $(function(){
+
+                $.mask.definitions['N']='[1-7]';
+                $.mask.definitions['F']='[ABCHKEM]';
+                $.mask.definitions['T']='(P|B)';
+                $.mask.definitions['E']='(B|I|A)';
+                //2. Получить элемент, к которому необходимо добавить маску
+                $("#identificationNumber").mask("N999999F999TE9", {placeholder: "7999999Z999ZZ9" });
+            });
+        </script>
+        <label for="birthPlace">birthPlace</label>
+        <input type="text" required id="birthPlace" th:field="*{birthPlace}"><br>
+        <label for="residenceTown">residenceTown</label>
+        <select id="residenceTown" required th:field="*{residenceTown}">
+            <option th:value="${clientInfo.residenceTown.id}" selected><p th:text="${clientInfo.residenceTown.title}"></p></option>
+            <option th:each="town : ${allTowns}" th:value="${town.id}"><p th:text="${town.title}"></p></option>
+
+        </select><br>
+        <label for="residenceAddress">residenceAddress</label>
+        <input type="text" required id="residenceAddress" th:field="*{residenceAddress}"><br>
+        <label for="townPhone">townPhone</label>
+        <input type="tel" id="townPhone" th:field="*{townPhone}"><br>
+        <label for="mobilePhone">mobilePhone</label>
+        <input type="tel" id="mobilePhone" th:field="*{mobilePhone}"><br>
+        <script>
+            //Код jQuery, установливающий маску для ввода элементу input
+            //1. После загрузки страницы,  когда все элементы будут доступны выполнить...
+            $(function(){
+
+                //2. Получить элемент, к которому необходимо добавить маску
+                $("#townPhone").mask("999-99-99", {placeholder: "___-__-__" });
+                $("#mobilePhone").mask("9(999)-999-99-99", {placeholder: "_(___)-___-__-__" });
+            });
+        </script>
+        <label for="email">email</label>
+        <input type="email" id="email" th:field="*{email}"><br>
+        <label for="workPlace">workPlace</label>
+        <input type="text" id="workPlace" th:field="*{workPlace}"><br>
+        <label for="workPosition">workPosition</label>
+        <input type="text" id="workPosition" th:field="*{workPosition}"><br>
+        <label for="registrationTown">registrationTown</label>
+        <select id="registrationTown" required th:field="*{registrationTown}">
+            <option th:value="${clientInfo.registrationTown.id}" selected><p th:text="${clientInfo.residenceTown.title}"></p></option>
+            <option th:each="town : ${allTowns}" th:value="${town.id}"><p th:text="${town.title}"></p></option>
+
+        </select><br>
+        <label for="familyStatus">familyStatus</label>
+        <select id="familyStatus" required th:field="*{familyStatus}">
+            <option th:value="${clientInfo.familyStatus.id}" selected><p th:text="${clientInfo.familyStatus.title}"></p></option>
+            <option th:each="familyStatus : ${allFamilyStatuses}" th:value="${familyStatus.id}"><p th:text="${familyStatus.title}"></p></option>
+
+        </select><br>
+        <label for="nationality">nationality</label>
+        <select id="nationality" required th:field="*{nationality}">
+            <option th:value="${clientInfo.nationality.id}" selected><p th:text="${clientInfo.nationality.title}"></p></option>
+            <option th:each="nationality : ${allNationalities}" th:value="${nationality.id}"><p th:text="${nationality.title}"></p></option>
+
+        </select><br>
+        <label for="disability">disability</label>
+        <select id="disability" required th:field="*{disability}">
+            <option th:value="${clientInfo.disability.id}" selected><p th:text="${clientInfo.disability.title}"></p></option>
+            <option th:each="disability : ${allDisabilities}" th:value="${disability.id}"><p th:text="${disability.title}"></p></option>
+
+        </select><br>
+        <label for="pensioner" >pensioner</label>
+        <input type="checkbox" id="pensioner" th:field="*{pensioner}"><br>
+        <label for="monthlyIncome">monthlyIncome</label>
+        <input type="text" pattern="(^\d+(\.\d+)?$)|(^$)" id="monthlyIncome" th:field="*{monthlyIncome}"><br>
+        <input type="submit"  value="Edit client">
+    </form>
+
+
+
+</body>
+</html>
