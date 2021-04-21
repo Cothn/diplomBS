@@ -13,11 +13,11 @@
             padding: 8px 16px;
             text-decoration: none;
             transition: background-color .3s;
+            font-size: 20px;
         }
 
         /* Style the active/current link */
         .pagination a.active {
-            background-color: dodgerblue;
             color: white;
         }
 
@@ -36,45 +36,74 @@
 <table border="1">
     <tr>
         <th>ID</th>
-        <th>Nickname</th>
+        <th>Авторы</th>
+        <th>Исполнители</th>
+        <th>Обложка</th>
+        <th>Жанры</th>
+        <th>Длительность</th>
         <th>Distributed</th>
-        <th>Title</th>
-        <th>Picture Path</th>
-        <th>Publication Year</th>
-        <th>Description</th>
-        <th  style="min-width: 100px">Add Date</th>
-        <th>Rating</th>
-        <th>Audiobook File</th>
+        <th>Название</th>
+        <th>Рейтинг</th>
+        <th>Описание</th>
+        <th>Добавил</th>
+        <th>Действия</th>
     </tr>
     <tr th:each="elementInfo : ${audiobooksInfos}">
         <td th:utext="${elementInfo.id}">..</td>
-        <td th:utext="${elementInfo.user.nickname}">..</td>
-        <td th:utext="(${elementInfo.distributed} ? 'Yes' : 'No')">..</td>
-        <td th:utext="${elementInfo.title}">..</td>
-        <td th:utext="${elementInfo.picturePath}">..</td>
-        <td th:utext="${elementInfo.publicationYear}">..</td>
-        <td th:utext="${elementInfo.description}">..</td>
-        <td th:utext="${elementInfo.addDate}">..</td>
-        <td th:utext="${elementInfo.rating}">..</td>
-        <td th:utext="${elementInfo.audiobookFile.toString()}">..</td>
-        <td>
-            <a th:href="@{/clients/edit/{clientsId}(clientsId=${elementInfo.id})}">edit</a>
-            <a th:href="@{/clients/delete/{clientsId}(clientsId=${elementInfo.id})}">delete</a>
+        <td >
+            | <th:block th:each="itemInfo : ${elementInfo.audiobookCreators}">
+                    <th:block th:utext="${itemInfo.title}+ ' |'" th:if="${itemInfo.Author}">
+                        /
+                    </th:block>
+            </th:block>
         </td>
-
+        <td>
+            | <th:block th:each="itemInfo : ${elementInfo.audiobookCreators}">
+                <th:block th:utext="${itemInfo.title} + ' |'" th:unless="${itemInfo.Author}">
+                </th:block>
+            </th:block>
+        </td>
+        <td><img th:src="@{${elementInfo.picturePath}}"></td>
+        <td>
+            | <th:block th:each="itemInfo : ${elementInfo.audiobookGenres}">
+                <th:block th:utext="${itemInfo.title}+ ' |'">
+                </th:block>
+            </th:block>
+        </td>
+        <td th:utext="${elementInfo.audiobookFile.duration}">..</td>
+        <td th:utext="(${elementInfo.distributed} ? 'Yes' : 'No')">..</td>
+        <td><a style="background-color: white;"><p th:utext="${elementInfo.title}"></p></a></td>
+        <td th:utext="${elementInfo.rating}">..</td>
+        <td th:utext="${elementInfo.description}">..</td>
+        <td th:utext="${elementInfo.user.nickname}">..</td>
+        <td>
+            <a th:href="@{/audiobook/edit/{audiobookId}(audiobookId=${elementInfo.id})}">edit</a>
+            <a th:href="@{/audiobook/delete/{audiobookId}(audiobookId=${elementInfo.id})}">delete</a>
+        </td>
     </tr>
 
 </table>
-<h2>Add</h2>
-    <a th:href="@{/clients/add}">Add new Client</a>
+
 </body>
 
-<div class="pagination" >
-    <a th:href="@{/audiobooks(page=0)}"> <p th:text="1"></p></a>
-    <a th:href="@{/audiobooks(page=0)}"> <p th:text="1"></p></a>
-    <a th:href="@{/audiobooks(page=${pages}-1)}"> <p th:text="${pages}-1"></p></a>
-    <a th:href="@{/audiobooks(page=${pages}-1)}"> <p th:text="${pages}-1"></p></a>
-    <a th:href="@{/audiobooks(page=0)}"> <p th:text="1"></p></a>
-</div>
+    <div class="pagination" >
+        <span th:if="${currentPage > 0}">
+            <a th:href="@{/audiobooks(pageNum=${currentPage}-1)}"><p th:text="Предыдущая"></p></a>
+            <a th:href="@{/audiobooks(pageNum=0)}"> <p th:text="1"></p></a>
+            <a style="background-color: white; pointer-events: none;"><p th:text="..."></p></a>
+        </span>
+        <span th:unless="${currentPage > 0}">
+            <a style="background-color: white; pointer-events: none;"><p th:text="Предыдущая"></p></a>
+        </span>
+        <a th:href="@{/audiobooks(pageNum=${currentPage})}"> <p th:text="${currentPage}+1"></p></a>
+        <span th:if="${currentPage < (lastPage -1)}">
+            <a style="background-color: white; pointer-events: none;"><p th:text="..."></p></a>
+            <a th:href="@{/audiobooks(pageNum=${lastPage}-1)}"> <p th:text="${lastPage}"></p></a>
+            <a th:href="@{/audiobooks(pageNum=${currentPage}+1)}"><p th:text="Следующая"></p></a>
+        </span>
+        <span th:unless="${currentPage < (lastPage -1)}">
+            <a style="background-color: white; pointer-events: none;"><p th:text="Следующая"></p></a>
+        </span>
+    </div>
 </body>
 </html>

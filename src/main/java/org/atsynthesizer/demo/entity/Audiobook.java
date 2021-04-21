@@ -3,8 +3,10 @@ package org.atsynthesizer.demo.entity;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "audiobook")
@@ -43,19 +45,20 @@ public class Audiobook {
     @JoinColumn(name = "audiobook_file_id", nullable = false)
     private AudiobookFile audiobookFile;
 
-        @ManyToMany
-        @JoinTable(
-                name = "audiobook_creator",
-                joinColumns = @JoinColumn(name = "audiobook_id"),
-                inverseJoinColumns = @JoinColumn(name = "creator_id"))
-        private List<Creator> audiobookCreators;
+    @ManyToMany
+    @JoinTable(
+            name = "audiobook_creator",
+            joinColumns = @JoinColumn(name = "audiobook_id"),
+            inverseJoinColumns = @JoinColumn(name = "creator_id"))
+    private List<Creator> audiobookCreators;
 
-        @ManyToMany
-        @JoinTable(
-                name = "audiobook_genre",
-                joinColumns = @JoinColumn(name = "audiobook_id"),
-                inverseJoinColumns = @JoinColumn(name = "genre_id"))
-        private List<Genre> audiobookGenres;
+    @ManyToMany
+    @JoinTable(
+            name = "audiobook_genre",
+            joinColumns = @JoinColumn(name = "audiobook_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private List<Genre> audiobookGenres;
+
 
     public Long getId() {
         return id;
@@ -141,6 +144,24 @@ public class Audiobook {
         return audiobookCreators;
     }
 
+     public String getAuthorsString(int maxCount) {
+         List<Creator> authors = new ArrayList<>(audiobookCreators);
+         authors.removeIf(el -> (!el.Author()));
+
+         Creator author = authors.get(0);
+         String result = author.getTitle();
+
+         int i = 1;
+         author = authors.get(i);
+         while ((i < maxCount) && !Objects.isNull(author)){
+             result += ", "+ author.getTitle();
+             i++;
+             author = authors.get(i);
+         }
+         result += ".";
+         return result;
+    }
+
     public void setAudiobookCreators(List<Creator> audiobookCreators) {
         this.audiobookCreators = audiobookCreators;
     }
@@ -149,10 +170,43 @@ public class Audiobook {
         return audiobookGenres;
     }
 
+    public String getGenresString(int maxCount) {
+        Genre genre = audiobookGenres.get(0);
+        String result = genre.getTitle();
+
+        int i = 1;
+        genre = audiobookGenres.get(i);
+        while ((i < maxCount) && !Objects.isNull(genre)){
+            result += ", "+ genre.getTitle();
+            i++;
+            genre = audiobookGenres.get(i);
+        }
+        result += ".";
+
+        return result;
+    }
+
     public void setAudiobookGenres(List<Genre> audiobookGenres) {
         this.audiobookGenres = audiobookGenres;
     }
 
+    public String getPerformersString(int maxCount) {
+        List<Creator> performers = new ArrayList<>(audiobookCreators);
+        performers.removeIf(el -> (el.Author()));
+
+        Creator performer = performers.get(0);
+        String result = performer.getTitle();
+
+        int i = 1;
+        performer = performers.get(i);
+        while ((i < maxCount) && !Objects.isNull(performer)){
+            result += ", "+ performer.getTitle();
+            i++;
+            performer = performers.get(i);
+        }
+        result += ".";
+        return result;
+    }
 
 
     @Override
@@ -168,8 +222,8 @@ public class Audiobook {
                 ", addDate=" + addDate +
                 ", rating=" + rating +
                 ", audiobookFile=" + audiobookFile +
-               // ", audiobookCreators={" + audiobookCreators + '}' +
-               // ", audiobookGenres={" + audiobookGenres + '}' +
+                ", audiobookCreators={" + audiobookCreators + '}' +
+                ", audiobookGenres={" + audiobookGenres + '}' +
                 '}';
     }
 }

@@ -33,7 +33,19 @@ public class Creator {
         this.title = title;
     }
 
-    public Boolean getAuthor() { return author; }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isAuthor() {
+        return author;
+    }
+
+    public void setAuthor(boolean author) {
+        this.author = author;
+    }
+
+    public Boolean Author() { return author; }
 
     public void setAuthor(Boolean author) {
         this.author = author;

@@ -20,7 +20,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("audiobooks")
-public class AudiobookController {
+public class AudiobooksController {
 
     private AudiobookService audiobookService;
 
@@ -37,7 +37,7 @@ public class AudiobookController {
         Page<Audiobook> audiobooks = audiobookService.allAudiobooks(page);
 
         model.addAttribute("audiobooksInfos", audiobooks.getContent());
-        model.addAttribute("lastPage", audiobooks.getTotalPages()-1);
+        model.addAttribute("lastPage", audiobooks.getTotalPages());
         model.addAttribute("currentPage", pageNum);
 
         return "audiobooksPage";

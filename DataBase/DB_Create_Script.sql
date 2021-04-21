@@ -10,6 +10,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema books_db
 -- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `books_db` ;
 
 -- -----------------------------------------------------
 -- Schema books_db
@@ -51,6 +52,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `books_db`.`Audiobook_File` (
   `Id` INT NOT NULL AUTO_INCREMENT,
+  `Duration` INT NOT NULL DEFAULT 0,
   `Extension` VARCHAR(45) NOT NULL,
   `File_path` VARCHAR(510) NOT NULL,
   PRIMARY KEY (`Id`))

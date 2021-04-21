@@ -1055,340 +1055,359 @@ Creator_Id</ColNames>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="326" parent="293" name="Extension">
+    <column id="326" parent="293" name="Duration">
       <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>0</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="327" parent="293" name="Extension">
+      <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="327" parent="293" name="File_path">
-      <Position>3</Position>
-      <DataType>varchar(510)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <key id="328" parent="293" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>Id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <column id="329" parent="294" name="Audiobook_Id">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="330" parent="294" name="Genre_Id">
-      <Position>2</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="331" parent="294" name="fk_Audiobook_has_Genre_Audiobook1_idx">
-      <ColNames>Audiobook_Id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="332" parent="294" name="fk_Audiobook_has_Genre_Genre1_idx">
-      <ColNames>Genre_Id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="333" parent="294" name="PRIMARY">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>Audiobook_Id
-Genre_Id</ColNames>
-      <Primary>1</Primary>
-    </key>
-    <foreign-key id="334" parent="294" name="fk_Audiobook_has_Genre_Audiobook1">
-      <ColNames>Audiobook_Id</ColNames>
-      <RefTableName>audiobook</RefTableName>
-      <RefColNames>Id</RefColNames>
-    </foreign-key>
-    <foreign-key id="335" parent="294" name="fk_Audiobook_has_Genre_Genre1">
-      <ColNames>Genre_Id</ColNames>
-      <RefTableName>genre</RefTableName>
-      <RefColNames>Id</RefColNames>
-    </foreign-key>
-    <column id="336" parent="295" name="Id">
-      <Position>1</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <SequenceIdentity>1</SequenceIdentity>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="337" parent="295" name="Audiobook_Id">
-      <Position>2</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="338" parent="295" name="User_Id">
-      <Position>3</Position>
-      <DataType>int|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="339" parent="295" name="Text">
+    <column id="328" parent="293" name="File_path">
       <Position>4</Position>
       <DataType>varchar(510)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="340" parent="295" name="Send_DateTime">
-      <Position>5</Position>
-      <DataType>datetime|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <index id="341" parent="295" name="fk_Query_Audiobook1_idx">
-      <ColNames>Audiobook_Id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <index id="342" parent="295" name="fk_Query_User1_idx">
-      <ColNames>User_Id</ColNames>
-      <Type>btree</Type>
-    </index>
-    <key id="343" parent="295" name="PRIMARY">
+    <key id="329" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="344" parent="295" name="fk_Query_Audiobook10">
+    <column id="330" parent="294" name="Audiobook_Id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="331" parent="294" name="Genre_Id">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="332" parent="294" name="fk_Audiobook_has_Genre_Audiobook1_idx">
+      <ColNames>Audiobook_Id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="333" parent="294" name="fk_Audiobook_has_Genre_Genre1_idx">
+      <ColNames>Genre_Id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="334" parent="294" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>Audiobook_Id
+Genre_Id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="335" parent="294" name="fk_Audiobook_has_Genre_Audiobook1">
       <ColNames>Audiobook_Id</ColNames>
       <RefTableName>audiobook</RefTableName>
       <RefColNames>Id</RefColNames>
     </foreign-key>
-    <foreign-key id="345" parent="295" name="fk_Query_User10">
-      <ColNames>User_Id</ColNames>
-      <RefTableName>user</RefTableName>
+    <foreign-key id="336" parent="294" name="fk_Audiobook_has_Genre_Genre1">
+      <ColNames>Genre_Id</ColNames>
+      <RefTableName>genre</RefTableName>
       <RefColNames>Id</RefColNames>
     </foreign-key>
-    <column id="346" parent="296" name="Id">
+    <column id="337" parent="295" name="Id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="347" parent="296" name="Title">
+    <column id="338" parent="295" name="Audiobook_Id">
+      <Position>2</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="339" parent="295" name="User_Id">
+      <Position>3</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="340" parent="295" name="Text">
+      <Position>4</Position>
+      <DataType>varchar(510)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="341" parent="295" name="Send_DateTime">
+      <Position>5</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <index id="342" parent="295" name="fk_Query_Audiobook1_idx">
+      <ColNames>Audiobook_Id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="343" parent="295" name="fk_Query_User1_idx">
+      <ColNames>User_Id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="344" parent="295" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>Id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="345" parent="295" name="fk_Query_Audiobook10">
+      <ColNames>Audiobook_Id</ColNames>
+      <RefTableName>audiobook</RefTableName>
+      <RefColNames>Id</RefColNames>
+    </foreign-key>
+    <foreign-key id="346" parent="295" name="fk_Query_User10">
+      <ColNames>User_Id</ColNames>
+      <RefTableName>user</RefTableName>
+      <RefColNames>Id</RefColNames>
+    </foreign-key>
+    <column id="347" parent="296" name="Id">
+      <Position>1</Position>
+      <DataType>int|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="348" parent="296" name="Title">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="348" parent="296" name="Author">
+    <column id="349" parent="296" name="Author">
       <Position>3</Position>
       <DataType>tinyint|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>1</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="349" parent="296" name="PRIMARY">
+    <key id="350" parent="296" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="350" parent="297" name="Id">
+    <column id="351" parent="297" name="Id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="351" parent="297" name="Title">
+    <column id="352" parent="297" name="Title">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="352" parent="297" name="PRIMARY">
+    <key id="353" parent="297" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="353" parent="298" name="Id">
+    <column id="354" parent="298" name="Id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="354" parent="298" name="Audiobook_Id">
+    <column id="355" parent="298" name="Audiobook_Id">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="355" parent="298" name="User_Id">
+    <column id="356" parent="298" name="User_Id">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="356" parent="298" name="Send_DateTime">
+    <column id="357" parent="298" name="Send_DateTime">
       <Position>4</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="357" parent="298" name="fk_Query_Audiobook1_idx">
+    <index id="358" parent="298" name="fk_Query_Audiobook1_idx">
       <ColNames>Audiobook_Id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="358" parent="298" name="fk_Query_User1_idx">
+    <index id="359" parent="298" name="fk_Query_User1_idx">
       <ColNames>User_Id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="359" parent="298" name="PRIMARY">
+    <key id="360" parent="298" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="360" parent="298" name="fk_Query_Audiobook1">
+    <foreign-key id="361" parent="298" name="fk_Query_Audiobook1">
       <ColNames>Audiobook_Id</ColNames>
       <RefTableName>audiobook</RefTableName>
       <RefColNames>Id</RefColNames>
     </foreign-key>
-    <foreign-key id="361" parent="298" name="fk_Query_User1">
+    <foreign-key id="362" parent="298" name="fk_Query_User1">
       <ColNames>User_Id</ColNames>
       <RefTableName>user</RefTableName>
       <RefColNames>Id</RefColNames>
     </foreign-key>
-    <column id="362" parent="299" name="Audiobook_Id">
+    <column id="363" parent="299" name="Audiobook_Id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="363" parent="299" name="User_Id">
+    <column id="364" parent="299" name="User_Id">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="364" parent="299" name="Value">
+    <column id="365" parent="299" name="Value">
       <Position>3</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="365" parent="299" name="fk_Audiobook_has_User_Audiobook1_idx">
+    <index id="366" parent="299" name="fk_Audiobook_has_User_Audiobook1_idx">
       <ColNames>Audiobook_Id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="366" parent="299" name="fk_Audiobook_has_User_User1_idx">
+    <index id="367" parent="299" name="fk_Audiobook_has_User_User1_idx">
       <ColNames>User_Id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="367" parent="299" name="PRIMARY">
+    <key id="368" parent="299" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Audiobook_Id
 User_Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="368" parent="299" name="fk_Audiobook_has_User_Audiobook1">
+    <foreign-key id="369" parent="299" name="fk_Audiobook_has_User_Audiobook1">
       <ColNames>Audiobook_Id</ColNames>
       <RefTableName>audiobook</RefTableName>
       <RefColNames>Id</RefColNames>
     </foreign-key>
-    <foreign-key id="369" parent="299" name="fk_Audiobook_has_User_User1">
+    <foreign-key id="370" parent="299" name="fk_Audiobook_has_User_User1">
       <ColNames>User_Id</ColNames>
       <RefTableName>user</RefTableName>
       <RefColNames>Id</RefColNames>
     </foreign-key>
-    <column id="370" parent="300" name="Id">
+    <trigger id="371" parent="299" name="Rating_AFTER_INSERT">
+      <SourceTextLength>225</SourceTextLength>
+      <Definer>audiobooks_synthesizer@localhost</Definer>
+      <Turn>after-row</Turn>
+      <Events>I</Events>
+    </trigger>
+    <trigger id="372" parent="299" name="Rating_AFTER_UPDATE">
+      <SourceTextLength>225</SourceTextLength>
+      <Definer>audiobooks_synthesizer@localhost</Definer>
+      <Turn>after-row</Turn>
+      <Events>U</Events>
+    </trigger>
+    <column id="373" parent="300" name="Id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="371" parent="300" name="Title">
+    <column id="374" parent="300" name="Title">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="372" parent="300" name="PRIMARY">
+    <key id="375" parent="300" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="373" parent="301" name="Id">
+    <column id="376" parent="301" name="Id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="374" parent="301" name="Nickname">
+    <column id="377" parent="301" name="Nickname">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="375" parent="301" name="Email">
+    <column id="378" parent="301" name="Email">
       <Position>3</Position>
       <DataType>varchar(45)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="376" parent="301" name="Password">
+    <column id="379" parent="301" name="Password">
       <Position>4</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="377" parent="301" name="Role_Id">
+    <column id="380" parent="301" name="Role_Id">
       <Position>5</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="378" parent="301" name="fk_User_Role1_idx">
+    <index id="381" parent="301" name="fk_User_Role1_idx">
       <ColNames>Role_Id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="379" parent="301" name="PRIMARY">
+    <key id="382" parent="301" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="380" parent="301" name="fk_User_Role1">
+    <foreign-key id="383" parent="301" name="fk_User_Role1">
       <ColNames>Role_Id</ColNames>
       <RefTableName>role</RefTableName>
       <RefColNames>Id</RefColNames>
     </foreign-key>
-    <column id="381" parent="302" name="User_Id">
+    <column id="384" parent="302" name="User_Id">
       <Position>1</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="382" parent="302" name="Audiobook_Id">
+    <column id="385" parent="302" name="Audiobook_Id">
       <Position>2</Position>
       <DataType>int|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <index id="383" parent="302" name="fk_User_has_Audiobook_User1_idx">
+    <index id="386" parent="302" name="fk_User_has_Audiobook_User1_idx">
       <ColNames>User_Id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="384" parent="302" name="fk_User_has_Audiobook_Audiobook1_idx">
+    <index id="387" parent="302" name="fk_User_has_Audiobook_Audiobook1_idx">
       <ColNames>Audiobook_Id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="385" parent="302" name="PRIMARY">
+    <key id="388" parent="302" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>User_Id
 Audiobook_Id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="386" parent="302" name="fk_User_has_Audiobook_User1">
+    <foreign-key id="389" parent="302" name="fk_User_has_Audiobook_User1">
       <ColNames>User_Id</ColNames>
       <RefTableName>user</RefTableName>
       <RefColNames>Id</RefColNames>
     </foreign-key>
-    <foreign-key id="387" parent="302" name="fk_User_has_Audiobook_Audiobook1">
+    <foreign-key id="390" parent="302" name="fk_User_has_Audiobook_Audiobook1">
       <ColNames>Audiobook_Id</ColNames>
       <RefTableName>audiobook</RefTableName>
       <RefColNames>Id</RefColNames>

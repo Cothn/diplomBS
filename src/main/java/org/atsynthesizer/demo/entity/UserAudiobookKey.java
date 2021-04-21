@@ -4,7 +4,7 @@ import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class UserAudiobokKey implements Serializable {
+public class UserAudiobookKey implements Serializable {
 
     @Column(name = "user_id")
     Long userId;
@@ -15,10 +15,10 @@ public class UserAudiobokKey implements Serializable {
     // standard constructors, getters, and setters
     // hashcode and equals implementation
 
-    public UserAudiobokKey(){
+    public UserAudiobookKey(){
     }
 
-    public UserAudiobokKey(Long userId, Long audiobookId){
+    public UserAudiobookKey(Long userId, Long audiobookId){
         this.userId = userId;
         this.audiobookId = audiobookId;
     }
@@ -27,7 +27,7 @@ public class UserAudiobokKey implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserAudiobokKey ratingKey = (UserAudiobokKey) o;
+        UserAudiobookKey ratingKey = (UserAudiobookKey) o;
         return Objects.equals(userId, ratingKey.userId) &&
                 Objects.equals(audiobookId, ratingKey.audiobookId);
     }

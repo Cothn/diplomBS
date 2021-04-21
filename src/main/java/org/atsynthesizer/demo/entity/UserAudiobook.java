@@ -3,7 +3,7 @@ package org.atsynthesizer.demo.entity;
 import javax.persistence.*;
 
 @Entity
-@IdClass(UserAudiobokKey.class)
+@IdClass(UserAudiobookKey.class)
 @Table(name = "user_audiobook")
 public class UserAudiobook {
     @Id

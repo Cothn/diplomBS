@@ -12,11 +12,15 @@ public class Query {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "audiobook_id", nullable = false)
-    private Long audiobookId;
+
+
+    @ManyToOne
+    @JoinColumn(name = "audiobook_id")
+    private Audiobook audiobook;
 
     public Long getId() {
         return id;
@@ -25,21 +29,6 @@ public class Query {
     @Column(name = "send_DateTime", nullable = false)
     private Timestamp sendDateTime;
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getAudiobookId() {
-        return audiobookId;
-    }
-
-    public void setAudiobookId(Long audiobookId) {
-        this.audiobookId = audiobookId;
-    }
 
     public Timestamp getSendDateTime() {
         return sendDateTime;
@@ -53,11 +42,29 @@ public class Query {
     public String toString() {
         return "Comment{" +
                 "Id=" + id +
-                ", userId=" + userId +
-                ", audiobookId=" + audiobookId +
+                ", user=" + user +
+                ", audiobook=" + audiobook +
                 ", sendDateTime=" + sendDateTime +
                 '}';
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Audiobook getAudiobook() {
+        return audiobook;
+    }
+
+    public void setAudiobook(Audiobook audiobook) {
+        this.audiobook = audiobook;
+    }
 }

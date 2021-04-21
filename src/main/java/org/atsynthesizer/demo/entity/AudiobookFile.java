@@ -10,11 +10,24 @@ public class AudiobookFile {
     @Column(name = "id", nullable = false)
     private Long id;
 
+
+    @Column(name = "duration",  nullable = false)
+    private String duration;
+
     @Column(name = "extension",  nullable = false)
     private String extension;
 
     @Column(name = "file_path",  nullable = false)
     private String filePath;
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
 
     public Long getId() {
         return id;
