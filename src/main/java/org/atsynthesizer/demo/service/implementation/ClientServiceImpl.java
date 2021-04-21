@@ -1,4 +1,4 @@
-package com.example.demo.service.implementation;
+/*package com.example.demo.service.implementation;
 
 import com.example.demo.dao.ClientDAO;
 import com.example.demo.dao.hibernate.ClientDAOImpl;
@@ -82,4 +82,4 @@ public class ClientServiceImpl implements ClientService {
     public Client getById(int id) {
         return clientDAO.getById(id);
     }
-}
+}*/

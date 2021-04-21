@@ -2,6 +2,7 @@ package org.atsynthesizer.demo.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Audiobook {
     private String description;
 
     @Column(name = "add_date", nullable = false)
-    private Date addDate;
+    private Timestamp addDate;
 
     @Column(name = "rating", nullable = false)
     private String rating;
@@ -42,19 +43,19 @@ public class Audiobook {
     @JoinColumn(name = "audiobook_file_id", nullable = false)
     private AudiobookFile audiobookFile;
 
-    @ManyToMany
-    @JoinTable(
-            name = "audiobook_creator",
-            joinColumns = @JoinColumn(name = "audiobook_id"),
-            inverseJoinColumns = @JoinColumn(name = "creator_id"))
-    private List<Creator> audiobookCreators;
+        @ManyToMany
+        @JoinTable(
+                name = "audiobook_creator",
+                joinColumns = @JoinColumn(name = "audiobook_id"),
+                inverseJoinColumns = @JoinColumn(name = "creator_id"))
+        private List<Creator> audiobookCreators;
 
-    @ManyToMany
-    @JoinTable(
-            name = "audiobook_genre",
-            joinColumns = @JoinColumn(name = "audiobook_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Genre> audiobookGenres;
+        @ManyToMany
+        @JoinTable(
+                name = "audiobook_genre",
+                joinColumns = @JoinColumn(name = "audiobook_id"),
+                inverseJoinColumns = @JoinColumn(name = "genre_id"))
+        private List<Genre> audiobookGenres;
 
     public Long getId() {
         return id;
@@ -112,11 +113,11 @@ public class Audiobook {
         this.description = description;
     }
 
-    public Date getAddDate() {
+    public Timestamp getAddDate() {
         return addDate;
     }
 
-    public void setAddDate(Date addDate) {
+    public void setAddDate(Timestamp addDate) {
         this.addDate = addDate;
     }
 
@@ -167,8 +168,8 @@ public class Audiobook {
                 ", addDate=" + addDate +
                 ", rating=" + rating +
                 ", audiobookFile=" + audiobookFile +
-                ", audiobookCreators={" + audiobookCreators + '}' +
-                ", audiobookGenres={" + audiobookGenres + '}' +
+               // ", audiobookCreators={" + audiobookCreators + '}' +
+               // ", audiobookGenres={" + audiobookGenres + '}' +
                 '}';
     }
 }

@@ -1,28 +1,29 @@
 package org.atsynthesizer.demo.converter;
 
-import com.example.demo.service.DisabilityService;
 import org.atsynthesizer.demo.entity.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
+/*
 @Component
 public class GenreConverter implements Converter<String, Genre> {
 
-    private final DisabilityService disabilityService;
+    private final GenreService genreService;
 
     @Autowired
-    public GenreConverter(DisabilityService disabilityService) {
-        this.disabilityService = disabilityService;
+    public GenreConverter(GenreService genreService) {
+        this.genreService = genreService;
     }
 
     @Override
-        public Disability convert(String id) {
-            System.out.println("Trying to convert id=" + id + " into a disability");
+        public Genre convert(String id) {
+            System.out.println("Trying to convert id=" + id + " into a genre");
 
             int parsedId = Integer.parseInt(id);
 
-            return disabilityService.getById(parsedId);
+            return genreService.getById(parsedId);
         }
-}
 
+
+}
+ */

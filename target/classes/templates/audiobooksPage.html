@@ -1,0 +1,76 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Library</title>
+
+    <style>
+        th, td {
+            padding: 5px;
+        }
+        /* Pagination links */
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: background-color .3s;
+        }
+
+        /* Style the active/current link */
+        .pagination a.active {
+            background-color: dodgerblue;
+            color: white;
+        }
+
+        /* Add a grey background color on mouse-over */
+        .pagination a:hover:not(.active) {background-color: #ddd;}
+    </style>
+
+</head>
+
+<body>
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+<h2>Accounts</h2>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nickname</th>
+        <th>Distributed</th>
+        <th>Title</th>
+        <th>Picture Path</th>
+        <th>Publication Year</th>
+        <th>Description</th>
+        <th  style="min-width: 100px">Add Date</th>
+        <th>Rating</th>
+        <th>Audiobook File</th>
+    </tr>
+    <tr th:each="elementInfo : ${audiobooksInfos}">
+        <td th:utext="${elementInfo.id}">..</td>
+        <td th:utext="${elementInfo.user.nickname}">..</td>
+        <td th:utext="(${elementInfo.distributed} ? 'Yes' : 'No')">..</td>
+        <td th:utext="${elementInfo.title}">..</td>
+        <td th:utext="${elementInfo.picturePath}">..</td>
+        <td th:utext="${elementInfo.publicationYear}">..</td>
+        <td th:utext="${elementInfo.description}">..</td>
+        <td th:utext="${elementInfo.addDate}">..</td>
+        <td th:utext="${elementInfo.rating}">..</td>
+        <td th:utext="${elementInfo.audiobookFile.toString()}">..</td>
+        <td>
+            <a th:href="@{/clients/edit/{clientsId}(clientsId=${elementInfo.id})}">edit</a>
+            <a th:href="@{/clients/delete/{clientsId}(clientsId=${elementInfo.id})}">delete</a>
+        </td>
+
+    </tr>
+
+</table>
+<h2>Add</h2>
+    <a th:href="@{/clients/add}">Add new Client</a>
+</body>
+<div class="pagination" th:each ="cl,stat : ${pages}">
+    <a th:href="@{/audiobooks(page=${stat.index})}"> <p th:text="${stat.index+1}"></p></a>
+</div>
+
+</body>
+</html>

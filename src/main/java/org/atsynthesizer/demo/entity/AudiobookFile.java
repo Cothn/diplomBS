@@ -16,11 +16,37 @@ public class AudiobookFile {
     @Column(name = "file_path",  nullable = false)
     private String filePath;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+
+
     @Override
     public String toString() {
         return "AudiobookFile{" +
                 "id=" + id +
-                ", title='" + extension + '\'' +
+                ", extension='" + extension + '\'' +
                 ", filePath='" + filePath + '\'' +
                 '}';
     }

@@ -1,11 +1,9 @@
-package com.example.demo.converter;
 
-import com.example.demo.entity.Disability;
-import com.example.demo.service.DisabilityService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
+/*
 @Component
 public class DisabilityConverter implements Converter<String, Genre> {
 
@@ -25,4 +23,4 @@ public class DisabilityConverter implements Converter<String, Genre> {
             return disabilityService.getById(parsedId);
         }
 }
-
+*/
