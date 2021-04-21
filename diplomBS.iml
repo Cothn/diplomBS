@@ -6,6 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
+          <factory-entry name="diplomBS" value="079cf6d6-b971-493a-93df-bee408cb9626" />
           <factory-entry name="entityManagerFactory" value="079cf6d6-b971-493a-93df-bee408cb9626" />
         </datasource-mapping>
         <naming-strategy-map />

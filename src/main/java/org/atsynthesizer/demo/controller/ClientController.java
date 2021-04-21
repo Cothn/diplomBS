@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Controller
+//@Controller
 @RequestMapping("clients")
 public class ClientController {
-
+/*
     private ClientService clientService;
 
     @Autowired
@@ -156,5 +156,5 @@ public class ClientController {
         Client client = clientService.getById(id);
         clientService.delete(client);
         return "redirect:/clients";
-    }
+    }*/
 }
