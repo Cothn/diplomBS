@@ -13,8 +13,17 @@ public class Comment {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "audiobook_id", nullable = false)
     private Long audiobookId;
@@ -26,16 +35,8 @@ public class Comment {
         return id;
     }
 
-    @Column(name = "send_DateTime", nullable = false)
+    @Column(name = "send_date_time", nullable = false)
     private Timestamp sendDateTime;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public Long getAudiobookId() {
         return audiobookId;
@@ -65,7 +66,7 @@ public class Comment {
     public String toString() {
         return "Comment{" +
                 "Id=" + id +
-                ", userId=" + userId +
+                ", user=" + user +
                 ", audiobookId=" + audiobookId +
                 ", text='" + text + '\'' +
                 ", sendDateTime=" + sendDateTime +

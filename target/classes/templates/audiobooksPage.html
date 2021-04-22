@@ -36,13 +36,13 @@
 <table border="1">
     <tr>
         <th>ID</th>
+        <th>Название</th>
         <th>Авторы</th>
         <th>Исполнители</th>
         <th>Обложка</th>
         <th>Жанры</th>
         <th>Длительность</th>
         <th>Distributed</th>
-        <th>Название</th>
         <th>Рейтинг</th>
         <th>Описание</th>
         <th>Добавил</th>
@@ -50,6 +50,11 @@
     </tr>
     <tr th:each="elementInfo : ${audiobooksInfos}">
         <td th:utext="${elementInfo.id}">..</td>
+        <td>
+            <a th:href="@{/audiobook/{audiobookId}(audiobookId=${elementInfo.id})}">
+                <p th:utext="${elementInfo.title}"></p>
+            </a>
+        </td>
         <td >
             | <th:block th:each="itemInfo : ${elementInfo.audiobookCreators}">
                     <th:block th:utext="${itemInfo.title}+ ' |'" th:if="${itemInfo.Author}">
@@ -72,7 +77,6 @@
         </td>
         <td th:utext="${elementInfo.audiobookFile.duration}">..</td>
         <td th:utext="(${elementInfo.distributed} ? 'Yes' : 'No')">..</td>
-        <td><a style="background-color: white;"><p th:utext="${elementInfo.title}"></p></a></td>
         <td th:utext="${elementInfo.rating}">..</td>
         <td th:utext="${elementInfo.description}">..</td>
         <td th:utext="${elementInfo.user.nickname}">..</td>

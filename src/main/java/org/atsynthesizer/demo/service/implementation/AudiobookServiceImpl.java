@@ -14,7 +14,6 @@ import java.util.List;
 
 @Service
 @Transactional
-
 public class AudiobookServiceImpl implements AudiobookService {
 
     @Autowired
@@ -37,45 +36,20 @@ public class AudiobookServiceImpl implements AudiobookService {
     public void edit(Audiobook audiobook) {
         audiobookRepository.save(audiobook);
     }
-    /*
-        @Override
-        @Transactional
-        public void add(Audiobook audiobook) {
-            audiobookRepository.add(audiobook);
-        }
 
-        @Override
-        @Transactional
-        public boolean checkByPassport(Audiobook audiobook) {
-            List<Audiobook> audiobooks = audiobookRepository.allAudiobooks();
-            for (Audiobook cl : audiobooks){
-                if(cl.getPassportSeries().equalsIgnoreCase(audiobook.getPassportSeries()) &&
-                        cl.getPassportNumber().equalsIgnoreCase(audiobook.getPassportNumber()) &&
-                                (cl.getId() != audiobook.getId()))
-                    return true;
-            }
-            return false;
-        }
+    @Override
+    public Audiobook getFirst() {
+        return audiobookRepository.findFirstByOrderByAddDate().get();
+    }
 
-        @Override
-        @Transactional
-        public boolean checkByIdentifyNumber(Audiobook audiobook) {
-            List<Audiobook> audiobooks = audiobookRepository.allAudiobooks();
-            for (Audiobook cl : audiobooks){
-                if(cl.getIdentificationNumber().equalsIgnoreCase(audiobook.getIdentificationNumber()) &&
-                    (cl.getId() != audiobook.getId()))
-                    return true;
-            }
-            return false;
-        }
+    @Override
+    public void add(Audiobook audiobook) {
+        audiobookRepository.save(audiobook);
+    }
 
-        @Override
-        @Transactional
-        public void delete(Audiobook audiobook) {
-            audiobookRepository.delete(audiobook);
-        }
-
-
-    */
-
+    @Override
+    @Transactional
+    public void delete(Audiobook audiobook) {
+        audiobookRepository.delete(audiobook);
+    }
 }

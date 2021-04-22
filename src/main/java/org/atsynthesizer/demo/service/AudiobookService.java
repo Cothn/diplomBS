@@ -15,18 +15,12 @@ public interface AudiobookService {
     public Audiobook getById(Long id);
 
     public void edit(Audiobook audiobook);
-/*
+
+    public Audiobook getFirst();
+
     public void add(Audiobook audiobook);
-
-    boolean checkByPassport(Audiobook audiobook);
-
-    boolean checkByIdentifyNumber(Audiobook audiobook);
 
     public void delete(Audiobook audiobook);
 
-
-м
-
-*/
 
 }

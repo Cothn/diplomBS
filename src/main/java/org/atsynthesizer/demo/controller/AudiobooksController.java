@@ -22,6 +22,8 @@ import java.util.Objects;
 @RequestMapping("audiobooks")
 public class AudiobooksController {
 
+    private static int PAGINATION_SIZE = 10;
+
     private AudiobookService audiobookService;
 
     @Autowired
@@ -32,10 +34,13 @@ public class AudiobooksController {
     @Autowired
     private GenreService genreService;
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String showBankAudiobooks(@RequestParam(defaultValue = "0") int pageNum, Model model) {
+    @Autowired
+    private CreatorService creatorService;
 
-        Pageable page = PageRequest.of(pageNum, 10, Sort.by("title").ascending());
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String showAllAudiobooks(@RequestParam(defaultValue = "0") int pageNum, Model model) {
+
+        Pageable page = PageRequest.of(pageNum, PAGINATION_SIZE, Sort.by("title").ascending());
 
         Page<Audiobook> audiobooks = audiobookService.allAudiobooks(page);
 
@@ -55,12 +60,27 @@ public class AudiobooksController {
 
         Audiobook audiobook = audiobookService.getById(id);
         model.addAttribute("audiobookInfo", audiobook);
-
         Iterable<Genre> genres = genreService.allGenres();
         model.addAttribute("allGenres", genres);
-
+        Iterable<Creator> creators = creatorService.allCreators();
+        model.addAttribute("allCreators", creators);
         return "audiobookEditPage";
     }
 
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    public String getClientAddPage(@RequestParam(required = false) String message, Model model) {
+        if(!Objects.isNull(message)) {
+            model.addAttribute("message", message);
+        }
+
+        Audiobook audiobook = audiobookService.getFirst();
+        model.addAttribute("audiobookInfo", audiobook);
+        Iterable<Genre> genres = genreService.allGenres();
+        model.addAttribute("allGenres", genres);
+        Iterable<Creator> creators = creatorService.allCreators();
+        model.addAttribute("allCreators", creators);
+        return "audiobookAddPage";
+    }
 
 }

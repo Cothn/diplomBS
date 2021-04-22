@@ -39,3 +39,8 @@ INSERT INTO `books_db`.`audiobook_creator` (`Audiobook_Id`, `Creator_Id`) VALUES
 INSERT INTO `books_db`.`audiobook_creator` (`Audiobook_Id`, `Creator_Id`) VALUES ('2', '4');
 INSERT INTO `books_db`.`audiobook_creator` (`Audiobook_Id`, `Creator_Id`) VALUES ('3', '3');
 INSERT INTO `books_db`.`audiobook_creator` (`Audiobook_Id`, `Creator_Id`) VALUES ('3', '4');
+
+INSERT INTO `books_db`.`comment` (`Audiobook_Id`, `User_Id`, `Text`, `send_date_time`) VALUES ('1', '1', 'qwe', '2021.04.22');
+INSERT INTO `books_db`.`comment` (`Audiobook_Id`, `User_Id`, `Text`, `send_date_time`) VALUES ('1', '1', 'qwe1', '2021.04.21');
+INSERT INTO `books_db`.`comment` (`Audiobook_Id`, `User_Id`, `Text`, `send_date_time`) VALUES ('1', '1', 'qwe2', '2021.04.23');
+INSERT INTO `books_db`.`comment` (`Audiobook_Id`, `User_Id`, `Text`, `send_date_time`) VALUES ('1', '1', 'qwe3', '2021.04.20');
