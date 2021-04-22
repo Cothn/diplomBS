@@ -1,9 +1,11 @@
 package org.atsynthesizer.demo.service.implementation;
 
 
-import org.atsynthesizer.demo.entity.Audiobook;
+import org.atsynthesizer.demo.entity.Genre;
 import org.atsynthesizer.demo.repository.AudiobookRepository;
+import org.atsynthesizer.demo.repository.GenreRepository;
 import org.atsynthesizer.demo.service.AudiobookService;
+import org.atsynthesizer.demo.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,28 +17,24 @@ import java.util.List;
 @Service
 @Transactional
 
-public class AudiobookServiceImpl implements AudiobookService {
+public class GenreServiceImpl implements GenreService {
 
     @Autowired
-    private AudiobookRepository audiobookRepository;
+    private GenreRepository genreRepository;
 
     @Override
     @Transactional
-    public Page<Audiobook> allAudiobooks(Pageable page) {
-        return audiobookRepository.findAll(page);
+    public Iterable<Genre> allGenres() {
+        return genreRepository.findAll();
     }
 
     @Override
     @Transactional
-    public Audiobook getById(Long id) {
-        return audiobookRepository.findById(id).get();
+    public Genre getById(Long id) {
+        return genreRepository.findById(id).get();
     }
 
-    @Override
-    @Transactional
-    public void edit(Audiobook audiobook) {
-        audiobookRepository.save(audiobook);
-    }
+
     /*
         @Override
         @Transactional
@@ -75,7 +73,11 @@ public class AudiobookServiceImpl implements AudiobookService {
             audiobookRepository.delete(audiobook);
         }
 
-
+        @Override
+        @Transactional
+        public void edit(Audiobook audiobook) {
+            audiobookRepository.edit(audiobook);
+        }
     */
 
 }

@@ -2,19 +2,18 @@ package org.atsynthesizer.demo.service;
 
 
 import org.atsynthesizer.demo.entity.Audiobook;
-
+import org.atsynthesizer.demo.entity.Genre;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 
-public interface AudiobookService {
+public interface GenreService {
 
-    public Page<Audiobook> allAudiobooks(Pageable page);
+    public Iterable<Genre> allGenres();
 
-    public Audiobook getById(Long id);
-
-    public void edit(Audiobook audiobook);
+    public Genre getById(Long id);
 /*
     public void add(Audiobook audiobook);
 
@@ -25,7 +24,7 @@ public interface AudiobookService {
     public void delete(Audiobook audiobook);
 
 
-м
+    public void edit(Audiobook audiobook);
 
 */
 

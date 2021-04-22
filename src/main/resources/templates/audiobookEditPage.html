@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Library</title>
+
+    <style>
+        th, td {
+            padding: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- Подключение библиотеки jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<!-- Подключение jQuery плагина Masked Input -->
+<script src="/js/jquery.maskedinput.min.js"></script>
+
+<!-- Include _menu.html -->
+<th:block th:include="/_menu"></th:block>
+
+<h2>Edit audiobook</h2>
+
+<script th:if="${message}" th:inline="javascript">
+    var message = /*[[${message}]]*/ 'default';
+    alert(message);
+</script>
+
+    <form th:action="@{/audiobook/edit}" th:object="${audiobookInfo}" method="POST">
+        <input type="hidden" required name="id" th:field="*{id}"><br>
+        <label for="genre">Жанр</label>
+        <br>
+        <br>
+        <select id="genre" required multiple size="2"
+                th:field="*{audiobookGenres}">
+            <option th:each="genre : ${allGenres}" th:value="${genre.id}"><p th:text="${genre.title}"></p></option>
+        </select>
+        <br>
+        <br>
+        <label for="title">Название</label>
+        <input type="text" pattern="^[A-Za-zА-Яа-я]+$" required id="title" th:field="*{title}"><br>
+        <label for="description">Описание</label>
+        <input type="text" pattern="^[A-Za-zА-Яа-я]+$" id="description" th:field="*{description}"><br>
+        <input type="submit"  value="Edit audiobook">
+    </form>
+
+</body>
+</html>

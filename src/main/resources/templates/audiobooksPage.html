@@ -31,7 +31,7 @@
 <!-- Include _menu.html -->
 <th:block th:include="/_menu"></th:block>
 
-<h2>Accounts</h2>
+<h2>Distributed Books</h2>
 
 <table border="1">
     <tr>
@@ -77,7 +77,7 @@
         <td th:utext="${elementInfo.description}">..</td>
         <td th:utext="${elementInfo.user.nickname}">..</td>
         <td>
-            <a th:href="@{/audiobook/edit/{audiobookId}(audiobookId=${elementInfo.id})}">edit</a>
+            <a th:href="@{/audiobooks/edit/{audiobookId}(audiobookId=${elementInfo.id})}">edit</a>
             <a th:href="@{/audiobook/delete/{audiobookId}(audiobookId=${elementInfo.id})}">delete</a>
         </td>
     </tr>
