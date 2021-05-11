@@ -1,6 +1,7 @@
 package org.atsynthesizer.demo.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -20,9 +21,11 @@ public class Audiobook {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @NotNull
     @Column(name = "distributed",  nullable = false)
     private boolean distributed;
 
+    @NotNull
     @Column(name = "title", length = 45, nullable = false)
     private String title;
 
@@ -32,15 +35,19 @@ public class Audiobook {
     @Column(name = "publication_year", nullable = true)
     private int publicationYear;
 
+    @NotNull
     @Column(name = "description", length = 2100, nullable = false)
     private String description;
 
+    @NotNull
     @Column(name = "add_date", nullable = false)
     private Timestamp addDate;
 
+    @NotNull
     @Column(name = "rating", nullable = false)
     private String rating;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "audiobook_file_id", nullable = false)
     private AudiobookFile audiobookFile;

@@ -1,6 +1,6 @@
-INSERT INTO `books_db`.`role` (`Title`) VALUES ('Admin');
-INSERT INTO `books_db`.`role` (`Title`) VALUES ('User');
-INSERT INTO `books_db`.`role` (`Title`) VALUES ('SuperAdmin');
+INSERT INTO `books_db`.`role` (`Title`) VALUES ('ROLE_ADMIN');
+INSERT INTO `books_db`.`role` (`Title`) VALUES ('ROLE_USER');
+INSERT INTO `books_db`.`role` (`Title`) VALUES ('ROLE_SUPER_ADMIN');
 
 INSERT INTO `books_db`.`user` (`Nickname`, `Password`, `Role_Id`) VALUES ('super_admin', '123', '3');
 

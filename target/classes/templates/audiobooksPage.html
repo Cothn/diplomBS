@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <!-- Обязательные метатеги -->
     <meta charset="utf-8">
@@ -34,12 +36,19 @@
 </head>
 
 <body>
-
     <div th:replace="fragments/header :: header"/>
 
-    <div class="container">
+    <div id="content" class="container">
 
         <h2>Distributed Books</h2>
+
+        <!-- TEST Roles Interactive -->
+        <div sec:authorize="hasAuthority('ADMIN')" > Has Authority ADMIN </div>
+        <div sec:authorize="hasAuthority('USER')" > Has Authority USER </div>
+        <div sec:authorize="hasRole('ROLE_ADMIN')">Has Role ROLE_ADMIN</div>
+        <div sec:authorize="hasRole('ROLE_USER')">Has Role ROLE_USER</div>
+        <div sec:authorize="hasRole('ADMIN')">Has Role ADMIN</div>
+        <div sec:authorize="hasRole('USER')">Has Role USER</div>
 
         <table border="1">
             <tr>

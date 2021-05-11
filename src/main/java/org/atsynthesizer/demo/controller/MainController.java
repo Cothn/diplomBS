@@ -8,8 +8,8 @@ public class MainController {
 
     //Мы могли бы расписать эти 2 маппинга отдельно, но смысла дублировать одинаковый код нет.
     // этот метод будет слушать запросы на "/" и "/index"
-    @GetMapping(value = {"/", "/index"})
-    public String index() {
+    @GetMapping(value = {"/home"})
+    public String home()  {
         return "redirect:/audiobooks";
     }
 
@@ -32,5 +32,6 @@ public class MainController {
     public String login() {
         return "/login";
     }
+
 
 }

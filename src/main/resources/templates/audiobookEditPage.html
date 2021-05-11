@@ -1,33 +1,25 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <!-- Обязательные метатеги -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
     <title>Library</title>
 
     <style>
     </style>
 
+    <div th:replace="fragments/header :: header-css"/>
+
 </head>
 <body>
 
-    <!-- Подключение библиотеки jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <div th:replace="fragments/header :: header"/>
     <!-- Подключение jQuery плагина Masked Input -->
     <script src="/js/jquery.maskedinput.min.js"></script>
-
-    <!-- Подключение BOOTSTRAP -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
-
-    <!-- Include _menu.html -->
-    <th:block th:include="/_menu"></th:block>
-
 
 
     <script th:if="${message}" th:inline="javascript">
@@ -35,46 +27,49 @@
         alert(message);
     </script>
 
-    <h2>Edit audiobook</h2>
+    <div id="content" class="container">
 
-    <form th:action="@{/audiobook/edit}" th:object="${audiobookInfo}" method="POST">
-        <input type="hidden" required name="id" th:field="*{id}"><br>
-        <label for="title">Название</label>
-        <input type="text"  required id="title" th:field="*{title}"><br>
-        <input type="hidden"  required id="picturePath" th:field="*{picturePath}">
-        <label for="authors">Создатели аудиокниги</label>
-        <br>
-        <select id="authors" required multiple size="2"
-                th:field="*{audiobookCreators}">
-            <option th:each="creator : ${allCreators}" th:value="${creator.id}" >
-                <p th:text="${creator.title}"></p><p th:if="${creator.author}"> автор</p>
-                <p th:unless="${creator.author}"> исполнитель</p></option>
-        </select>
-        <br>
-        <label for="genre">Жанры</label>
-        <br>
-        <select id="genre" required multiple size="2"
-                th:field="*{audiobookGenres}">
-            <option th:each="genre : ${allGenres}" th:value="${genre.id}"><p th:text="${genre.title}"></p></option>
-        </select>
-        <br>
-        <select id="audiobookFile" required hidden
-                th:field="*{audiobookFile}">
-            <option th:value="*{audiobookFile.id}" selected>qwe</option>
-        </select>
-        <input type="hidden"  required id="distributed" th:field="*{distributed}">
-        <input type="hidden"  required id="rating" th:field="*{rating}">
-        <label for="description">Описание</label>
-        <input type="text"  id="description" th:field="*{description}"><br>
-        <select id="userId" required hidden
-                th:field="*{user}">
-            <option th:value="*{user.id}" selected>qwe</option>
-        </select>
-        <label for="title">Год издания</label>
-        <input type="text"  required id="publicYear" th:field="*{publicationYear}"><br>
-        <input type="hidden"  required id="addDate" th:field="*{addDate}">
-        <input type="submit"  value="Подтвердить редактирование">
-    </form>
+        <h2>Edit audiobook</h2>
+
+        <form th:action="@{/audiobook/edit}" th:object="${audiobookInfo}" method="POST">
+            <input type="hidden" required name="id" th:field="*{id}"><br>
+            <label for="title">Название</label>
+            <input type="text"  required id="title" th:field="*{title}"><br>
+            <input type="hidden"  required id="picturePath" th:field="*{picturePath}">
+            <label for="authors">Создатели аудиокниги</label>
+            <br>
+            <select id="authors" required multiple size="2"
+                    th:field="*{audiobookCreators}">
+                <option th:each="creator : ${allCreators}" th:value="${creator.id}" >
+                    <p th:text="${creator.title}"></p><p th:if="${creator.author}"> автор</p>
+                    <p th:unless="${creator.author}"> исполнитель</p></option>
+            </select>
+            <br>
+            <label for="genre">Жанры</label>
+            <br>
+            <select id="genre" required multiple size="2"
+                    th:field="*{audiobookGenres}">
+                <option th:each="genre : ${allGenres}" th:value="${genre.id}"><p th:text="${genre.title}"></p></option>
+            </select>
+            <br>
+            <select id="audiobookFile" required hidden
+                    th:field="*{audiobookFile}">
+                <option th:value="*{audiobookFile.id}" selected>qwe</option>
+            </select>
+            <input type="hidden"  required id="distributed" th:field="*{distributed}">
+            <input type="hidden"  required id="rating" th:field="*{rating}">
+            <label for="description">Описание</label>
+            <input type="text"  id="description" th:field="*{description}"><br>
+            <select id="userId" required hidden
+                    th:field="*{user}">
+                <option th:value="*{user.id}" selected>qwe</option>
+            </select>
+            <label for="title">Год издания</label>
+            <input type="text"  required id="publicYear" th:field="*{publicationYear}"><br>
+            <input type="hidden"  required id="addDate" th:field="*{addDate}">
+            <input type="submit"  value="Подтвердить редактирование">
+        </form>
+    </div>
     <div th:replace="fragments/footer :: footer"/>
 </body>
 </html>

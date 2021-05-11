@@ -16,8 +16,6 @@ public class Query {
     @JoinColumn(name = "user_id")
     private User user;
 
-
-
     @ManyToOne
     @JoinColumn(name = "audiobook_id")
     private Audiobook audiobook;

@@ -1,9 +1,6 @@
 package org.atsynthesizer.demo.controller;
 
-import org.atsynthesizer.demo.entity.Audiobook;
-import org.atsynthesizer.demo.entity.Comment;
-import org.atsynthesizer.demo.entity.Creator;
-import org.atsynthesizer.demo.entity.Genre;
+import org.atsynthesizer.demo.entity.*;
 import org.atsynthesizer.demo.service.AudiobookService;
 import org.atsynthesizer.demo.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +10,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -34,7 +33,7 @@ public class AudiobookController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String  editAudiobook(@ModelAttribute("audiobookInfo") Audiobook audiobook,
+    public String  editAudiobook(@ModelAttribute("audiobookInfo") @Valid Audiobook audiobook,  BindingResult bindingResult,
                                  Model model) {
         audiobookService.edit(audiobook);
 
@@ -42,8 +41,8 @@ public class AudiobookController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String  addAudiobook(@ModelAttribute("audiobookInfo") Audiobook audiobook,
-                                 Model model) {
+    public String  addAudiobook(@ModelAttribute("audiobookInfo") @Valid Audiobook audiobook,  BindingResult bindingResult,
+                                Model model) {
         Timestamp ts = Timestamp.from(Instant.now());
         audiobook.setAddDate(ts);
         audiobookService.add(audiobook);

@@ -1,29 +1,41 @@
 package org.atsynthesizer.demo.entity;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.sql.Date;
-import java.util.HashSet;
+import java.util.*;
 
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotNull
     @Column(name = "nickname", nullable = false)
     private String nickname;
 
     @Column(name = "email",  nullable = true)
     private String email;
 
+    @NotNull
     @Column(name = "password", length = 45, nullable = false)
     private String password;
 
-    @ManyToOne
+    @Transient
+    private String passwordConfirm;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
+
+    public User() {
+    }
 
     public Long getId() {
         return id;
@@ -45,8 +57,38 @@ public class User {
         this.email = email;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return getRoles();
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return nickname;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
     public void setPassword(String password) {
@@ -57,8 +99,22 @@ public class User {
         return role;
     }
 
+    public Set<Role> getRoles() {
+        Set<Role> roles = new HashSet<Role>();
+        roles.add(getRole());
+        return roles;
+    }
+
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     @Override
