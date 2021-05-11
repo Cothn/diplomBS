@@ -8,10 +8,10 @@
 <body>
 <div th:fragment="footer">
     <div class="container mt-5">
-        <footer>
+        <footer id="footer">
             <!-- FOOTER -->
             <!--  -->
-            © 2021 AudioLibrary
+            © Всеволод Гринчик 2021 BSUIR
             <span sec:authorize="isAuthenticated()">| Logged user: <span sec:authentication="name"></span> |
                 Roles: <span sec:authentication="principal.authorities"></span> |
                 <a th:href="@{/logout}">Sign Out</a>
