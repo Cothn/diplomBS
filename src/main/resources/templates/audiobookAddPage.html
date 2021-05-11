@@ -1,26 +1,17 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Library</title>
 
-    <style>
-        th, td {
-            padding: 5px;
-        }
-    </style>
+    <title>Library</title>
+    <div th:replace="fragments/header :: header-css"/>
 
 </head>
 
 <body>
 
-<!-- Подключение библиотеки jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<!-- Подключение jQuery плагина Masked Input -->
-<script src="/js/jquery.maskedinput.min.js"></script>
+<div th:replace="fragments/header :: header"/>
 
-<!-- Include _menu.html -->
-<th:block th:include="/_menu"></th:block>
-
-<h2>Edit audiobook</h2>
+<h2>Add audiobook</h2>
 
 <script th:if="${message}" th:inline="javascript">
     var message = /*[[${message}]]*/ 'default';
