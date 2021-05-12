@@ -24,9 +24,10 @@ public class User implements UserDetails {
     private String email;
 
     @NotNull
-    @Column(name = "password", length = 45, nullable = false)
+    @Column(name = "password", length = 70, nullable = false)
     private String password;
 
+    @NotNull
     @Transient
     private String passwordConfirm;
 

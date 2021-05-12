@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `books_db`.`User` (
   `Id` INT NOT NULL AUTO_INCREMENT,
   `Nickname` VARCHAR(45) NOT NULL,
   `Email` VARCHAR(45) NULL,
-  `Password` VARCHAR(45) NOT NULL,
+  `Password` VARCHAR(70) NOT NULL,
   `Role_Id` INT NOT NULL,
   PRIMARY KEY (`Id`),
   INDEX `fk_User_Role1_idx` (`Role_Id` ASC) VISIBLE,

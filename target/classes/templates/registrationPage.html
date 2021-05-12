@@ -14,25 +14,20 @@
 
         <div class="row justify-content-center" >
             <div class="col-md-6 col-sm-8 mb-1">
-                <h1 style="text-align: center">Войдите в аккаунт</h1>
+                <h1 style="text-align: center">Регистрация</h1>
             </div>
         </div>
 
-        <form th:action="@{/login}" method="post">
-            <div class="row justify-content-center" th:if="${param.error}">
-                <div class="alert alert-danger mb-2 col-md-6 col-sm-8">
-                    Неверный никнейм или пароль.
-                </div>
-            </div>
-            <div class="row justify-content-center" th:if="${param.logout}">
-                <div class="alert alert-info mb-2 col-md-6 col-sm-8">
-                    Вы должны выйти из профиля.
+        <form th:action="@{/user/add}" name="userForm" method="post">
+            <div class="row justify-content-center"  th:if="${errorMessage}" >
+                <div class="alert alert-danger mb-2 col-md-6 col-sm-8"  >
+                    <p th:text="${errorMessage}"></p>
                 </div>
             </div>
             <div class="row justify-content-center">
                 <div class="form-group mb-2 col-md-6 col-sm-8">
                     <label for="nickname" class="form-label">Никнейм</label>
-                    <input type="text" name="username" id="nickname" class="form-control"
+                    <input type="text" name="nickname" id="nickname" class="form-control"
                            placeholder="Введите никнейм" required="true"/>
                 </div>
             </div>
@@ -43,14 +38,17 @@
                            placeholder="Введите пароль" required="true" />
                 </div>
             </div>
+            <div class="row justify-content-center">
+                <div class="form-group mb-2 col-md-6 col-sm-8">
+                    <label for="password" class="form-label">Повтор пароля</label>
+                    <input type="password" name="passwordConfirm" id="password2" class="form-control"
+                           placeholder="Повторите пароль" required="true" />
+                </div>
+            </div>
             <div class="row justify-content-center mt-2">
-                <div class= "col-md-2  col-sm-2" style="visibility: hidden">
-                    e
-                </div>
-                <input type="submit" class="col-md-2 col-sm-3 btn btn-lg btn-primary btn-block" value="Войти"/>
-                <div class= "col-md-2 col-sm-2" style="visibility: hidden">
-                    e
-                </div>
+
+                <input type="submit" class="col-lg-3 col-md-4 col-sm-5 btn btn-lg btn-primary btn-block" value="Зарегестрироваться"/>
+
             </div>
 
         </form>

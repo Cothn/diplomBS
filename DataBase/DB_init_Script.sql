@@ -1,8 +1,10 @@
-INSERT INTO `books_db`.`role` (`Title`) VALUES ('ROLE_ADMIN');
 INSERT INTO `books_db`.`role` (`Title`) VALUES ('ROLE_USER');
+INSERT INTO `books_db`.`role` (`Title`) VALUES ('ROLE_ADMIN');
 INSERT INTO `books_db`.`role` (`Title`) VALUES ('ROLE_SUPER_ADMIN');
 
-INSERT INTO `books_db`.`user` (`Nickname`, `Password`, `Role_Id`) VALUES ('super_admin', '123', '3');
+INSERT INTO `books_db`.`user` (`Nickname`, `Password`, `Role_Id`) VALUES ('super_admin', '$2a$10$lxIB1zZeB1SOuta6Ow5h1..WXxNcjpYoNKTx3w1naCb.Hp9cOtHSW', '3');
+INSERT INTO `books_db`.`user` (`Nickname`, `Password`, `Role_Id`) VALUES ('admin', '$2a$10$8Ouj6pQ7jDWHXjlFcBNGXO6myncfZmkCdHLyQWx2uNyyg/woQ0nC2', '2');
+INSERT INTO `books_db`.`user` (`Nickname`, `Password`, `Role_Id`) VALUES ('user', '$2a$10$sxPuXo7KIlFeGDgMyzTh4.N6ruUws4BuDOMXiq9BOf6QWe8SNjB2K', '1');
 
 INSERT INTO `books_db`.`audiobook_file` (`Extension`, `File_path`) VALUES ('fb2', 'book.fb2');
 INSERT INTO `books_db`.`audiobook_file` (`Extension`, `File_path`) VALUES ('fb2', 'book1.fb2');

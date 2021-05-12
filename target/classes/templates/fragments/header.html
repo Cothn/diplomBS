@@ -34,9 +34,21 @@
                         <a th:href="@{/registration}" class="btn btn-outline-success me-2">Регистрация</a>
                         <a th:href="@{/login}" class="btn btn-outline-success">Авторизация</a>
                     </div>
+                    <!--
+
+                    -->
                     <div class="d-flex" sec:authorize="isAuthenticated()">
-                        <a th:href="@{/user/me}" class="btn btn-outline-success me-2">Перейти в профиль</a>
-                        <a th:href="@{/logout}" class="btn btn-outline-success">Выйти</a>
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span sec:authentication="name"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                <li><a th:href="@{/user/me}" class="dropdown-item">Мой профиль</a></li>
+                                <li><a th:href="@{/user/books}" class="dropdown-item">Мои книги</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a th:href="@{/logout}" class="dropdown-item">Выйти</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
