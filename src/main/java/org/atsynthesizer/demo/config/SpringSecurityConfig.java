@@ -38,7 +38,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/audiobooks", "/home", "/audiobook/{id}").permitAll()
                 .antMatchers("/js/**", "/css/**").permitAll()
                 .antMatchers("/admin/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
-                .antMatchers("/user/**").hasAnyRole("USER", "SUPER_ADMIN")
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN", "SUPER_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

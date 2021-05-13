@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <title>Spring Security Example </title>
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+
+
+    <div th:replace="fragments/header :: header"/>
+
+    <div id="content" class="container mt-4">
+
+        <div class="row justify-content-center" >
+            <div class="col-md-6 col-sm-8 mb-1">
+                <h2 style="text-align: center">Профиль пользователя <span sec:authentication="name"></span></h2>
+            </div>
+        </div>
+
+        <div class="validate-form" th:object="${userInfo}">
+            <div class="row justify-content-center"  th:if="${errorMessage}" >
+                <div class="alert alert-danger mb-2 col-md-6 col-sm-8"  >
+                    <p th:text="${errorMessage}"></p>
+                </div>
+            </div>
+
+            <input type="hidden" required name="id" th:field="*{id}"><br>
+            <div class="row justify-content-center">
+                <div class="form-group mb-2 col-md-6 col-sm-8" data-validate = "Требуется ввести никнейм">
+                    <label for="nickname" class="form-label">Никнейм</label>
+                    <input class="input100 form-control"  type="text" name="nickname" id="nickname"
+                           placeholder="Введите никнейм" required="true" th:field="*{nickname}"/>
+                    <span class="focus-input100"></span>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group mb-2 col-md-6 col-sm-8" data-validate = "Неверный email">
+                    <label for="nickname" class="form-label">Email</label>
+                    <input class="input100 form-control"  type="text" id="email" name="email"
+                           placeholder="Введите email" required="false" th:field="*{email}"/>
+                    <span class="focus-input100"></span>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group mb-2 col-md-6 col-sm-8" data-validate = "Неверный пароль">
+                    <label for="password" class="form-label">Пароль</label>
+                    <input class="input100 form-control"  type="password" name="password" id="password"
+                           placeholder="Введите пароль" required="true"/>
+                    <span class="focus-input100"></span>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="form-group mb-2 col-md-6 col-sm-8" data-validate = "Неверный пароль">
+                    <label for="password" class="form-label">Повтор пароля</label>
+                    <input class="input100 form-control"  type="password" name="passwordConfirm" id="confirm-password"
+                           placeholder="Повторите пароль" required="true" />
+                    <span class="focus-input100"></span>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-2">
+                <a id="edit-profile-btn" class="col-lg-3 col-md-4 col-sm-5 btn  btn-primary btn-block"
+                        th:href="@{/user/me/edit}"/>
+                    Редактировать профиль
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 package org.atsynthesizer.demo.service.implementation;
 
 
+import lombok.var;
 import org.atsynthesizer.demo.entity.Creator;
 import org.atsynthesizer.demo.entity.Role;
 import org.atsynthesizer.demo.entity.User;
@@ -49,12 +50,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public boolean edit(User user) {
         Optional<User> userFromDB = userRepository.findByNickname(user.getUsername());
-        if (userFromDB.isPresent()) {
-            return false;
+        if (userFromDB.isPresent() ) {
+            if (userFromDB.get().getId() == user.getId()){
+                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                user.setRole(userFromDB.get().getRole());
+                userRepository.save(user);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
-
-        userRepository.save(user);
-        return true;
+        return false;
     }
 
     @Override
@@ -72,6 +80,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        Optional<User> user = userRepository.findByNickname(s);
+        if (!user.isPresent()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        return user.get();
+    }
+
+    @Override
+    public User getByNickname(String s) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByNickname(s);
         if (!user.isPresent()) {
             throw new UsernameNotFoundException("User not found");

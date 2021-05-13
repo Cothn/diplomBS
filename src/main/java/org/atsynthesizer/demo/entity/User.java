@@ -27,7 +27,6 @@ public class User implements UserDetails {
     @Column(name = "password", length = 70, nullable = false)
     private String password;
 
-    @NotNull
     @Transient
     private String passwordConfirm;
 
@@ -125,6 +124,7 @@ public class User implements UserDetails {
                 ", nickname='" + nickname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", role=" + role +
                 '}';
     }

@@ -11,6 +11,8 @@ public interface UserService {
 
     public User getById(Long id);
 
+    public User getByNickname(String nickname);
+
     public boolean add(User user);
 
     public boolean edit(User user);
