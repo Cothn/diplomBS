@@ -25,8 +25,17 @@ public class UserController {
 
 
     @RequestMapping(value = "/me", method = RequestMethod.GET)
-    public String getUserPage(Model model, @AuthenticationPrincipal UserDetails currentUser) {
+    public String getMyUserPage(Model model, @AuthenticationPrincipal UserDetails currentUser) {
         User user = userService.getByNickname(currentUser.getUsername());
+
+        model.addAttribute("userInfo", user);
+        return "userPage";
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public String getUserPage(Model model, @AuthenticationPrincipal UserDetails currentUser,
+                              @PathVariable("id") Long id) {
+        User user = userService.getById(id);
 
         model.addAttribute("userInfo", user);
         return "userPage";

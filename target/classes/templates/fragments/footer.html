@@ -13,10 +13,6 @@
         <span>
             © Всеволод Гринчик 2021 BSUIR
         </span>
-        <span sec:authorize="isAuthenticated()">| Logged user: <span sec:authentication="name"></span> |
-            Roles: <span sec:authentication="principal.authorities"></span> |
-            <a th:href="@{/logout}">Sign Out</a>
-        </span>
         <!-- Подключение библиотеки jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <!-- Подключение BOOTSTRAP -->
