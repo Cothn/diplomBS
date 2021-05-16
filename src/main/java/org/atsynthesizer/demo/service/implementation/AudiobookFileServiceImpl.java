@@ -3,9 +3,11 @@ package org.atsynthesizer.demo.service.implementation;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.atsynthesizer.demo.entity.AudiobookFile;
+import org.atsynthesizer.demo.entity.Creator;
 import org.atsynthesizer.demo.repository.AudiobookFileRepository;
 import org.atsynthesizer.demo.service.AudiobookFileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +18,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class AudiobookFileServiceImpl implements AudiobookFileService {
 
-
-    private static String UPLOAD_DIR = "/static/users";
+    @Value("${upload.path}")
+    private String UPLOAD_DIR;
 
     @Autowired
     private AudiobookFileRepository audiobookFileRepository;
@@ -34,35 +37,38 @@ public class AudiobookFileServiceImpl implements AudiobookFileService {
         }else if (fileSize/(1024*1024) > 1){
             return (double) file.length()/(1024*1024)+" mb";
         }else if (fileSize/(1024) > 1){
-            return (double) file.length()/(1024*1024)+" kb";
+            return (double) file.length()/(1024)+" kb";
         }else{
             return file.length() + " bytes";
         }
     }
 
     // Save Files
-    public String saveUploadedFile(MultipartFile file, UserDetails currentUser) {
+    public String saveUploadedFile(MultipartFile file, UserDetails currentUser) throws IOException {
 
         // Make sure directory exists!
-        File uploadDir = new File(UPLOAD_DIR + "/" +currentUser.getUsername());
-        uploadDir.mkdirs();
-
+        File uploadDir = new File(UPLOAD_DIR +currentUser.getUsername());
+        if(!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
         if (!file.isEmpty()) {
-            try {
-                String uploadFilePath = UPLOAD_DIR + "/" +currentUser.getUsername() + "/"
+                String uploadFilePath = currentUser.getUsername() + "/"
                         + RandomStringUtils.randomAlphanumeric(8)+ "-" + file.getOriginalFilename();
 
                 byte[] bytes = file.getBytes();
-                Path path = Paths.get(uploadFilePath);
+                Path path = Paths.get(UPLOAD_DIR + uploadFilePath);
                 Files.write(path, bytes);
                 return uploadFilePath;
-            } catch (Exception e) {
-                return "";
-            }
         } else {
             return "";
         }
 
+    }
+
+    @Override
+    public AudiobookFile add(AudiobookFile audiobookFile) {
+        Optional<AudiobookFile> audiobookFileFromDB = audiobookFileRepository.findByFilePath(audiobookFile.getFilePath());
+        return audiobookFileFromDB.orElseGet(() -> audiobookFileRepository.save(audiobookFile));
     }
 
     @Override

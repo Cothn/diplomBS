@@ -47,10 +47,6 @@ public class Creator {
 
     public Boolean Author() { return author; }
 
-    public void setAuthor(Boolean author) {
-        this.author = author;
-    }
-
     public Long getId() {
         return id;
     }

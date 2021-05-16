@@ -85,7 +85,7 @@
                     </th:block>
                 </th:block>
                 </td>
-                <td><img th:src="@{${elementInfo.picturePath}}"></td>
+                <td><img th:src="@{'/img/'+${elementInfo.picturePath}}"></td>
                 <td>
                     | <th:block th:each="itemInfo : ${elementInfo.audiobookGenres}">
                     <th:block th:utext="${itemInfo.title}+ ' |'">

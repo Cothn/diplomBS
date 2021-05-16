@@ -2,6 +2,7 @@ package org.atsynthesizer.demo.service;
 
 
 import org.atsynthesizer.demo.entity.AudiobookFile;
+import org.atsynthesizer.demo.entity.Creator;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,9 +17,10 @@ public interface AudiobookFileService {
     public AudiobookFile getById(Long id);
 
     public String getFileSize(File file);
-    public String saveUploadedFile(MultipartFile file, UserDetails currentUser);
+    public String saveUploadedFile(MultipartFile file, UserDetails currentUser) throws IOException;
+
+    public AudiobookFile add(AudiobookFile audiobookFile);
 /*
-    public void add(Audiobook audiobook);
 
     boolean checkByPassport(Audiobook audiobook);
 

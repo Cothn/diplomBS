@@ -9,9 +9,9 @@ public interface CreatorService {
     public Iterable<Creator> allCreators();
 
     public Creator getById(Long id);
-/*
-    public void add(Audiobook audiobook);
 
+    public Creator add(Creator creator);
+/*
     boolean checkByPassport(Audiobook audiobook);
 
     boolean checkByIdentifyNumber(Audiobook audiobook);

@@ -45,7 +45,7 @@ public class Audiobook {
 
     @NotNull
     @Column(name = "rating", nullable = false)
-    private String rating;
+    private Double rating;
 
     @NotNull
     @ManyToOne
@@ -131,11 +131,11 @@ public class Audiobook {
         this.addDate = addDate;
     }
 
-    public String getRating() {
+    public Double getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(Double rating) {
         this.rating = rating;
     }
 

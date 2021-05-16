@@ -3,6 +3,7 @@ package org.atsynthesizer.demo.service.implementation;
 
 import org.atsynthesizer.demo.entity.Creator;
 import org.atsynthesizer.demo.entity.Genre;
+import org.atsynthesizer.demo.entity.Creator;
 import org.atsynthesizer.demo.repository.CreatorRepository;
 import org.atsynthesizer.demo.repository.GenreRepository;
 import org.atsynthesizer.demo.service.CreatorService;
@@ -10,6 +11,8 @@ import org.atsynthesizer.demo.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -32,21 +35,22 @@ public class CreatorServiceImpl implements CreatorService {
     }
 
 
+
+        @Override
+        @Transactional
+        public Creator add(Creator creator) {
+            Optional<Creator> creatorFromDB = creatorRepository.findByAuthorAndTitle(creator.isAuthor(), creator.getTitle());
+            return creatorFromDB.orElseGet(() -> creatorRepository.save(creator));
+        }
     /*
         @Override
         @Transactional
-        public void add(Audiobook audiobook) {
-            audiobookRepository.add(audiobook);
-        }
-
-        @Override
-        @Transactional
-        public boolean checkByPassport(Audiobook audiobook) {
-            List<Audiobook> audiobooks = audiobookRepository.allAudiobooks();
-            for (Audiobook cl : audiobooks){
-                if(cl.getPassportSeries().equalsIgnoreCase(audiobook.getPassportSeries()) &&
-                        cl.getPassportNumber().equalsIgnoreCase(audiobook.getPassportNumber()) &&
-                                (cl.getId() != audiobook.getId()))
+        public boolean checkByPassport(Creator creator) {
+            List<Creator> creators = creatorRepository.allCreators();
+            for (Creator cl : creators){
+                if(cl.getPassportSeries().equalsIgnoreCase(creator.getPassportSeries()) &&
+                        cl.getPassportNumber().equalsIgnoreCase(creator.getPassportNumber()) &&
+                                (cl.getId() != creator.getId()))
                     return true;
             }
             return false;
@@ -54,11 +58,11 @@ public class CreatorServiceImpl implements CreatorService {
 
         @Override
         @Transactional
-        public boolean checkByIdentifyNumber(Audiobook audiobook) {
-            List<Audiobook> audiobooks = audiobookRepository.allAudiobooks();
-            for (Audiobook cl : audiobooks){
-                if(cl.getIdentificationNumber().equalsIgnoreCase(audiobook.getIdentificationNumber()) &&
-                    (cl.getId() != audiobook.getId()))
+        public boolean checkByIdentifyNumber(Creator creator) {
+            List<Creator> creators = creatorRepository.allCreators();
+            for (Creator cl : creators){
+                if(cl.getIdentificationNumber().equalsIgnoreCase(creator.getIdentificationNumber()) &&
+                    (cl.getId() != creator.getId()))
                     return true;
             }
             return false;
@@ -66,14 +70,14 @@ public class CreatorServiceImpl implements CreatorService {
 
         @Override
         @Transactional
-        public void delete(Audiobook audiobook) {
-            audiobookRepository.delete(audiobook);
+        public void delete(Creator creator) {
+            creatorRepository.delete(creator);
         }
 
         @Override
         @Transactional
-        public void edit(Audiobook audiobook) {
-            audiobookRepository.edit(audiobook);
+        public void edit(Creator creator) {
+            creatorRepository.edit(creator);
         }
     */
 
