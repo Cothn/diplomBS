@@ -89,6 +89,80 @@ function addPerformer(){
 
 };
 
+function addOldAuthor(name){
+
+    numberAuthors++;
+
+    var authorsEl= document.getElementById('authors-group');
+    var authorName = name;
+
+    if (!(authorName === "")) {
+        let div = document.createElement('div');
+        div.className = "input-group mb-2 col";
+        div.id = 'author-group' + numberAuthors;
+
+        let inputBlock =
+            '<input type="text" readonly class="form-control" ' +
+            'value="' + authorName +
+            '" id="author' + numberAuthors +
+            '" name="authors' +
+            '" aria-describedby="delete-author-btn' + numberAuthors +
+            '"/>';
+        let buttonBlock =
+            '<button class="btn btn-secondary" ' +
+            'id="delete-author-btn' + numberAuthors +
+            '" onclick="deleteElById(\'authors-group\', \'author-group' + numberAuthors + '\')' +
+            '" type="button">' +
+            'Удалить' +
+            '</button>';
+
+        div.innerHTML = inputBlock + buttonBlock;
+        authorsEl.append(div);
+    }
+
+};
+
+function addOldPerformer(name){
+
+    numberPerformers++;
+
+    var performersEl= document.getElementById('performers-group');
+    var performerName = name;
+
+    for (let i=1; i< numberPerformers; i++){
+        var temp= $.trim($('#performer'+i).val());
+        if(temp === performerName){
+            return;
+        }
+    }
+
+    if (!(performerName === "")) {
+        let div = document.createElement('div');
+        div.className = "input-group mb-2 col";
+        div.id = 'performer-group' + numberPerformers;
+
+        let inputBlock =
+            '<input type="text" readonly class="form-control" ' +
+            'value="' + performerName +
+            '" id="performer' + numberPerformers +
+            '" name="performers' +
+            '" aria-describedby="delete-performer-btn' + numberPerformers +
+            '"/>';
+        let buttonBlock =
+            '<button class="btn btn-secondary" ' +
+            'id="delete-performer-btn' + numberPerformers +
+            '" onclick="deleteElById(\'performers-group\', \'performer-group' + numberPerformers + '\')' +
+            '" type="button">' +
+            'Удалить' +
+            '</button>';
+
+        div.innerHTML = inputBlock + buttonBlock;
+        performersEl.append(div);
+    }
+
+};
+
+
     function sendUserInfo(){
 
         var userId= $.trim($('#id').val());

@@ -55,31 +55,69 @@ public class AudiobookController {
     }
 
 
-
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public String  editAudiobook(@ModelAttribute("audiobookInfo") Audiobook audiobook,
-                                 Model model) {
+    public String  addAudiobook(
+            @RequestParam(required = false) MultipartFile picture,
+            @RequestParam(required = true) List<String> authors,
+            @RequestParam(required = true) List<String> performers,
+            @AuthenticationPrincipal UserDetails currentUser,
+            @ModelAttribute("audiobookInfo") Audiobook audiobook, Model model) throws IOException {
+
+        if((!picture.isEmpty()) && (picture.getSize() != 0)) {
+            audiobook.setPicturePath(audiobookFileService.saveUploadedFile(picture, audiobook.getUser()));
+            if (audiobook.getPicturePath().isEmpty()) {
+                return "redirect:/audiobooks/add";
+            }
+        }
+
+        List<Creator> creators = new ArrayList<Creator>();
+        if(!authors.isEmpty()) {
+            for (String author: authors) {
+                Creator creator = new Creator();
+                creator.setAuthor(true);
+                creator.setTitle(author);
+                creators.add(creatorService.add(creator));
+            }
+        }
+        else{
+            return "redirect:/audiobooks/edit";
+        }
+        if(!performers.isEmpty()) {
+            for (String performer: performers) {
+                Creator creator = new Creator();
+                creator.setAuthor(false);
+                creator.setTitle(performer);
+                creatorService.add(creator);
+                creators.add(creatorService.add(creator));
+            }
+        }
+        else{
+            return "redirect:/audiobooks/edit";
+        }
+        audiobook.setAudiobookCreators(creators);
+
         audiobookService.edit(audiobook);
 
-        return "redirect:/audiobooks";
+        return "redirect:/audiobook/"+audiobook.getId();
     }
+
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String  addAudiobook(
-            @RequestParam(required = true) MultipartFile picture,
+            @RequestParam(required = false) MultipartFile picture,
             @RequestParam(required = true) MultipartFile audiobookFileStream,
             @RequestParam(required = true) List<String> authors,
             @RequestParam(required = true) List<String> performers,
             @AuthenticationPrincipal UserDetails currentUser,
             @ModelAttribute("audiobookInfo") Audiobook audiobook, Model model) throws IOException {
 
-        if(!picture.isEmpty()) {
+        if((!picture.isEmpty()) && (picture.getSize() != 0))  {
             audiobook.setPicturePath(audiobookFileService.saveUploadedFile(picture, currentUser));
             if (audiobook.getPicturePath().isEmpty()) {
                 return "redirect:/audiobooks/add";
             }
         }
-        if(!audiobookFileStream.isEmpty()) {
+        if((!audiobookFileStream.isEmpty()) && (audiobookFileStream.getSize() != 0))  {
             String filePath =audiobookFileService.saveUploadedFile(audiobookFileStream, currentUser);
             if (filePath.isEmpty()){
                 return "redirect:/audiobooks/add";
