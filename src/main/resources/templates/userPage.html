@@ -13,49 +13,50 @@
     <div th:replace="fragments/header :: header"/>
 
     <div id="content" class="container mt-4">
-
         <div class="row justify-content-center" >
-            <div class="col-md-6 col-sm-8 mb-1" th:if="${userInfo.nickname.equals(#authorization.authentication.name)}">
-                <h2 style="text-align: center">Мой профиль</h2>
-            </div>
-            <div class="col-md-6 col-sm-8 mb-1" th:unless="${userInfo.nickname.equals(#authorization.authentication.name)}">
-                <h2 style="text-align: center">Профиль пользователя <p th:text="${userInfo.nickname}"></p></h2>
-            </div>
-        </div>
-
-        <div class="validate-form" th:object="${userInfo}">
-            <input type="hidden" required name="id" th:field="*{id}"><br>
-            <div class="row justify-content-center">
-                <div class="mb-2 col-md-6 col-sm-8">
-                    <span class="" name="nickname" id="nickname">
-                       <p th:text="'Никнейм: '+${userInfo.nickname}"></p></span>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="mb-2 col-md-6 col-sm-8" id="email" name="email">
-                    <div class="col" th:unless="${#strings.isEmpty(userInfo.email)}" >
-                        <p th:text="'Email: '+ ${userInfo.email}"></p>
+        <div class="card col-lg-5  col-md-7 col-sm-10"  th:object="${userInfo}">
+            <div class="card-body" >
+                <div class="row justify-content-center" >
+                    <div class="col-9 mb-1" th:if="${userInfo.nickname.equals(#authorization.authentication.name)}">
+                        <h2 class="card-title" style="text-align: center">Мой профиль</h2>
                     </div>
-                    <p class="col" th:if="${#strings.isEmpty(userInfo.email)}">Email: не указан</p>
+                    <div class="col-9 mb-1" th:unless="${userInfo.nickname.equals(#authorization.authentication.name)}">
+                        <h2 class="card-title" style="text-align: center">Профиль пользователя <p th:text="${userInfo.nickname}"></p></h2>
+                    </div>
                 </div>
-            </div>
-            <div class="row justify-content-center">
-                <div  class="mb-2 col-md-6 col-sm-8" th:switch="${userInfo.role.id}">
-                    <p th:case="2">Статус: администратор сайта</p>
-                    <p th:case="3">Статус: Администратор сайта</p>
-                    <p th:case="1">Статус: пользователь сайта</p>
+                <input type="hidden" required name="id" th:field="*{id}"><br>
+                <div class="row justify-content-center">
+                    <div class="mb-2 col-9">
+                        <span class="" name="nickname" id="nickname">
+                           <p th:text="'Никнейм: '+${userInfo.nickname}"></p></span>
+                    </div>
                 </div>
-            </div>
-            <div class="row justify-content-center mt-2" th:if="${userInfo.nickname.equals(#authorization.authentication.name)}" >
-                <a id="edit-profile-btn" class="col-lg-3 col-md-4 col-sm-5 btn  btn-primary btn-block"
-                        th:href="@{/user/me/edit}"/>
-                    Редактировать профиль
-                </a>
+                <div class="row justify-content-center">
+                    <div class="mb-2 col-9" id="email" name="email">
+                        <div class="col" th:unless="${#strings.isEmpty(userInfo.email)}" >
+                            <p th:text="'Email: '+ ${userInfo.email}"></p>
+                        </div>
+                        <p class="col" th:if="${#strings.isEmpty(userInfo.email)}">Email: не указан</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div  class="mb-2 col-9" th:switch="${userInfo.role.id}">
+                        <p th:case="2">Статус: администратор сайта</p>
+                        <p th:case="3">Статус: Администратор сайта</p>
+                        <p th:case="1">Статус: пользователь сайта</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-2" th:if="${userInfo.nickname.equals(#authorization.authentication.name)}" >
+                    <a id="edit-profile-btn" class="col-lg-7 col-md-8 col-sm-9 btn  btn-primary btn-block"
+                            th:href="@{/user/me/edit}"/>
+                        Редактировать профиль
+                    </a>
+                </div>
             </div>
         </div>
 
     </div>
-
+    </div>
     <div th:replace="fragments/footer :: footer"/>
 
 </body>

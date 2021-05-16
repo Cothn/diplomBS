@@ -52,7 +52,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `books_db`.`Audiobook_File` (
   `Id` INT NOT NULL AUTO_INCREMENT,
-  `Duration` INT NOT NULL DEFAULT 0,
+  `Size` VARCHAR(255) NOT NULL DEFAULT '0 bytes',
   `Extension` VARCHAR(45) NOT NULL,
   `File_path` VARCHAR(510) NOT NULL,
   PRIMARY KEY (`Id`))

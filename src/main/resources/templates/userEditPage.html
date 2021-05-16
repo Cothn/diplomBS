@@ -12,64 +12,68 @@
 
     <div th:replace="fragments/header :: header"/>
 
-    <div id="content" class="container mt-4">
-
+    <div id="content" class="container mt-0">
         <div class="row justify-content-center" >
-            <div class="col-md-6 col-sm-8 mb-1">
-                <h2 style="text-align: center">Редактирование данных пользователя</h2>
+            <div class="card col-lg-7  col-md-9 col-sm-11">
+                <div class="card-body" >
+                    <div class="row justify-content-center" >
+                        <div class="col-11">
+                            <h2 class="card-title" style="text-align: center">Редактирование данных пользователя</h2>
+                        </div>
+                    </div>
+
+                    <div class="validate-form"
+                         th:object="${userInfo}">
+                        <input type="hidden" required name="id" th:field="*{id}">
+                        <div class="row justify-content-center mt-2"  th:if="${errorMessage}" >
+                            <div class="alert alert-danger  col-11 "  >
+                                <p th:text="${errorMessage}"></p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11" data-validate = "Требуется ввести никнейм">
+                                <label for="nickname" class="form-label">Никнейм</label>
+                                <input class="input100 form-control"  type="text" name="nickname" id="nickname"
+                                       placeholder="Введите никнейм" required="true" th:field="*{nickname}"/>
+                                <span class="focus-input100"></span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11" data-validate = "Неверный email">
+                                <label for="nickname" class="form-label">Email</label>
+                                <input class="input100 form-control"  type="text" id="email" name="email"
+                                       placeholder="Введите email" required="false" th:field="*{email}"/>
+                                <span class="focus-input100"></span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11" data-validate = "Неверный пароль">
+                                <label for="password" class="form-label">Пароль</label>
+                                <input class="input100 form-control"  type="password" name="password" id="password"
+                                       placeholder="Введите пароль" required="true"/>
+                                <span class="focus-input100"></span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11" data-validate = "Неверный пароль">
+                                <label for="password" class="form-label">Повтор пароля</label>
+                                <input class="input100 form-control"  type="password" name="passwordConfirm" id="confirm-password"
+                                       placeholder="Повторите пароль" required="true"/>
+                                <span class="focus-input100"></span>
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center mt-2">
+                            <button id="edit-profile-btn" class="col-lg-5 col-md-6 col-sm-6  btn  btn-primary btn-block"
+                            onclick="sendUserInfo()"/>
+                                Сохранинь изменения
+                            </button>
+                            <script  src="/js/userEdit.js"></script>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="validate-form" th:object="${userInfo}">
-            <div class="row justify-content-center"  th:if="${errorMessage}" >
-                <div class="alert alert-danger mb-2 col-md-6 col-sm-8"  >
-                    <p th:text="${errorMessage}"></p>
-                </div>
-            </div>
-
-            <input type="hidden" required name="id" th:field="*{id}"><br>
-            <div class="row justify-content-center">
-                <div class="form-group mb-2 col-md-6 col-sm-8" data-validate = "Требуется ввести никнейм">
-                    <label for="nickname" class="form-label">Никнейм</label>
-                    <input class="input100 form-control"  type="text" name="nickname" id="nickname"
-                           placeholder="Введите никнейм" required="true" th:field="*{nickname}"/>
-                    <span class="focus-input100"></span>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="form-group mb-2 col-md-6 col-sm-8" data-validate = "Неверный email">
-                    <label for="nickname" class="form-label">Email</label>
-                    <input class="input100 form-control"  type="text" id="email" name="email"
-                           placeholder="Введите email" required="false" th:field="*{email}"/>
-                    <span class="focus-input100"></span>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="form-group mb-2 col-md-6 col-sm-8" data-validate = "Неверный пароль">
-                    <label for="password" class="form-label">Пароль</label>
-                    <input class="input100 form-control"  type="password" name="password" id="password"
-                           placeholder="Введите пароль" required="true"/>
-                    <span class="focus-input100"></span>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="form-group mb-2 col-md-6 col-sm-8" data-validate = "Неверный пароль">
-                    <label for="password" class="form-label">Повтор пароля</label>
-                    <input class="input100 form-control"  type="password" name="passwordConfirm" id="confirm-password"
-                           placeholder="Повторите пароль" required="true"/>
-                    <span class="focus-input100"></span>
-                </div>
-            </div>
-
-            <div class="row justify-content-center mt-2">
-                <button id="edit-profile-btn" class="col-lg-3 col-md-4 col-sm-5 btn  btn-primary btn-block"
-                onclick="sendUserInfo()"/>
-                    Сохранинь изменения
-                </button>
-                <script  src="/js/userEdit.js"></script>
-            </div>
-        </div>
-
     </div>
 
     <div th:replace="fragments/footer :: footer"/>

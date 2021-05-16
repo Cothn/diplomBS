@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en"
+<html lang="ru"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
@@ -12,51 +12,134 @@
 <body>
 
     <div th:replace="fragments/header :: header"/>
-    <div id="content" class="container">
-        <h2>Add audiobook</h2>
 
-        <script th:if="${message}" th:inline="javascript">
-            var message = /*[[${message}]]*/ 'default';
-            alert(message);
-        </script>
+    <div id="content" class="container mt-4">
 
-        <form th:action="@{/audiobook/add}" th:object="${audiobookInfo}" method="POST">
-            <input type="hidden"  required id="picturePath" th:field="*{picturePath}">
-            <label for="title">Название</label>
-            <input type="text"  required id="title" name="title" value="Новая книга"><br>
-            <label for="authors">Создатели аудиокниги</label>
-            <br>
-            <select id="authors" required multiple size="2"
-                    name="audiobookCreators">
-                <option th:each="creator : ${allCreators}" th:value="${creator.id}" >
-                    <p th:text="${creator.title}"></p><p th:if="${creator.author}"> автор</p>
-                    <p th:unless="${creator.author}"> исполнитель</p></option>
-            </select>
-            <br>
-            <label for="genre">Жанры</label>
-            <br>
-            <select id="genre" required multiple size="2"
-                    name="audiobookGenres">
-                <option th:each="genre : ${allGenres}" th:value="${genre.id}"><p th:text="${genre.title}"></p></option>
-            </select>
-            <br>
-            <select id="audiobookFile" required hidden
-                    name="audiobookFile">
-                <option th:value="*{audiobookFile.id}" selected>qwe</option>
-            </select>
-            <input type="hidden"  required id="distributed" th:field="*{distributed}">
-            <input type="hidden"  required id="rating" th:field="*{rating}">
-            <label for="description">Описание</label>
-            <input type="text"  id="description" name="description" value="Аудиокнига"><br>
-            <select id="userId" required hidden
-                    name="user">
-                <option th:value="*{user.id}" selected>qwe</option>
-            </select>
-            <label for="title">Год издания</label>
-            <input type="text"  required id="publicYear" name="publicationYear" value="2000"><br>
-            <input type="submit"  value="Добавить">
-        </form>
+        <div class="row justify-content-center" >
+            <div class="card col-lg-8 col-md-10 col-sm-12">
+                <div class="card-body" >
+                    <div class="row justify-content-center" >
+                        <div class="col-11">
+                            <h1 style="text-align: center">Добавление аудиокниги</h1>
+                        </div>
+                    </div>
+
+                    <form th:action="@{/audiobook/add}" th:object="${audiobookInfo}"
+                          method="POST" enctype="multipart/form-data">
+                        <div class="row justify-content-center"  th:if="${errorMessage}" >
+                            <div class="alert alert-danger mt-2 col-11"  >
+                                <p th:text="${errorMessage}"></p>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="title">Название</label>
+                                <input type="text" class="form-control"  id="title" name="title"
+                                       placeholder="Введите название книги" required/>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="picturePath">Файл обложки</label>
+                                <input type="file" class="form-control" id="picturePath" name="picture"
+                                        accept="image/png">
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="authors-group">Авторы аудиокниги</label>
+                                <div id="authors-group">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <div class="input-group ">
+                                    <input type="text" class="form-control"  id="authorAdd" name="authorAdd"
+                                           placeholder="Введите наименование автора" aria-describedby="add-author-btn">
+                                    <button id="add-author-btn" type="button" class="btn btn-success"
+                                            onclick="addAuthor()">
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="performers-group">Исполнители озвучки</label>
+                                <div id="performers-group">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <div class="input-group ">
+                                    <input type="text" class="form-control"  id="performerAdd" name="performerAdd"
+                                           placeholder="Введите наименование исполнителя" aria-describedby="add-performer-btn">
+                                    <button id="add-performer-btn" type="button" class="btn btn-success"
+                                            onclick="addPerformer()">
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="genres">Жанры аудиокниги</label>
+                                <select  id="genres" class="form-select" required multiple size="5"
+                                        name="audiobookGenres">
+                                    <option th:each="genre : ${allGenres}" th:value="${genre.id}"><p th:text="${genre.title}"></p></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="audiobookFileStream">Файл аудиокниги</label>
+                                <input type="file" class="form-control" required id="audiobookFileStream" name="audiobookFileStream"
+                                        accept="audio/mpeg, application/zip">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="description">Описание</label>
+                                <textarea class="form-control"  id="description" name="description" value="Аудиокнига" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="publicYear">Год издания</label>
+                                <select class="form-select" required id="publicYear" name="publicationYear"></select>
+
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-2">
+                            <input type="submit" class="col-lg-3 col-md-4 col-sm-5 btn btn-lg btn-primary btn-block" value="Добавить"/>
+                        </div>
+                    </form>
+
+                    <script  src="/js/audiobookEdit.js"></script>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+                for (let year = 1920; year <= 2020; year++) {
+                let options = document.createElement("OPTION");
+                document.getElementById("publicYear").appendChild(options).innerHTML = year;
+                }
+                let options = document.createElement("OPTION");
+                options.selected = true;
+                document.getElementById("publicYear").appendChild(options).innerHTML = 2021;
+            }, false);
+        })();
+    </script>
+
     <footer th:replace="fragments/footer :: footer"/>
 </body>
 </html>

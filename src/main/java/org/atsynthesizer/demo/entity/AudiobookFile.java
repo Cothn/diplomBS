@@ -11,8 +11,8 @@ public class AudiobookFile {
     private Long id;
 
 
-    @Column(name = "duration",  nullable = false)
-    private String duration;
+    @Column(name = "size",  nullable = false)
+    private String size;
 
     @Column(name = "extension",  nullable = false)
     private String extension;
@@ -20,12 +20,12 @@ public class AudiobookFile {
     @Column(name = "file_path",  nullable = false)
     private String filePath;
 
-    public String getDuration() {
-        return duration;
+    public String getSize() {
+        return size;
     }
 
-    public void setDuration(String duration) {
-        this.duration = duration;
+    public void setSize(String size) {
+        this.size = size;
     }
 
 

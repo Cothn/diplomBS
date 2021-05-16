@@ -11,49 +11,48 @@
     <div th:replace="fragments/header :: header"/>
 
     <div id="content" class="container mt-4">
-
         <div class="row justify-content-center" >
-            <div class="col-md-6 col-sm-8 mb-1">
-                <h1 style="text-align: center">Войдите в аккаунт</h1>
+            <div class="card col-lg-6 col-md-8 col-sm-11">
+                <div class="card-body" >
+                    <div class="row justify-content-center" >
+                        <div class="col-11">
+                            <h1 style="text-align: center">Авторизация</h1>
+                        </div>
+                    </div>
+
+                    <form th:action="@{/login}" method="post">
+                        <div class="row justify-content-center" th:if="${param.error}">
+                            <div class="alert alert-danger mb-2 col-11">
+                                Неверный никнейм или пароль.
+                            </div>
+                        </div>
+                        <div class="row justify-content-center" th:if="${param.logout}">
+                            <div class="alert alert-info mb-2 col-11">
+                                Вы должны выйти из профиля.
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="nickname" class="form-label">Никнейм</label>
+                                <input type="text" name="username" id="nickname" class="form-control"
+                                       placeholder="Введите никнейм" required="true"/>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="password" class="form-label">Пароль</label>
+                                <input type="password" name="password" id="password" class="form-control"
+                                       placeholder="Введите пароль" required="true" />
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-2">
+                            <input type="submit" class="col-lg-3 col-md-4 col-sm-5 btn btn-lg btn-primary btn-block" value="Войти"/>
+                        </div>
+
+                    </form>
+                </div>
             </div>
         </div>
-
-        <form th:action="@{/login}" method="post">
-            <div class="row justify-content-center" th:if="${param.error}">
-                <div class="alert alert-danger mb-2 col-md-6 col-sm-8">
-                    Неверный никнейм или пароль.
-                </div>
-            </div>
-            <div class="row justify-content-center" th:if="${param.logout}">
-                <div class="alert alert-info mb-2 col-md-6 col-sm-8">
-                    Вы должны выйти из профиля.
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="form-group mb-2 col-md-6 col-sm-8">
-                    <label for="nickname" class="form-label">Никнейм</label>
-                    <input type="text" name="username" id="nickname" class="form-control"
-                           placeholder="Введите никнейм" required="true"/>
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="form-group mb-2 col-md-6 col-sm-8">
-                    <label for="password" class="form-label">Пароль</label>
-                    <input type="password" name="password" id="password" class="form-control"
-                           placeholder="Введите пароль" required="true" />
-                </div>
-            </div>
-            <div class="row justify-content-center mt-2">
-                <div class= "col-md-2  col-sm-2" style="visibility: hidden">
-                    e
-                </div>
-                <input type="submit" class="col-md-2 col-sm-3 btn btn-lg btn-primary btn-block" value="Войти"/>
-                <div class= "col-md-2 col-sm-2" style="visibility: hidden">
-                    e
-                </div>
-            </div>
-
-        </form>
     </div>
 
     <div th:replace="fragments/footer :: footer"/>
