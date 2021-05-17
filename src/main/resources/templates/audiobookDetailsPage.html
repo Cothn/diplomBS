@@ -13,19 +13,21 @@
 
     <div th:replace="fragments/header :: header"/>
 
-    <div id="content" class="container mt-4" th:object="${audiobookInfo}">
+    <div id="content" class="container" th:object="${audiobookInfo}">
         <input hidden id="audiobookId" th:value="*{id}">
         <div hidden id="username" sec:authorize="isAuthenticated()">
             <span sec:authentication="name"></span>
         </div>
         <div class="row justify-content-center" >
-            <div class="card col-lg-8 col-md-10 col-sm-12">
-                <div class="card-body" >
-                    <div class="row justify-content-center mb-1" >
+            <div class="card col-lg-8 col-md-10 col-sm-12" style="padding: 0px">
+                <div class="card-header" style="background-color: rgb(253, 253, 253);">
+                    <div class="row justify-content-center mb-0" >
                         <div class="col-11">
-                            <h2 class="card-title" style="text-align: left"><b th:utext="*{title}"></b></h2>
+                            <h2 class="card-title mb-0" style="text-align: left;"><b th:utext="*{title}"></b></h2>
                         </div>
                     </div>
+                </div>
+                <div class="card-body" >
                     <div class="row justify-content-center">
                         <div class="form-group mr-2 col-4">
                             <img th:src="@{'/img/'+${audiobookInfo.picturePath}}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
@@ -145,11 +147,11 @@
                                 <th:block th:if="*{user.nickname.equals(#authorization.authentication.name)}">
                                     <div class="d-flex col-4 ms-auto justify-content-end" >
                                         <div class="btn-group me-1"
-                                             style="height: 25px">
+                                             style="height: 26px">
                                             <a style="padding: 0px 4px;" class="btn btn-outline-secondary" th:href="@{'/audiobooks/edit/'+ *{id}}"  >Редактировать</a>
                                         </div>
                                         <div class="btn-group"
-                                             style="height: 25px">
+                                             style="height: 26px">
                                             <a th:href="@{'/audiobook/delete/'+ *{id}}" style="padding: 0px 4px;" class="btn btn-outline-secondary">Удалить</a>
                                         </div>
                                     </div>
@@ -160,7 +162,7 @@
                     </div>
                 </div>
 
-                <div class="card-body mb-1" >
+                <div class="card-body mb-0" >
                     <div class="card col-12 mb-2" style="border-style: dashed" th:each="comment : *{comments}" >
                         <div class="card-body"   th:object="${comment}">
                             <div class="row justify-content-start mb-1" >
@@ -178,7 +180,7 @@
                     </div>
                 </div>
 
-                <div class="card-footer text-muted mb-3" sec:authorize="isAuthenticated()" style="background-color: rgb(250, 250, 250);">
+                <div class="card-footer text-muted mb-2" sec:authorize="isAuthenticated()" style="background-color: rgb(250, 250, 250);">
                     <th:block sec:authorize="hasRole('USER')">
                         <div class="row justify-content-start ">
                             <div class="form-group  col">

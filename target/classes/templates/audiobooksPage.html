@@ -10,26 +10,33 @@
     <title>Library</title>
 
     <style>
-        th, td {
-            padding: 5px;
-        }
         /* Pagination links */
-        .pagination a {
+        .pagination1 a {
             color: black;
             float: left;
-            padding: 8px 16px;
+            padding: 2px 8px;
+            text-decoration: none;
+            transition: background-color .3s;
+            font-size: 20px;
+        }
+
+        .pagination1 p {
+            color: black;
+            float: left;
+            margin: 0;
+            padding: 2px 8px;
             text-decoration: none;
             transition: background-color .3s;
             font-size: 20px;
         }
 
         /* Style the active/current link */
-        .pagination a.active {
+        .pagination1 a.active {
             color: white;
         }
 
         /* Add a grey background color on mouse-over */
-        .pagination a:hover:not(.active) {background-color: #ddd;}
+        .pagination1 a:hover:not(.active) {background-color: #ddd;}
     </style>
 
     <div th:replace="fragments/header :: header-css"/>
@@ -39,91 +46,209 @@
     <div th:replace="fragments/header :: header"/>
 
     <div id="content" class="container">
+        <div class="row justify-content-center" >
+            <div class="card col-lg-8 col-md-10 col-sm-12" style="padding: 0px">
+                <div class="card-body " style="padding-bottom: 5px">
+                    <div class="card col-12 mb-2" style="border-style: dashed" th:each="audiobookInfo : ${audiobooksInfos}" >
+                        <div class="card-header" th:object="${audiobookInfo}" style="background-color: rgb(253, 253, 253);">
+                            <div class="row justify-content-center mb-0" >
+                                <div class="col-11">
+                                    <h4 class="card-title mb-0" style="text-align: left"><a class="text-dark" th:href="@{'/audiobook/'+*{id}}" th:utext="*{title}"></a></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body"   th:object="${audiobookInfo}">
+                            <div class="row justify-content-center">
+                                <div class="form-group mr-2 col-4">
+                                    <img th:src="@{'/img/'+${audiobookInfo.picturePath}}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                </div>
+                                <div class="form-group  col-8">
+                                    <div class="row justify-content-start mb-2">
+                                        <div id="authors" class="col">
+                                            <b id="author-title">Авторы: </b>
+                                            <th:block th:each="itemInfo : *{audiobookCreators}">
+                                                <a style="display: inline;" class="text-dark"  th:href="@{'/audiobooks?author='+${itemInfo.id}}" th:utext="${itemInfo.title}" th:if="${itemInfo.Author}">
+                                                </a><div style="display: inline;" th:if="${itemInfo.Author}" class="comma">, </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-start mb-2">
+                                        <div class="form-group  col">
+                                            <b>Название: </b>
+                                            <div style="display: inline;" th:utext="*{title}" ></div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-start mb-2">
+                                        <div id="performers" class="col">
+                                            <b id="performer-title">Исполнители озвучки: </b>
+                                            <th:block  th:each="itemInfo : *{audiobookCreators}">
+                                                <a style="display: inline;" class="text-dark" th:href="@{'/audiobooks?creator='+${itemInfo.id}}" th:utext="${itemInfo.title}"
+                                                   th:unless="${itemInfo.Author}">
 
-        <h2>Distributed Books</h2>
+                                                </a><div style="display: inline;" th:unless="${itemInfo.Author}" class="comma">, </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-start mb-2">
+                                        <div id="genres" class="col">
+                                            <b id="genre-title">Жанры: </b>
+                                            <th:block  th:each="itemInfo : *{audiobookGenres}">
+                                                <a style="display: inline;" class="text-dark" th:href="@{'/audiobooks?genre='+${itemInfo.id}}" th:utext="${itemInfo.title}">
 
-        <!-- TEST Roles Interactive -->
-        <div sec:authorize="hasAuthority('ADMIN')" > Has Authority ADMIN </div>
-        <div sec:authorize="hasAuthority('USER')" > Has Authority USER </div>
-        <div sec:authorize="hasRole('ROLE_ADMIN')">Has Role ROLE_ADMIN</div>
-        <div sec:authorize="hasRole('ROLE_USER')">Has Role ROLE_USER</div>
-        <div sec:authorize="hasRole('ADMIN')">Has Role ADMIN</div>
-        <div sec:authorize="hasRole('USER')">Has Role USER</div>
+                                                </a><div style="display: inline;" class="comma">, </div>
+                                            </th:block>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-start mb-2">
+                                        <div class="col">
+                                            <b>Год издания: </b>
+                                            <a id="publicYear" style="display: inline;" class="text-dark"
+                                               th:href="@{'/audiobooks?year='+*{publicationYear}}"
+                                               th:utext="*{publicationYear}"></a>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-start mb-2">
+                                        <div class=" col">
+                                            <b>Рейтинг: </b>
+                                            <p style="display: inline;" th:id="'rating'+ *{id}" th:utext="*{rating}"></p>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-start mb-2">
+                                        <div class="form-group  col">
+                                            <b>Описание книги «<th:block th:utext="*{title}"></th:block>»: </b>
+                                            <p style="display: inline;" id="description" th:utext="*{description}"></p>
+                                        </div>
+                                    </div>
 
-        <table border="1">
-            <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Авторы</th>
-                <th>Исполнители</th>
-                <th>Обложка</th>
-                <th>Жанры</th>
-                <th>Длительность</th>
-                <th>Distributed</th>
-                <th>Рейтинг</th>
-                <th>Описание</th>
-                <th>Добавил</th>
-                <th>Действия</th>
-            </tr>
-            <tr th:each="elementInfo : ${audiobooksInfos}">
-                <td th:utext="${elementInfo.id}">..</td>
-                <td>
-                    <a th:href="@{/audiobook/{audiobookId}(audiobookId=${elementInfo.id})}">
-                        <p th:utext="${elementInfo.title}"></p>
-                    </a>
-                </td>
-                <td >
-                    | <th:block th:each="itemInfo : ${elementInfo.audiobookCreators}">
-                    <th:block th:utext="${itemInfo.title}+ ' |'" th:if="${itemInfo.Author}">
-                        /
-                    </th:block>
-                </th:block>
-                </td>
-                <td>
-                    | <th:block th:each="itemInfo : ${elementInfo.audiobookCreators}">
-                    <th:block th:utext="${itemInfo.title} + ' |'" th:unless="${itemInfo.Author}">
-                    </th:block>
-                </th:block>
-                </td>
-                <td><img th:src="@{'/img/'+${elementInfo.picturePath}}"></td>
-                <td>
-                    | <th:block th:each="itemInfo : ${elementInfo.audiobookGenres}">
-                    <th:block th:utext="${itemInfo.title}+ ' |'">
-                    </th:block>
-                </th:block>
-                </td>
-                <td th:utext="${elementInfo.audiobookFile.size}">..</td>
-                <td th:utext="(${elementInfo.distributed} ? 'Yes' : 'No')">..</td>
-                <td th:utext="${elementInfo.rating}">..</td>
-                <td th:utext="${elementInfo.description}">..</td>
-                <td th:utext="${elementInfo.user.nickname}">..</td>
-                <td>
-                    <a th:href="@{/audiobooks/edit/{audiobookId}(audiobookId=${elementInfo.id})}">edit</a>
-                    <a th:href="@{/audiobook/delete/{audiobookId}(audiobookId=${elementInfo.id})}">delete</a>
-                </td>
-            </tr>
+                                    <div class="row mb-3 mt-3 d-flex" >
+                                        <div class="d-flex">
+                                            <div class="btn-group me-2"  >
+                                                <button   class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Скачать</button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" th:href="@{'/download/'+ *{audiobookFile.filePath}}" download th:text="*{audiobookFile.extension + ', ' + audiobookFile.size}"></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="btn-group"   sec:authorize="isAuthenticated()">
+                                                <th:block sec:authorize="hasRole('USER')">
+                                                    <button   class="btn btn-secondary dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Оценить</button>
+                                                    <ul class="dropdown-menu dropdown-menu-dark " style="min-width: 6.5rem">
+                                                        <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(1)" >1</li>
+                                                        <li style="padding-top: 0; padding-bottom: 0"  class="dropdown-item" onClick="addRating(2)" >2</li>
+                                                        <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(3)" >3</li>
+                                                        <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(4)" >4</li>
+                                                        <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(5)" >5</li>
+                                                        <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(6)" >6</li>
+                                                        <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(7)" >7</li>
+                                                        <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(8)" >8</li>
+                                                        <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(9)" >9</li>
+                                                        <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(10)" >10</li>
+                                                    </ul>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted mb-0" th:object="${audiobookInfo}" style="background-color: rgb(250, 250, 250);">
+                            <div class="row justify-content-start ">
+                                <div class="form-group  col">
+                                    Добавлено: <p style="display: inline;"  th:utext="*{getAddDateString()}"></p>
+                                    | Добавил: <a style="display: inline;"class="text-success" th:href="@{'/user/'+*{user.id}}" th:utext="*{user.nickname}"></a>
+                                </div>
+                                <th:block sec:authorize="isAuthenticated()">
+                                    <th:block th:if="*{distributed}">
+                                        <th:block sec:authorize="hasAnyRole('ADMIN')">
+                                            <div class="d-flex col-4 ms-auto justify-content-end" >
+                                                <div class="btn-group me-1"
+                                                     style="height: 26px">
+                                                    <a style="padding: 0px 4px;" class="btn btn-outline-secondary" th:href="@{'/audiobooks/edit/'+ *{id}}"  >Редактировать</a>
+                                                </div>
+                                                <div class="btn-group"
+                                                     style="height: 26px">
+                                                    <a th:href="@{'/audiobook/delete/'+ *{id}}" style="padding: 0px 4px;" class="btn btn-outline-secondary">Удалить</a>
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                    </th:block>
+                                    <th:block th:unless="*{distributed}">
+                                        <th:block th:if="*{user.nickname.equals(#authorization.authentication.name)}">
+                                            <div class="d-flex col-4 ms-auto justify-content-end" >
+                                                <div class="btn-group me-1"
+                                                     style="height: 25px">
+                                                    <a style="padding: 0px 4px;" class="btn btn-outline-secondary" th:href="@{'/audiobooks/edit/'+ *{id}}"  >Редактировать</a>
+                                                </div>
+                                                <div class="btn-group"
+                                                     style="height: 25px">
+                                                    <a th:href="@{'/audiobook/delete/'+ *{id}}" style="padding: 0px 4px;" class="btn btn-outline-secondary">Удалить</a>
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                    </th:block>
+                                </th:block>
 
-        </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted" style="background-color: rgb(250, 250, 250);">
+                    <div class="row justify-content-center" >
+                        <nav aria-label="Page navigation example">
+                            <ul class="mb-0 pagination1 pagination pagination-lg justify-content-center ">
+                                <li class="page-item" th:if="${currentPage > 0}">
+                                    <a class="page-link" th:text="Предыдущая" th:href="@{/audiobooks(pageNum=${currentPage}-1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disabled" th:unless="${currentPage > 0}">
+                                    <p class="page-link" th:text="Предыдущая" >
+                                    </p>
+                                </li>
+                                <li class="page-item" th:if="${currentPage > 0}">
+                                    <a class="page-link" th:text="1" th:href="@{/audiobooks(pageNum=0)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disable" th:if="${currentPage > 2}">
+                                    <p class="page-link" th:text="..." style="color: black; background-color: white">
+                                    </p>
+                                </li>
+                                <li class="page-item" th:if="${currentPage > 1}">
+                                    <a class="page-link" th:text="${currentPage}" th:href="@{/audiobooks(pageNum=${currentPage}-1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" th:text="${currentPage}+1" style="background-color: #ddd; color: black; border-color: #666" th:href="@{/audiobooks(pageNum=${currentPage})}">
+                                    </a>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < (lastPage -2)}">
+                                    <a class="page-link" th:text="${currentPage}+2" th:href="@{/audiobooks(pageNum=${currentPage}+1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disable" th:if="${currentPage < (lastPage -3)}">
+                                    <p class="page-link" th:text="..." style="color: black; background-color: white">
+                                    </p>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < (lastPage -1)}">
+                                    <a class="page-link" th:text="${lastPage}" th:href="@{/audiobooks(pageNum=${lastPage}-1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < (lastPage -1)}">
+                                    <a class="page-link" th:text="Следующая" th:href="@{/audiobooks(pageNum=${currentPage}+1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disabled" th:unless="${currentPage < (lastPage -1)}">
+                                    <p class="page-link" th:text="Следующая">
+                                    </p>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
 
-        <div class="pagination" >
-            <span th:if="${currentPage > 0}">
-                <a th:href="@{/audiobooks(pageNum=${currentPage}-1)}"><p th:text="Предыдущая"></p></a>
-                <a th:href="@{/audiobooks(pageNum=0)}"> <p th:text="1"></p></a>
-                <a style="background-color: white; pointer-events: none;"><p th:text="..."></p></a>
-            </span>
-            <span th:unless="${currentPage > 0}">
-                <a style="background-color: white; pointer-events: none;"><p th:text="Предыдущая"></p></a>
-            </span>
-            <a th:href="@{/audiobooks(pageNum=${currentPage})}"> <p th:text="${currentPage}+1"></p></a>
-            <span th:if="${currentPage < (lastPage -1)}">
-                <a style="background-color: white; pointer-events: none;"><p th:text="..."></p></a>
-                <a th:href="@{/audiobooks(pageNum=${lastPage}-1)}"> <p th:text="${lastPage}"></p></a>
-                <a th:href="@{/audiobooks(pageNum=${currentPage}+1)}"><p th:text="Следующая"></p></a>
-            </span>
-            <span th:unless="${currentPage < (lastPage -1)}">
-                <a style="background-color: white; pointer-events: none;"><p th:text="Следующая"></p></a>
-            </span>
+            </div>
+            <script  src="/js/audiobookEdit.js"></script>
         </div>
+
+
     </div>
 
     <div th:replace="fragments/footer :: footer"/>
