@@ -22,7 +22,7 @@ import java.util.Objects;
 @RequestMapping("audiobooks")
 public class AudiobooksController {
 
-    private static int PAGINATION_SIZE = 3;
+    private static int PAGINATION_SIZE = 1;
 
     private AudiobookService audiobookService;
 
