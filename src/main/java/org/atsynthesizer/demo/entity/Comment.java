@@ -1,5 +1,10 @@
 package org.atsynthesizer.demo.entity;
 
+
+
+
+import org.thymeleaf.util.StringUtils;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -43,21 +48,26 @@ public class Comment {
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 
+
     public String getSendDateString() {
 
         return sdf.format(sendDateTime);
     }
 
-    public Audiobook getAudiobookId() {
+    public Audiobook getAudiobook() {
         return audiobook;
     }
 
-    public void setAudiobookId(Audiobook audiobook) {
+    public void setAudiobook(Audiobook audiobook) {
         this.audiobook = audiobook;
     }
 
     public String getText() {
         return text;
+    }
+
+    public String getHtmlText() {
+        return StringUtils.replace(text, "\n", "<br/>");
     }
 
     public void setText(String text) {

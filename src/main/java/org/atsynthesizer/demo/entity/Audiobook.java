@@ -80,9 +80,6 @@ public class Audiobook {
     @Transient
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public Audiobook() {
-    }
-
     public Long getId() {
         return id;
     }

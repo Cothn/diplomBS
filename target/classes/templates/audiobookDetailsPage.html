@@ -28,7 +28,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="form-group mr-2 col-4">
-                            <img th:src="@{'/img/'+${audiobookInfo.picturePath}}">
+                            <img th:src="@{'/img/'+${audiobookInfo.picturePath}}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                         </div>
                         <div class="form-group  col-8">
                             <div class="row justify-content-start mb-2">
@@ -93,27 +93,28 @@
                                     <div class="btn-group me-2"  >
                                         <button   class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Скачать</button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" th:href="@{'/download/'+ *{audiobookFile.filePath}}"><div th:text="*{audiobookFile.extension + ', ' + audiobookFile.size}"></div></a></li>
+                                            <li><a class="dropdown-item" th:href="@{'/download/'+ *{audiobookFile.filePath}}" download th:text="*{audiobookFile.extension + ', ' + audiobookFile.size}"></a></li>
                                         </ul>
                                     </div>
                                     <div class="btn-group"   sec:authorize="isAuthenticated()">
-                                        <button   class="btn btn-secondary dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Оценить</button>
-                                        <ul class="dropdown-menu dropdown-menu-dark " style="min-width: 6.5rem">
-                                            <li class="dropdown-item" onClick="addRating(1)" >1</li>
-                                            <li class="dropdown-item" onClick="addRating(2)" >2</li>
-                                            <li class="dropdown-item" onClick="addRating(3)" >3</li>
-                                            <li class="dropdown-item" onClick="addRating(4)" >4</li>
-                                            <li class="dropdown-item" onClick="addRating(5)" >5</li>
-                                            <li class="dropdown-item" onClick="addRating(6)" >6</li>
-                                            <li class="dropdown-item" onClick="addRating(7)" >7</li>
-                                            <li class="dropdown-item" onClick="addRating(8)" >8</li>
-                                            <li class="dropdown-item" onClick="addRating(9)" >9</li>
-                                            <li class="dropdown-item" onClick="addRating(10)" >10</li>
-                                        </ul>
+                                        <th:block sec:authorize="hasRole('USER')">
+                                            <button   class="btn btn-secondary dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Оценить</button>
+                                            <ul class="dropdown-menu dropdown-menu-dark " style="min-width: 6.5rem">
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(1)" >1</li>
+                                                <li style="padding-top: 0; padding-bottom: 0"  class="dropdown-item" onClick="addRating(2)" >2</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(3)" >3</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(4)" >4</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(5)" >5</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(6)" >6</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(7)" >7</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(8)" >8</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(9)" >9</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(10)" >10</li>
+                                            </ul>
+                                        </th:block>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -167,36 +168,38 @@
                                     <h6 style="text-align: left"><a class="text-dark" th:href="@{'/user/'+*{user.id}}" th:utext="*{user.nickname}"></a></h6>
                                 </div>
                                 <div class="form-group justify-content-end col ms-auto" style="text-align: right">
-                                    <p style="text-align: right" th:utext="*{sendDateTime}"></p>
+                                    <p style="text-align: right" th:utext="*{getSendDateString()}"></p>
                                 </div>
                             </div>
                             <div class="row justify-content-start" >
-                                <div style="text-align: left" th:utext="*{text}"></div>
+                                <div style="text-align: left" th:utext="*{getHtmlText()}"></div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="card-footer text-muted mb-3" sec:authorize="isAuthenticated()" style="background-color: rgb(250, 250, 250);">
-                    <div class="row justify-content-start ">
-                        <div class="form-group  col">
-                            <h6 style="text-align: left"><p class="text-dark" ><span sec:authentication="name"></span></p></h6>
-                        </div>
-                        <form th:action="@{/comment/add}" th:object="${newComment}"
-                              method="POST" enctype="multipart/form-data">
-                            <div class="row justify-content-start">
-                                <div class="form-group">
-                                    <textarea class="form-control" required id="text" name="text" placeholder="Ввведить текст комментария" rows="5" th:field="*{text}"></textarea>
-                                    <input type="hidden"  required th:name="audiobook" th:value="${audiobookInfo}">
+                    <th:block sec:authorize="hasRole('USER')">
+                        <div class="row justify-content-start ">
+                            <div class="form-group  col">
+                                <h6 style="text-align: left" class="text-dark" ><span sec:authentication="name"></span></h6>
+                            </div>
+                            <form th:action="@{/comment/add}" th:object="${newComment}"
+                                  method="POST" enctype="multipart/form-data">
+                                <div class="row justify-content-start">
+                                    <div class="form-group">
+                                        <textarea class="form-control" required id="text" name="text" placeholder="Ввведить текст комментария" rows="5" th:field="*{text}"></textarea>
+
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row justify-content-start mt-2">
-                                <input type="submit" class=" btn btn-lg btn-outline-secondary btn-block"  value="Добавить комментарий"/>
-                            </div>
-                        </form>
-
-                    </div>
+                                <input type="hidden"  required th:name="audiobook.id" th:value="${audiobookInfo.id}">
+                                <div class="row justify-content-start mt-2">
+                                    <input type="submit" class=" btn btn-lg btn-outline-secondary btn-block"  value="Добавить комментарий"/>
+                                </div>
+                            </form>
+                        </div>
+                    </th:block>
                 </div>
-
             </div>
         </div>
     </div>

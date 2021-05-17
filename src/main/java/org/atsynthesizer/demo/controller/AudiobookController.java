@@ -25,6 +25,7 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -186,7 +187,9 @@ public class AudiobookController {
     public String showAudiobook(@PathVariable("id") Long id, Model model) {
 
         Audiobook audiobook = audiobookService.getById(id);
+        audiobook.getComments().sort(Comparator.comparing(Comment::getSendDateTime));
         model.addAttribute("audiobookInfo", audiobook);
+
 
         Comment  comment= new Comment();
         model.addAttribute("newComment", comment);
