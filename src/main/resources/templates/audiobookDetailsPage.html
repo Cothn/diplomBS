@@ -1,20 +1,10 @@
 <!doctype html>
-<html lang="en"
+<html lang="ru"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
-    <!-- Обязательные метатеги -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Library</title>
-
-    <style>
-        th, td {
-            padding: 5px;
-        }
-    </style>
-
     <div th:replace="fragments/header :: header-css"/>
 
 </head>
@@ -22,75 +12,146 @@
 <body>
 
     <div th:replace="fragments/header :: header"/>
-    <div id="content" class="container">
-        <h2 >Audiobook details</h2>
 
-        <table border="1" th:object="${audiobookInfo}">
-            <tr>
-                <th>ID</th>
-                <th>Название</th>
-                <th>Авторы</th>
-                <th>Исполнители</th>
-                <th>Обложка</th>
-                <th>Жанры</th>
-                <th>Год издания</th>
-                <th>Описание</th>
-                <th>Distributed</th>
-                <th>Рейтинг</th>
-                <th>Длительность</th>
-                <th>Дата добавления</th>
-                <th>Добавил</th>
-            </tr>
-            <tr>
-                <td th:utext="${audiobookInfo.id}">..</td>
-                <td><p th:utext="${audiobookInfo.title}"></p></td>
-                <td >
-                    | <th:block th:each="itemInfo : ${audiobookInfo.audiobookCreators}">
-                    <th:block th:utext="${itemInfo.title}+ ' |'" th:if="${itemInfo.Author}">
-                        /
-                    </th:block>
-                </th:block>
-                </td>
-                <td>
-                    | <th:block th:each="itemInfo : ${audiobookInfo.audiobookCreators}">
-                    <th:block th:utext="${itemInfo.title} + ' |'" th:unless="${itemInfo.Author}">
-                    </th:block>
-                </th:block>
-                </td>
-                <td><img th:src="@{${audiobookInfo.picturePath}}"></td>
-                <td>
-                    | <th:block th:each="itemInfo : ${audiobookInfo.audiobookGenres}">
-                    <th:block th:utext="${itemInfo.title}+ ' |'">
-                    </th:block>
-                </th:block>
-                </td>
-                <td th:utext="${audiobookInfo.publicationYear}">..</td>
-                <td th:utext="${audiobookInfo.description}">..</td>
-                <td th:utext="(${audiobookInfo.distributed} ? 'Yes' : 'No')">..</td>
-                <td th:utext="${audiobookInfo.rating}">..</td>
-                <td th:utext="${audiobookInfo.audiobookFile.duration}">..</td>
-                <td th:utext="${audiobookInfo.addDate}">..</td>
-                <td th:utext="${audiobookInfo.user.nickname}">..</td>
-            </tr>
+    <div id="content" class="container mt-4" th:object="${audiobookInfo}">
+        <input hidden th:value="*{id}">
+        <div hidden id="username" sec:authorize="isAuthenticated()">
+            <span sec:authentication="name"></span>
+        </div>
+        <div class="row justify-content-center" >
+            <div class="card col-lg-8 col-md-10 col-sm-12">
+                <div class="card-body" >
+                    <div class="row justify-content-center mb-1" >
+                        <div class="col-11">
+                            <h2 class="card-title" style="text-align: left"><b th:utext="*{title}"></b></h2>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="form-group mr-2 col-4">
+                            <img th:src="@{'/img/'+${audiobookInfo.picturePath}}">
+                        </div>
+                        <div class="form-group  col-8">
+                            <div class="row justify-content-start mb-2">
+                                <div id="authors" class="col">
+                                    <b id="author-title">Авторы: </b>
+                                    <th:block th:each="itemInfo : *{audiobookCreators}">
+                                        <a style="display: inline;"  th:href="@{'/audiobooks?author='+${itemInfo.id}}" th:utext="${itemInfo.title}" th:if="${itemInfo.Author}">
+                                        </a><div style="display: inline;" th:if="${itemInfo.Author}" class="comma">, </div>
+                                    </th:block>
+                                </div>
+                            </div>
+                            <div class="row justify-content-start mb-2">
+                                <div class="form-group  col">
+                                    <b>Название: </b>
+                                    <div style="display: inline;" th:utext="*{title}" ></div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-start mb-2">
+                                <div id="performers" class="col">
+                                    <b id="performer-title">Исполнители озвучки: </b>
+                                    <th:block  th:each="itemInfo : *{audiobookCreators}">
+                                        <a style="display: inline;" th:href="@{'/audiobooks?creator='+${itemInfo.id}}" th:utext="${itemInfo.title}"
+                                           th:unless="${itemInfo.Author}">
 
-        </table>
+                                        </a><div style="display: inline;" th:unless="${itemInfo.Author}" class="comma">, </div>
+                                    </th:block>
+                                </div>
+                            </div>
+                            <div class="row justify-content-start mb-2">
+                                <div id="genres" class="col">
+                                    <b id="genre-title">Жанры: </b>
+                                    <th:block  th:each="itemInfo : *{audiobookGenres}">
+                                        <a style="display: inline;" th:href="@{'/audiobooks?genre='+${itemInfo.id}}" th:utext="${itemInfo.title}">
 
-        <h3>Audiobook Comments</h3>
-        <table border="1" >
-            <tr>
-                <th>ID</th>
-                <th>Никнейм</th>
-                <th>Текст</th>
-                <th>Дата добавления</th>
-            </tr>
-            <tr th:each="element : ${commentsInfos}">
-                <td th:utext="${element.id}">..</td>
-                <td th:utext="${element.user.nickname}">..
-                <td th:utext="${element.text}">..</td>
-                <td th:utext="${element.sendDateTime}">..</td>
-            </tr>
-        </table>
+                                        </a><div style="display: inline;" class="comma">, </div>
+                                    </th:block>
+                                </div>
+                            </div>
+                            <div class="row justify-content-start mb-2">
+                                <div class="form-group  col">
+                                    <b>Год издания: </b>
+                                    <p style="display: inline;" id="publicYear" th:utext="*{publicationYear}"></p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-start mb-2">
+                                <div class="form-group  col">
+                                    <b>Рейтинг: </b>
+                                    <p style="display: inline;" id="rating" th:utext="*{rating}"></p>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-start mb-2">
+                                <div class="form-group  col">
+                                    <b>Описание книги «<th:block th:utext="*{title}"></th:block>»: </b>
+                                    <p style="display: inline;" id="description" th:utext="*{description}"></p>
+                                </div>
+                            </div>
+
+
+                            <div class="row mb-3 mt-3 d-flex" >
+                                <div class="d-flex">
+                                    <div class="btn-group me-2"  >
+                                        <button   class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Скачать</button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" th:href="@{'/download/'+ *{audiobookFile.filePath}}"><div th:text="*{audiobookFile.extension + ', ' + audiobookFile.size}"></div></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="btn-group"   sec:authorize="isAuthenticated()">
+                                        <button   class="btn btn-secondary dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Оценить</button>
+                                        <ul class="dropdown-menu dropdown-menu-dark " style="min-width: 6.5rem">
+                                            <li class="dropdown-item" onClick="addRating(1)" >1</li>
+                                            <li class="dropdown-item" onClick="addRating(2)" >2</li>
+                                            <li class="dropdown-item" onClick="addRating(3)" >3</li>
+                                            <li class="dropdown-item" onClick="addRating(4)" >4</li>
+                                            <li class="dropdown-item" onClick="addRating(5)" >5</li>
+                                            <li class="dropdown-item" onClick="addRating(6)" >6</li>
+                                            <li class="dropdown-item" onClick="addRating(7)" >7</li>
+                                            <li class="dropdown-item" onClick="addRating(8)" >8</li>
+                                            <li class="dropdown-item" onClick="addRating(9)" >9</li>
+                                            <li class="dropdown-item" onClick="addRating(10)" >10</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <script  src="/js/audiobookEdit.js"></script>
+                </div>
+                <div class="card-footer text-muted">
+                    2 дня спустя
+                </div>
+            </div>
+        </div>
     </div>
-    <div th:replace="fragments/footer :: footer"/>
+
+    <script>
+        (function() {
+            'use strict';
+
+            window.addEventListener('load', function() {
+
+                let authors = document.getElementById("authors").getElementsByClassName("comma");
+                authors.item(authors.length-1).remove();
+                if(authors.length === 1){
+                    document.getElementById("author-title").innerText="Автор: ";
+                }
+
+                let performers = document.getElementById("performers").getElementsByClassName("comma");
+                performers.item(performers.length-1).remove();
+                if(performers.length === 1){
+                    document.getElementById("performer-title").innerText="Озвучивает: ";
+                }
+
+                let genres = document.getElementById("genres").getElementsByClassName("comma");
+                genres.item(genres.length-1).remove();
+                if(genres.length === 1){
+                    document.getElementById("genre-title").innerText="Жанр: ";
+                }
+            }, false);
+        })();
+    </script>
+
+    <footer th:replace="fragments/footer :: footer"/>
 </body>
 </html>
