@@ -1,7 +1,6 @@
 package org.atsynthesizer.demo.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -22,11 +21,12 @@ public class Comment {
     }
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "audiobook_id", nullable = false)
-    private Long audiobookId;
+    @ManyToOne
+    @JoinColumn(name = "audiobook_id", nullable = false)
+    private Audiobook audiobook;
 
     @Column(name = "text", length = 510, nullable = false)
     private String text;
@@ -38,12 +38,12 @@ public class Comment {
     @Column(name = "send_date_time", nullable = false)
     private Timestamp sendDateTime;
 
-    public Long getAudiobookId() {
-        return audiobookId;
+    public Audiobook getAudiobookId() {
+        return audiobook;
     }
 
-    public void setAudiobookId(Long audiobookId) {
-        this.audiobookId = audiobookId;
+    public void setAudiobookId(Audiobook audiobook) {
+        this.audiobook = audiobook;
     }
 
     public String getText() {
@@ -67,7 +67,7 @@ public class Comment {
         return "Comment{" +
                 "Id=" + id +
                 ", user=" + user +
-                ", audiobookId=" + audiobookId +
+                ", audiobookId=" + audiobook +
                 ", text='" + text + '\'' +
                 ", sendDateTime=" + sendDateTime +
                 '}';

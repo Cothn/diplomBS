@@ -40,7 +40,8 @@ public class CreatorServiceImpl implements CreatorService {
         @Transactional
         public Creator add(Creator creator) {
             Optional<Creator> creatorFromDB = creatorRepository.findByAuthorAndTitle(creator.isAuthor(), creator.getTitle());
-            return creatorFromDB.orElseGet(() -> creatorRepository.save(creator));
+            return creatorFromDB.orElseGet(() ->
+                    creatorRepository.save(creator));
         }
     /*
         @Override

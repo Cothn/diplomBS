@@ -188,7 +188,7 @@ public class AudiobookController {
         Audiobook audiobook = audiobookService.getById(id);
         model.addAttribute("audiobookInfo", audiobook);
 
-        Iterable<Comment> comments = commentService.getAllByAudiobookId(id);
+        Iterable<Comment> comments = commentService.getAllByAudiobook(audiobook);
         model.addAttribute("commentsInfos", comments);
         return "audiobookDetailsPage";
     }

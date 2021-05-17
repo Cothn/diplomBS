@@ -118,8 +118,44 @@
 
                     <script  src="/js/audiobookEdit.js"></script>
                 </div>
-                <div class="card-footer text-muted">
-                    2 дня спустя
+                <div class="card-footer text-muted mb-3" style="background-color: rgb(250, 250, 250);">
+                    <div class="row justify-content-start ">
+                        <div class="form-group  col">
+                            Добавлено: <p style="display: inline;"  th:utext="*{getAddDateString()}"></p>
+                            | Добавил: <a style="display: inline;" th:href="@{'/user/'+*{user.id}}" th:utext="*{user.nickname}"></a>
+                        </div>
+                        <th:block sec:authorize="isAuthenticated()">
+                            <th:block th:if="*{distributed}">
+                                <th:block sec:authorize="hasAnyRole('ADMIN')">
+                                    <div class="d-flex col-4 ms-auto justify-content-end" >
+                                        <div class="btn-group me-1"
+                                             style="height: 25px">
+                                            <a style="padding: 0px 4px;" class="btn btn-outline-secondary" th:href="@{'/audiobooks/edit/'+ *{id}}"  >Редактировать</a>
+                                        </div>
+                                        <div class="btn-group"
+                                             style="height: 25px">
+                                            <a th:href="@{'/audiobook/delete/'+ *{id}}" style="padding: 0px 4px;" class="btn btn-outline-secondary">Удалить</a>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </th:block>
+                            <th:block th:unless="*{distributed}">
+                                <th:block th:if="*{user.nickname.equals(#authorization.authentication.name)}">
+                                    <div class="d-flex col-4 ms-auto justify-content-end" >
+                                        <div class="btn-group me-1"
+                                             style="height: 25px">
+                                            <a style="padding: 0px 4px;" class="btn btn-outline-secondary" th:href="@{'/audiobooks/edit/'+ *{id}}"  >Редактировать</a>
+                                        </div>
+                                        <div class="btn-group"
+                                             style="height: 25px">
+                                            <a th:href="@{'/audiobook/delete/'+ *{id}}" style="padding: 0px 4px;" class="btn btn-outline-secondary">Удалить</a>
+                                        </div>
+                                    </div>
+                                </th:block>
+                            </th:block>
+                        </th:block>
+
+                    </div>
                 </div>
             </div>
         </div>

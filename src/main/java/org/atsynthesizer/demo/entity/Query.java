@@ -24,7 +24,7 @@ public class Query {
         return id;
     }
 
-    @Column(name = "send_DateTime", nullable = false)
+    @Column(name = "send_Date_Time", nullable = false)
     private Timestamp sendDateTime;
 
 

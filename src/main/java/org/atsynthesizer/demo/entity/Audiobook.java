@@ -2,10 +2,9 @@ package org.atsynthesizer.demo.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -48,9 +47,21 @@ public class Audiobook {
     private Double rating;
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "audiobook_file_id", nullable = false)
     private AudiobookFile audiobookFile;
+
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    @OneToMany(mappedBy="audiobook", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
     @ManyToMany
     @JoinTable(
@@ -66,6 +77,11 @@ public class Audiobook {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> audiobookGenres;
 
+    @Transient
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public Audiobook() {
+    }
 
     public Long getId() {
         return id;
@@ -124,8 +140,16 @@ public class Audiobook {
     }
 
     public Timestamp getAddDate() {
+
         return addDate;
     }
+
+    public String getAddDateString() {
+
+        return sdf.format(addDate);
+    }
+
+
 
     public void setAddDate(Timestamp addDate) {
         this.addDate = addDate;

@@ -190,12 +190,12 @@ CREATE TABLE IF NOT EXISTS `books_db`.`Query` (
   CONSTRAINT `fk_Query_Audiobook1`
     FOREIGN KEY (`Audiobook_Id`)
     REFERENCES `books_db`.`Audiobook` (`Id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Query_User1`
     FOREIGN KEY (`User_Id`)
     REFERENCES `books_db`.`User` (`Id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -238,12 +238,12 @@ CREATE TABLE IF NOT EXISTS `books_db`.`Comment` (
   CONSTRAINT `fk_Query_Audiobook10`
     FOREIGN KEY (`Audiobook_Id`)
     REFERENCES `books_db`.`Audiobook` (`Id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Query_User10`
     FOREIGN KEY (`User_Id`)
     REFERENCES `books_db`.`User` (`Id`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 

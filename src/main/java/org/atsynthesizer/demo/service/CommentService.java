@@ -1,13 +1,14 @@
 package org.atsynthesizer.demo.service;
 
 
+import org.atsynthesizer.demo.entity.Audiobook;
 import org.atsynthesizer.demo.entity.Comment;
 import org.atsynthesizer.demo.entity.Genre;
 
 
 public interface CommentService {
 
-    public Iterable<Comment> getAllByAudiobookId(Long id);
+    public Iterable<Comment> getAllByAudiobook(Audiobook audiobook);
 
     public void add( Comment comment);
 /*
