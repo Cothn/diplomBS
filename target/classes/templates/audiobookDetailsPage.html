@@ -14,7 +14,7 @@
     <div th:replace="fragments/header :: header"/>
 
     <div id="content" class="container mt-4" th:object="${audiobookInfo}">
-        <input hidden th:value="*{id}">
+        <input hidden id="audiobookId" th:value="*{id}">
         <div hidden id="username" sec:authorize="isAuthenticated()">
             <span sec:authentication="name"></span>
         </div>
@@ -35,7 +35,7 @@
                                 <div id="authors" class="col">
                                     <b id="author-title">Авторы: </b>
                                     <th:block th:each="itemInfo : *{audiobookCreators}">
-                                        <a style="display: inline;"  th:href="@{'/audiobooks?author='+${itemInfo.id}}" th:utext="${itemInfo.title}" th:if="${itemInfo.Author}">
+                                        <a style="display: inline;" class="text-dark"  th:href="@{'/audiobooks?author='+${itemInfo.id}}" th:utext="${itemInfo.title}" th:if="${itemInfo.Author}">
                                         </a><div style="display: inline;" th:if="${itemInfo.Author}" class="comma">, </div>
                                     </th:block>
                                 </div>
@@ -50,7 +50,7 @@
                                 <div id="performers" class="col">
                                     <b id="performer-title">Исполнители озвучки: </b>
                                     <th:block  th:each="itemInfo : *{audiobookCreators}">
-                                        <a style="display: inline;" th:href="@{'/audiobooks?creator='+${itemInfo.id}}" th:utext="${itemInfo.title}"
+                                        <a style="display: inline;" class="text-dark" th:href="@{'/audiobooks?creator='+${itemInfo.id}}" th:utext="${itemInfo.title}"
                                            th:unless="${itemInfo.Author}">
 
                                         </a><div style="display: inline;" th:unless="${itemInfo.Author}" class="comma">, </div>
@@ -61,32 +61,32 @@
                                 <div id="genres" class="col">
                                     <b id="genre-title">Жанры: </b>
                                     <th:block  th:each="itemInfo : *{audiobookGenres}">
-                                        <a style="display: inline;" th:href="@{'/audiobooks?genre='+${itemInfo.id}}" th:utext="${itemInfo.title}">
+                                        <a style="display: inline;" class="text-dark" th:href="@{'/audiobooks?genre='+${itemInfo.id}}" th:utext="${itemInfo.title}">
 
                                         </a><div style="display: inline;" class="comma">, </div>
                                     </th:block>
                                 </div>
                             </div>
                             <div class="row justify-content-start mb-2">
-                                <div class="form-group  col">
+                                <div class="col">
                                     <b>Год издания: </b>
-                                    <p style="display: inline;" id="publicYear" th:utext="*{publicationYear}"></p>
+                                    <a id="publicYear" style="display: inline;" class="text-dark"
+                                       th:href="@{'/audiobooks?year='+*{publicationYear}}"
+                                       th:utext="*{publicationYear}"></a>
                                 </div>
                             </div>
                             <div class="row justify-content-start mb-2">
-                                <div class="form-group  col">
+                                <div class=" col">
                                     <b>Рейтинг: </b>
-                                    <p style="display: inline;" id="rating" th:utext="*{rating}"></p>
+                                    <p style="display: inline;" th:id="'rating'+ *{id}" th:utext="*{rating}"></p>
                                 </div>
                             </div>
-
                             <div class="row justify-content-start mb-2">
                                 <div class="form-group  col">
                                     <b>Описание книги «<th:block th:utext="*{title}"></th:block>»: </b>
                                     <p style="display: inline;" id="description" th:utext="*{description}"></p>
                                 </div>
                             </div>
-
 
                             <div class="row mb-3 mt-3 d-flex" >
                                 <div class="d-flex">
@@ -113,16 +113,17 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
                     <script  src="/js/audiobookEdit.js"></script>
                 </div>
-                <div class="card-footer text-muted mb-3" style="background-color: rgb(250, 250, 250);">
+                <div class="card-footer text-muted mb-1" style="background-color: rgb(250, 250, 250);">
                     <div class="row justify-content-start ">
                         <div class="form-group  col">
                             Добавлено: <p style="display: inline;"  th:utext="*{getAddDateString()}"></p>
-                            | Добавил: <a style="display: inline;" th:href="@{'/user/'+*{user.id}}" th:utext="*{user.nickname}"></a>
+                            | Добавил: <a style="display: inline;"class="text-success" th:href="@{'/user/'+*{user.id}}" th:utext="*{user.nickname}"></a>
                         </div>
                         <th:block sec:authorize="isAuthenticated()">
                             <th:block th:if="*{distributed}">
@@ -157,6 +158,45 @@
 
                     </div>
                 </div>
+
+                <div class="card-body mb-1" >
+                    <div class="card col-12 mb-2" style="border-style: dashed" th:each="comment : *{comments}" >
+                        <div class="card-body"   th:object="${comment}">
+                            <div class="row justify-content-start mb-1" >
+                                <div class="form-group  col">
+                                    <h6 style="text-align: left"><a class="text-dark" th:href="@{'/user/'+*{user.id}}" th:utext="*{user.nickname}"></a></h6>
+                                </div>
+                                <div class="form-group justify-content-end col ms-auto" style="text-align: right">
+                                    <p style="text-align: right" th:utext="*{sendDateTime}"></p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-start" >
+                                <div style="text-align: left" th:utext="*{text}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted mb-3" sec:authorize="isAuthenticated()" style="background-color: rgb(250, 250, 250);">
+                    <div class="row justify-content-start ">
+                        <div class="form-group  col">
+                            <h6 style="text-align: left"><p class="text-dark" ><span sec:authentication="name"></span></p></h6>
+                        </div>
+                        <form th:action="@{/comment/add}" th:object="${newComment}"
+                              method="POST" enctype="multipart/form-data">
+                            <div class="row justify-content-start">
+                                <div class="form-group">
+                                    <textarea class="form-control" required id="text" name="text" placeholder="Ввведить текст комментария" rows="5" th:field="*{text}"></textarea>
+                                    <input type="hidden"  required th:name="audiobook" th:value="${audiobookInfo}">
+                                </div>
+                            </div>
+                            <div class="row justify-content-start mt-2">
+                                <input type="submit" class=" btn btn-lg btn-outline-secondary btn-block"  value="Добавить комментарий"/>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

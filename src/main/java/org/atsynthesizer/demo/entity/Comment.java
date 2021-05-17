@@ -2,6 +2,7 @@ package org.atsynthesizer.demo.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 @Entity
 @Table(name = "comment")
@@ -37,6 +38,15 @@ public class Comment {
 
     @Column(name = "send_date_time", nullable = false)
     private Timestamp sendDateTime;
+
+    @Transient
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+
+    public String getSendDateString() {
+
+        return sdf.format(sendDateTime);
+    }
 
     public Audiobook getAudiobookId() {
         return audiobook;
