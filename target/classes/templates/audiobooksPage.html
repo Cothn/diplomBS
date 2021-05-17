@@ -22,12 +22,11 @@
         }
 
         .pagination1 p {
-            color: black;
             float: left;
             margin: 0;
             padding: 0px 10px;
             text-decoration: none;
-            transition: background-color .3s;
+            transition: background-color .4s;
             font-size: 22px;
         }
 
@@ -39,6 +38,12 @@
         .pagination1 .page-item{
             margin: 5px;
         }
+
+        .pagination1 .page-link{
+            border-radius: .3rem;
+            background-color: #dee2e6;
+        }
+
 
         /* Add a grey background color on mouse-over */
         .pagination1 a:hover:not(.active) {background-color: #ddd;}
@@ -66,10 +71,10 @@
                         <nav aria-label="Page pagination top" class="col-lg-9 col-md-12">
                             <ul class="mb-0 pagination1 pagination  justify-content-around ">
                                 <li class="page-item" th:if="${currentPage > 0}">
-                                    <a  th:text="Предыдущая" style="background-color: rgb(250, 250, 250)"th:href="@{/audiobooks(pageNum=${currentPage}-1)}">
+                                    <a  th:text="Предыдущая"  style="font-weight: 500; background-color: rgb(250, 250, 250)"th:href="@{/audiobooks(pageNum=${currentPage}-1)}">
                                     </a>
                                 </li>
-                                <li class="page-item disabled" th:unless="${currentPage > 0}">
+                                <li class="page-item disabled"  style="font-weight: 500; background-color: rgb(250, 250, 250)" th:unless="${currentPage > 0}">
                                     <p  th:text="Предыдущая" >
                                     </p>
                                 </li>
@@ -104,11 +109,11 @@
                                     </a>
                                 </li>
                                 <li class="page-item" th:if="${currentPage < (lastPage -1)}">
-                                    <a style="background-color: rgb(250, 250, 250)" th:text="Следующая" th:href="@{/audiobooks(pageNum=${currentPage}+1)}">
+                                    <a  style="font-weight: 500; background-color: rgb(250, 250, 250)"th:text="Следующая" th:href="@{/audiobooks(pageNum=${currentPage}+1)}">
                                     </a>
                                 </li>
                                 <li class="page-item disabled" th:unless="${currentPage < (lastPage -1)}">
-                                    <p style="background-color: rgb(250, 250, 250)" th:text="Следующая">
+                                    <p  style="font-weight: 500; background-color: rgb(250, 250, 250)" th:text="Следующая">
                                     </p>
                                 </li>
                             </ul>
@@ -263,10 +268,10 @@
                         <nav aria-label="Page pagination bottom" class="col-lg-9 col-md-12">
                             <ul class="mb-0 pagination1 pagination  justify-content-around ">
                                 <li class="page-item" th:if="${currentPage > 0}">
-                                    <a  th:text="Предыдущая" style="background-color: rgb(250, 250, 250)"th:href="@{/audiobooks(pageNum=${currentPage}-1)}">
+                                    <a  th:text="Предыдущая" style="font-weight: 500; background-color: rgb(250, 250, 250)" th:href="@{/audiobooks(pageNum=${currentPage}-1)}">
                                     </a>
                                 </li>
-                                <li class="page-item disabled" th:unless="${currentPage > 0}">
+                                <li class="page-item disabled" style="font-weight: 500; background-color: rgb(250, 250, 250)" th:unless="${currentPage > 0}">
                                     <p  th:text="Предыдущая" >
                                     </p>
                                 </li>
@@ -300,11 +305,11 @@
                                     <a class="page-link" th:text="${lastPage}" th:href="@{/audiobooks(pageNum=${lastPage}-1)}">
                                     </a>
                                 </li>
-                                <li class="page-item" th:if="${currentPage < (lastPage -1)}">
+                                <li class="page-item"style=" font-weight: 500; background-color: rgb(250, 250, 250)"  th:if="${currentPage < (lastPage -1)}">
                                     <a style="background-color: rgb(250, 250, 250)" th:text="Следующая" th:href="@{/audiobooks(pageNum=${currentPage}+1)}">
                                     </a>
                                 </li>
-                                <li class="page-item disabled" th:unless="${currentPage < (lastPage -1)}">
+                                <li class="page-item disabled" style=" font-weight: 500; background-color: rgb(250, 250, 250)" th:unless="${currentPage < (lastPage -1)}">
                                     <p style="background-color: rgb(250, 250, 250)" th:text="Следующая">
                                     </p>
                                 </li>
