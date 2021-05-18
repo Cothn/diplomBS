@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,9 @@ public class AudiobooksController {
     private static int PAGINATION_SIZE = 1;
 
     private AudiobookService audiobookService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     public void setAudiobookService(AudiobookService audiobookService) {
@@ -59,7 +64,7 @@ public class AudiobooksController {
         {
             page = PageRequest.of(pageNum, PAGINATION_SIZE, Sort.by(sortBy).descending());
         }
-        Page<Audiobook> audiobooks = audiobookService.allAudiobooks(page);
+        Page<Audiobook> audiobooks;
 
         UriComponentsBuilder builder = UriComponentsBuilder.newInstance()
                 .scheme("http")
@@ -102,6 +107,74 @@ public class AudiobooksController {
 
         return "audiobooksPage";
     }
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public String showUserAudiobooks(
+            @RequestParam(defaultValue = "0") int pageNum,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Long genre,
+            @RequestParam(required = false) Long author,
+            @RequestParam(required = false) Long performer,
+            @RequestParam(required = false) Long year,
+            @RequestParam(required = true, defaultValue = "title") String sortBy,
+            @RequestParam(required = true, defaultValue = "true") Boolean ascending,
+            @RequestParam(required = false) Boolean all,
+            @AuthenticationPrincipal UserDetails currentUser,
+            Model model) {
+
+        Pageable page;
+        if (ascending) {
+            page = PageRequest.of(pageNum, PAGINATION_SIZE, Sort.by(sortBy).ascending());
+        }
+        else
+        {
+            page = PageRequest.of(pageNum, PAGINATION_SIZE, Sort.by(sortBy).descending());
+        }
+        Page<Audiobook> audiobooks;
+
+        UriComponentsBuilder builder = UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(8088)
+                .path("/audiobooks/user");
+
+        User user = userService.getByNickname(currentUser.getUsername());
+
+        if(!Objects.isNull(title)){
+            builder.queryParam("title", title);
+            audiobooks = audiobookService.getAudiobooksByTitle(user, title, page);
+        } else if(!Objects.isNull(genre)){
+            builder.queryParam("genre", genre);
+            audiobooks = audiobookService.getAudiobooksByGenre(user, genreService.getById(genre), page);
+        } else if(!Objects.isNull(author)){
+            builder.queryParam("author", author);
+            audiobooks = audiobookService.getAudiobooksByCreator(user, creatorService.getById(author), page);
+        } else if(!Objects.isNull(performer)){
+            builder.queryParam("performer", performer);
+            audiobooks = audiobookService.getAudiobooksByCreator(user, creatorService.getById(performer), page);
+        } else if(!Objects.isNull(year)){
+            builder.queryParam("year", year);
+            audiobooks = audiobookService.getAudiobooksByYear(user, year, page);
+        } else{
+            builder.queryParam("all", true);
+            audiobooks = audiobookService.allAudiobooks(user, page);
+        }
+
+        String oldUrl = builder.build()
+                .toUri()
+                .toString();
+
+        model.addAttribute("audiobooksInfos", audiobooks.getContent());
+        model.addAttribute("lastPage", audiobooks.getTotalPages());
+        model.addAttribute("currentPage", pageNum);
+
+        model.addAttribute("sortParam", sortBy);
+        model.addAttribute("sortAscending", ascending);
+        model.addAttribute("oldUrl", oldUrl);
+
+        return "audiobooksPage";
+    }
+
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String getClientEditPage(@PathVariable("id") Long id,
