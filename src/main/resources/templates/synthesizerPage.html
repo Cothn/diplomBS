@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+
+    <title>Library</title>
+    <div th:replace="fragments/header :: header-css"/>
+
+</head>
+
+<body>
+
+    <div th:replace="fragments/header :: header"/>
+
+    <div id="content" class="container mt-4">
+
+        <div class="row justify-content-center" >
+            <div class="card col-lg-8 col-md-10 col-sm-12">
+                <div class="card-body" >
+                    <div class="row justify-content-center" >
+                        <div class="col-11">
+                            <h1 style="text-align: center">Редактирование информации об аудиокниге</h1>
+                        </div>
+                    </div>
+
+                    <form th:action="@{/audiobook/edit}" th:object="${audiobookInfo}"
+                          method="POST" enctype="multipart/form-data">
+                        <div class="row justify-content-center"  th:if="${errorMessage}" >
+                            <div class="alert alert-danger mt-2 col-11"  >
+                                <p th:text="${errorMessage}"></p>
+                            </div>
+                        </div>
+                        <input type="hidden" required name="id" th:field="*{id}">
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="title">Название</label>
+                                <input type="text" class="form-control"  id="title" name="title"
+                                       th:field="*{title}" placeholder="Введите название книги" required/>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="picturePath">Файл обложки</label>
+                                <input type="file" class="form-control" id="picture" name="picture"
+                                        accept="image/png" placeholder="Нажмите для смены обложки">
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="authors-group">Авторы аудиокниги</label>
+                                <div id="authors-group">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <div class="input-group ">
+                                    <input type="text" class="form-control"  id="authorAdd" name="authorAdd"
+                                           placeholder="Введите наименование автора" aria-describedby="add-author-btn">
+                                    <button id="add-author-btn" type="button" class="btn btn-success"
+                                            onclick="addAuthor()">
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="performers-group">Исполнители озвучки</label>
+                                <div id="performers-group">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <div class="input-group ">
+                                    <input type="text" class="form-control"  id="performerAdd" name="performerAdd"
+                                           placeholder="Введите наименование исполнителя" aria-describedby="add-performer-btn">
+                                    <button id="add-performer-btn" type="button" class="btn btn-success"
+                                            onclick="addPerformer()">
+                                        Добавить
+                                    </button>
+                                </div>
+                            </div>
+                            <select  id="creators" class="form-select" multiple hidden
+                                     name="creators" >
+                                <block th:each="creator : *{audiobookCreators}">
+                                    <option  th:if="${creator.author}" th:value="${creator.title}" class="author"></option>
+                                    <option  th:unless="${creator.author}" th:value="${creator.title}" class="performer"></option>
+                                </block>
+                            </select>
+                        </div>
+                        
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="genres">Жанры аудиокниги</label>
+                                <select  id="genres" class="form-select" required multiple size="5"
+                                        name="audiobookGenres" th:field="*{audiobookGenres}">
+                                    <option th:each="genre : ${allGenres}" th:value="${genre.id}"><p th:text="${genre.title}"></p></option>
+                                </select>
+                            </div>
+                            <input type="hidden"  required id="audiobookFile" th:field="*{audiobookFile}">
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="description">Описание</label>
+                                <textarea class="form-control"  id="description" name="description" value="Аудиокнига" rows="3" th:field="*{description}"></textarea>
+                                <input type="hidden"  required id="distributed" th:field="*{distributed}">
+                                <input type="hidden"  required id="rating" th:field="*{rating}">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="form-group mb-2 col-11">
+                                <label for="publicYear">Год издания</label>
+                                <select class="form-select" required id="publicYear" name="publicationYear" >
+                                    <option th:value="*{publicationYear}" selected><p th:utext="*{publicationYear}"></p> </option>
+                                </select>
+                                <input type="hidden"  required id="userId" th:field="*{user}">
+                                <input type="hidden"  required id="addDate" th:field="*{addDate}">
+                                <input type="hidden"  required id="picturePath" th:field="*{picturePath}">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center mt-2">
+                            <input type="submit" class="col-lg-6 col-md-8 col-sm-10 btn btn-lg btn-primary btn-block" value="Подтвердить редактирование"/>
+                        </div>
+                    </form>
+
+                    <script  src="/js/audiobookEdit.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            window.addEventListener('load', function() {
+                for (let year = 1920; year <= 2021; year++) {
+                let options = document.createElement("OPTION");
+                    document.getElementById("publicYear").appendChild(options).innerHTML = year;
+                }
+
+                let authors = document.getElementById("creators").getElementsByClassName("author");
+                for (let i=0; i <  authors.length; i++){
+                    let author = authors.item(i);
+                    addOldAuthor(author.value);
+                }
+                let performers = document.getElementById("creators").getElementsByClassName("performer");
+                for (let i=0; i <  performers.length; i++){
+                    let performer = performers.item(i);
+                    addOldPerformer(performer.value);
+                }
+            }, false);
+        })();
+    </script>
+
+    <footer th:replace="fragments/footer :: footer"/>
+</body>
+</html>

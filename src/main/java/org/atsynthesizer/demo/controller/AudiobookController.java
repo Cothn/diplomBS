@@ -81,7 +81,7 @@ public class AudiobookController {
             }
         }
         else{
-            return "redirect:/audiobooks/edit";
+            return "redirect:/audiobooks/edit/"+audiobook.getId();
         }
         if(!performers.isEmpty()) {
             for (String performer: performers) {
@@ -93,7 +93,7 @@ public class AudiobookController {
             }
         }
         else{
-            return "redirect:/audiobooks/edit";
+            return "redirect:/audiobooks/edit/"+audiobook.getId();
         }
         audiobook.setAudiobookCreators(creators);
 

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <!-- Обязательные метатеги -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Library</title>
+
+    <style>
+        /* Pagination links */
+        .pagination1 a {
+            color: black;
+            float: left;
+            margin: 0;
+            padding: 0px 10px;
+            text-decoration: none;
+            transition: background-color .3s;
+            font-size: 22px;
+        }
+
+        .pagination1 p {
+            float: left;
+            margin: 0;
+            padding: 0px 10px;
+            text-decoration: none;
+            transition: background-color .4s;
+            font-size: 22px;
+        }
+
+        /* Style the active/current link */
+        .pagination1 a.active {
+            color: white;
+        }
+
+        .pagination1 .page-item{
+            margin: 5px;
+        }
+
+        .pagination1 .page-link{
+            border-radius: .3rem;
+            background-color: #dee2e6;
+        }
+
+
+        /* Add a grey background color on mouse-over */
+        .pagination1 a:hover:not(.active) {background-color: #ddd;}
+    </style>
+
+    <div th:replace="fragments/header :: header-css"/>
+</head>
+
+<body>
+    <div th:replace="fragments/header :: header"/>
+
+    <div id="content" class="container">
+        <div class="row justify-content-center" >
+            <div class="card col-lg-8 col-md-10 col-sm-12" style="padding: 0px">
+                <div class="card-header " style="background-color: rgb(250, 250, 250);">
+                    <div class="row justify-content-center text-muted mb-2 " >
+                        <nav aria-label="Page pagination top" class="col-lg-9 col-md-12">
+                            <ul class="mb-0 pagination1 pagination  justify-content-around ">
+                                <li class="page-item" th:if="${currentPage > 0}">
+                                    <a  th:text="Предыдущая"  style="font-weight: 500; background-color: rgb(250, 250, 250)"th:href="@{${#httpServletRequest.requestURI}page(pageNum=${currentPage}-1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disabled"  style="font-weight: 500; background-color: rgb(250, 250, 250)" th:unless="${currentPage > 0}">
+                                    <p  th:text="Предыдущая" >
+                                    </p>
+                                </li>
+                                <li class="page-item" th:if="${currentPage > 0}">
+                                    <a class="page-link" th:text="1" th:href="@{${#httpServletRequest.requestURI}(pageNum=0)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disable" th:if="${currentPage > 0}">
+                                    <p style="color: black; background-color: rgb(250, 250, 250)">
+                                        .&nbsp.&nbsp.
+                                    </p>
+                                </li>
+                                <li class="page-item" th:if="${currentPage > 1}">
+                                    <a class="page-link" th:text="${currentPage}" th:href="@{${#httpServletRequest.requestURI}(pageNum=${currentPage}-1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" th:text="${currentPage}+1" style="background-color: #ddd; color: black; border-color: #666" th:href="@{${#httpServletRequest.requestURI}(pageNum=${currentPage})}">
+                                    </a>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < (lastPage -2)}">
+                                    <a class="page-link" th:text="${currentPage}+2" th:href="@{${#httpServletRequest.requestURI}(pageNum=${currentPage}+1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disable" th:if="${currentPage < (lastPage -1)}">
+                                    <p style="color: black; background-color: rgb(250, 250, 250)">
+                                        .&nbsp.&nbsp.
+                                    </p>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < (lastPage -1)}">
+                                    <a class="page-link" th:text="${lastPage}" th:href="@{${#httpServletRequest.requestURI}(pageNum=${lastPage}-1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < (lastPage -1)}">
+                                    <a  style="font-weight: 500; background-color: rgb(250, 250, 250)"th:text="Следующая" th:href="@{${#httpServletRequest.requestURI}(pageNum=${currentPage}+1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disabled" th:unless="${currentPage < (lastPage -1)}">
+                                    <p  style="font-weight: 500; background-color: rgb(250, 250, 250)" th:text="Следующая">
+                                    </p>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="card-body " style="padding-bottom: 5px">
+                    <div class="card col-12 mb-2" style="border-style: dashed" th:each="queryInfo : ${queriesInfos}" >
+                        <div class="card-header" th:object="${queryInfo}" style="background-color: rgb(253, 253, 253);">
+                            <div class="row justify-content-center mb-0" >
+                                <div class="col-11" >
+                                    <h4 class="card-title mb-0" style="text-align: left" th:text="'Заявка номер '+ *{id}"></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" th:object="${queryInfo}">
+                            <div class="row justify-content-center">
+                                <div class="form-group  col-8">
+                                    <div class="row justify-content-start mb-2">
+                                        <div class="form-group  col" th:object="${queryInfo.audiobook}">
+                                            <b>Наименование книги: </b>
+                                            <div style="display: inline;" ><a class="text-dark" th:href="@{/audiobook/__*{id}__}" th:utext="*{title}"></a></div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-start mb-2">
+                                        <div class="form-group  col" th:object="${queryInfo.user}">
+                                            <b>Никнейм отправителя: </b>
+                                            <div style="display: inline;" ><a class="text-dark" th:href="@{/user/__*{id}__}" th:utext="*{nickname}"></a></div>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-start mb-2">
+                                        <div class=" col">
+                                            <b>Дата и время отправления: </b>
+                                            <p style="display: inline;"  th:utext="*{sendDateTime}"></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer text-muted mb-0" th:object="${queryInfo}" style="background-color: rgb(250, 250, 250);">
+                            <div class="row">
+                                <th:block sec:authorize="isAuthenticated()">
+                                    <th:block sec:authorize="hasAnyRole('ADMIN')">
+                                        <div class="col"   style="text-align: left">
+                                            <div class="btn-group" >
+                                                <a class="btn btn-outline-danger"  type="button" th:href="@{/query/delete/__*{id}__}" aria-expanded="false">Отказать</a>
+                                            </div>
+                                        </div>
+                                        <div class="col"   style="text-align: right">
+                                            <div class="btn-group">
+                                                <a class="btn btn-outline-success" type="button" th:href="@{/query/__*{id}__/success/}" aria-expanded="false">Подтвердить</a>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-muted" style="background-color: rgb(250, 250, 250);">
+                    <div class="row justify-content-center" >
+                        <nav aria-label="Page pagination bottom" class="col-lg-9 col-md-12">
+                            <ul class="mb-0 pagination1 pagination  justify-content-around ">
+                                <li class="page-item" th:if="${currentPage > 0}">
+                                    <a  th:text="Предыдущая"  style="font-weight: 500; background-color: rgb(250, 250, 250)"th:href="@{${#httpServletRequest.requestURI}page(pageNum=${currentPage}-1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disabled"  style="font-weight: 500; background-color: rgb(250, 250, 250)" th:unless="${currentPage > 0}">
+                                    <p  th:text="Предыдущая" >
+                                    </p>
+                                </li>
+                                <li class="page-item" th:if="${currentPage > 0}">
+                                    <a class="page-link" th:text="1" th:href="@{${#httpServletRequest.requestURI}(pageNum=0)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disable" th:if="${currentPage > 0}">
+                                    <p style="color: black; background-color: rgb(250, 250, 250)">
+                                        .&nbsp.&nbsp.
+                                    </p>
+                                </li>
+                                <li class="page-item" th:if="${currentPage > 1}">
+                                    <a class="page-link" th:text="${currentPage}" th:href="@{${#httpServletRequest.requestURI}(pageNum=${currentPage}-1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" th:text="${currentPage}+1" style="background-color: #ddd; color: black; border-color: #666" th:href="@{${#httpServletRequest.requestURI}(pageNum=${currentPage})}">
+                                    </a>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < (lastPage -2)}">
+                                    <a class="page-link" th:text="${currentPage}+2" th:href="@{${#httpServletRequest.requestURI}(pageNum=${currentPage}+1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disable" th:if="${currentPage < (lastPage -1)}">
+                                    <p style="color: black; background-color: rgb(250, 250, 250)">
+                                        .&nbsp.&nbsp.
+                                    </p>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < (lastPage -1)}">
+                                    <a class="page-link" th:text="${lastPage}" th:href="@{${#httpServletRequest.requestURI}(pageNum=${lastPage}-1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item" th:if="${currentPage < (lastPage -1)}">
+                                    <a  style="font-weight: 500; background-color: rgb(250, 250, 250)"th:text="Следующая" th:href="@{${#httpServletRequest.requestURI}(pageNum=${currentPage}+1)}">
+                                    </a>
+                                </li>
+                                <li class="page-item disabled" th:unless="${currentPage < (lastPage -1)}">
+                                    <p  style="font-weight: 500; background-color: rgb(250, 250, 250)" th:text="Следующая">
+                                    </p>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+            <script  src="/js/audiobookEdit.js"></script>
+        </div>
+
+
+    </div>
+
+    <div th:replace="fragments/footer :: footer"/>
+</body>
+</html>
