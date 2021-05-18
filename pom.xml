@@ -89,14 +89,8 @@
             <scope>test</scope>
         </dependency>
       <!--  -->
-        <!-- https://mvnrepository.com/artifact/com.google.android/android -->
-        <dependency>
-            <groupId>com.google.android</groupId>
-            <artifactId>android</artifactId>
-            <version>1.6_r2</version>
-        </dependency>
-    </dependencies>
 
+    </dependencies>
 
     <build>
         <plugins>

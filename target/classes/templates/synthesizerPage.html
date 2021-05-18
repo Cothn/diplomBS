@@ -16,114 +16,57 @@
     <div id="content" class="container mt-4">
 
         <div class="row justify-content-center" >
-            <div class="card col-lg-8 col-md-10 col-sm-12">
+            <div class="card col-lg-7 col-md-9 col-sm-12">
                 <div class="card-body" >
                     <div class="row justify-content-center" >
                         <div class="col-11">
-                            <h1 style="text-align: center">Редактирование информации об аудиокниге</h1>
+                            <h3 style="text-align: center">Синтез аудиокниги</h3>
                         </div>
                     </div>
-
-                    <form th:action="@{/audiobook/edit}" th:object="${audiobookInfo}"
-                          method="POST" enctype="multipart/form-data">
+                    model.addAttribute("testFilePath", "/"+currentUser.getUsername()+"/test.mp3");
+                    <form th:action="@{/synthesizer/test}"
+                          method="POST" enctype="multipart/form-data" class="col mr-0">
                         <div class="row justify-content-center"  th:if="${errorMessage}" >
-                            <div class="alert alert-danger mt-2 col-11"  >
+                            <div class="alert alert-danger mt-2 "  >
                                 <p th:text="${errorMessage}"></p>
                             </div>
                         </div>
-                        <input type="hidden" required name="id" th:field="*{id}">
-                        <div class="row justify-content-center">
-                            <div class="form-group mb-2 col-11">
-                                <label for="title">Название</label>
-                                <input type="text" class="form-control"  id="title" name="title"
-                                       th:field="*{title}" placeholder="Введите название книги" required/>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="form-group mb-2 col-11">
-                                <label for="picturePath">Файл обложки</label>
-                                <input type="file" class="form-control" id="picture" name="picture"
-                                        accept="image/png" placeholder="Нажмите для смены обложки">
+                        <div class="row justify-content-center mb-3">
+                            <div class="input-group " >
+                                <select class="form-select" style="outline:0; box-shadow: none;" name="voiceOld" required  aria-describedby="button-addon1">
+                                    <option th:each="voice : ${voices}" th:value="${voice}" th:text="${voice}"  th:selected="${#strings.equals(voiceOld, voice)}"></option>
+                                </select>
+                                <select class="form-select" style="outline:0; box-shadow: none;" name="speed" required  aria-describedby="button-addon1">
+                                    <option style="padding-top: 0; padding-bottom: 0"
+                                            class="dropdown-item" value="-1" th:selected="${speed} == '-1'  ? true : false">-1</option>
+                                    <option style="padding-top: 0; padding-bottom: 0"
+                                            class="dropdown-item" value="0" th:selected="${speed} == '0'  ? true : false">Скорость речи</option>
+                                    <option style="padding-top: 0; padding-bottom: 0"
+                                            class="dropdown-item" value="1" th:selected="${speed} == '1'  ? true : false">1</option>
+                                    <option style="padding-top: 0; padding-bottom: 0"
+                                            class="dropdown-item" value="10" th:selected="${speed} == '10'  ? true : false">10</option>
+                                </select>
+                                <select class="form-select" style="outline:0; box-shadow: none;" name="height" required  aria-describedby="button-addon1">
+                                    <option style="padding-top: 0; padding-bottom: 0"
+                                            class="dropdown-item" value="-1" th:selected="${height} == '-1'  ? true : false">-1</option>
+                                    <option style="padding-top: 0; padding-bottom: 0"
+                                            class="dropdown-item" value="0" th:selected="${height} == '0'  ? true : false">Высота голоса</option>
+                                    <option style="padding-top: 0; padding-bottom: 0"
+                                            class="dropdown-item" value="1" th:selected="${height} == '1'  ? true : false">1</option>
+                                    <option style="padding-top: 0; padding-bottom: 0"
+                                            class="dropdown-item" value="10" th:selected="${height} == '10'  ? true : false">10</option>
+
+                                </select>
                             </div>
                         </div>
 
                         <div class="row justify-content-center">
-                            <div class="form-group mb-2 col-11">
-                                <label for="authors-group">Авторы аудиокниги</label>
-                                <div id="authors-group">
-                                </div>
+                            <div class="form-group mb-2 ">
+                                <textarea class="form-control" style="text-align: justify" required id="description" rows="4" name="text" th:text="*{text}"></textarea>
                             </div>
                         </div>
-                        <div class="row justify-content-center">
-                            <div class="form-group mb-2 col-11">
-                                <div class="input-group ">
-                                    <input type="text" class="form-control"  id="authorAdd" name="authorAdd"
-                                           placeholder="Введите наименование автора" aria-describedby="add-author-btn">
-                                    <button id="add-author-btn" type="button" class="btn btn-success"
-                                            onclick="addAuthor()">
-                                        Добавить
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="form-group mb-2 col-11">
-                                <label for="performers-group">Исполнители озвучки</label>
-                                <div id="performers-group">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="form-group mb-2 col-11">
-                                <div class="input-group ">
-                                    <input type="text" class="form-control"  id="performerAdd" name="performerAdd"
-                                           placeholder="Введите наименование исполнителя" aria-describedby="add-performer-btn">
-                                    <button id="add-performer-btn" type="button" class="btn btn-success"
-                                            onclick="addPerformer()">
-                                        Добавить
-                                    </button>
-                                </div>
-                            </div>
-                            <select  id="creators" class="form-select" multiple hidden
-                                     name="creators" >
-                                <block th:each="creator : *{audiobookCreators}">
-                                    <option  th:if="${creator.author}" th:value="${creator.title}" class="author"></option>
-                                    <option  th:unless="${creator.author}" th:value="${creator.title}" class="performer"></option>
-                                </block>
-                            </select>
-                        </div>
-                        
-                        <div class="row justify-content-center">
-                            <div class="form-group mb-2 col-11">
-                                <label for="genres">Жанры аудиокниги</label>
-                                <select  id="genres" class="form-select" required multiple size="5"
-                                        name="audiobookGenres" th:field="*{audiobookGenres}">
-                                    <option th:each="genre : ${allGenres}" th:value="${genre.id}"><p th:text="${genre.title}"></p></option>
-                                </select>
-                            </div>
-                            <input type="hidden"  required id="audiobookFile" th:field="*{audiobookFile}">
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="form-group mb-2 col-11">
-                                <label for="description">Описание</label>
-                                <textarea class="form-control"  id="description" name="description" value="Аудиокнига" rows="3" th:field="*{description}"></textarea>
-                                <input type="hidden"  required id="distributed" th:field="*{distributed}">
-                                <input type="hidden"  required id="rating" th:field="*{rating}">
-                            </div>
-                        </div>
-                        <div class="row justify-content-center">
-                            <div class="form-group mb-2 col-11">
-                                <label for="publicYear">Год издания</label>
-                                <select class="form-select" required id="publicYear" name="publicationYear" >
-                                    <option th:value="*{publicationYear}" selected><p th:utext="*{publicationYear}"></p> </option>
-                                </select>
-                                <input type="hidden"  required id="userId" th:field="*{user}">
-                                <input type="hidden"  required id="addDate" th:field="*{addDate}">
-                                <input type="hidden"  required id="picturePath" th:field="*{picturePath}">
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mt-2">
-                            <input type="submit" class="col-lg-6 col-md-8 col-sm-10 btn btn-lg btn-primary btn-block" value="Подтвердить редактирование"/>
+                        <div class="row justify-content-center  m-0" style="text-align: center">
+                            <input type="submit" value="Озвучить текст" style="padding: 2px 0" class="col-11 btn btn-outline-secondary col btn-lg btn-block" id="button-addon1">
                         </div>
                     </form>
 
@@ -132,30 +75,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        (function() {
-            'use strict';
-
-            window.addEventListener('load', function() {
-                for (let year = 1920; year <= 2021; year++) {
-                let options = document.createElement("OPTION");
-                    document.getElementById("publicYear").appendChild(options).innerHTML = year;
-                }
-
-                let authors = document.getElementById("creators").getElementsByClassName("author");
-                for (let i=0; i <  authors.length; i++){
-                    let author = authors.item(i);
-                    addOldAuthor(author.value);
-                }
-                let performers = document.getElementById("creators").getElementsByClassName("performer");
-                for (let i=0; i <  performers.length; i++){
-                    let performer = performers.item(i);
-                    addOldPerformer(performer.value);
-                }
-            }, false);
-        })();
-    </script>
 
     <footer th:replace="fragments/footer :: footer"/>
 </body>

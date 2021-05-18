@@ -83,6 +83,28 @@ public class AudiobookFileServiceImpl implements AudiobookFileService {
         return audiobookFileRepository.findById(id).get();
     }
 
+    // Save Files
+    public String saveBookFile(MultipartFile file, UserDetails currentUser) throws IOException {
+
+        // Make sure directory exists!
+        File uploadDir = new File(UPLOAD_DIR +currentUser.getUsername());
+        if(!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+        if (!file.isEmpty()) {
+            String uploadFilePath = currentUser.getUsername() + "/"
+                    + RandomStringUtils.randomAlphanumeric(8)+ "-" + file.getOriginalFilename();
+
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOAD_DIR + uploadFilePath);
+            Files.write(path, bytes);
+            return uploadFilePath;
+        } else {
+            return "";
+        }
+
+    }
+
 
     /*
         @Override

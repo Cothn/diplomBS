@@ -12,6 +12,16 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="speech" />
+      <option name="name" value="speech" />
+      <option name="url" value="http://maven.it.su.se/it.su.se/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="java.net-m2" />
+      <option name="name" value="java.net - Maven 2" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/java.net-m2" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jboss.community" />
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
