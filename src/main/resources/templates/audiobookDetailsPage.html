@@ -102,16 +102,16 @@
                                         <th:block sec:authorize="hasRole('USER')">
                                             <button   class="btn btn-secondary dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Оценить</button>
                                             <ul class="dropdown-menu dropdown-menu-dark " style="min-width: 6.5rem">
-                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(1)" >1</li>
-                                                <li style="padding-top: 0; padding-bottom: 0"  class="dropdown-item" onClick="addRating(2)" >2</li>
-                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(3)" >3</li>
-                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(4)" >4</li>
-                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(5)" >5</li>
-                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(6)" >6</li>
-                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(7)" >7</li>
-                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(8)" >8</li>
-                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(9)" >9</li>
-                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" onClick="addRating(10)" >10</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('1', '*{id}')|">1</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('2', '*{id}')|" >2</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('3', '*{id}')|" >3</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('4', '*{id}')|" >4</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('5', '*{id}')|" >5</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('6', '*{id}')|" >6</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('7', '*{id}')|" >7</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('8', '*{id}')|" >8</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('9', '*{id}')|" >9</li>
+                                                <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('10', '*{id}')|" >10</li>
                                             </ul>
                                         </th:block>
                                     </div>

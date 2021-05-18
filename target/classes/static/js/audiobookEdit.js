@@ -162,13 +162,12 @@ function addOldPerformer(name){
 
 };
 
-async function addRating(rating) {
-    let audiobookId = $.trim($('#audiobookId').val());
+async function addRating(rating, id) {
 
-    let response = await fetch("http://localhost:8088/rating/edit?audiobookId=" + audiobookId + "&rating=" + rating);
+    let response = await fetch("http://localhost:8088/rating/edit?audiobookId=" + id+ "&rating=" + rating);
     if (response.ok) {
         let newRating = response.text();
-        let ratingEl= document.getElementById('rating'+audiobookId);
+        let ratingEl= document.getElementById('rating'+id);
         ratingEl.textContent = (await newRating).toString();
     } else {
         alert("Ошибка HTTP: " + response.status);
