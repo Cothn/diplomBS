@@ -48,7 +48,7 @@ public class AudiobooksController {
             @RequestParam(required = false) Long year,
             @RequestParam(required = true, defaultValue = "title") String sortBy,
             @RequestParam(required = true, defaultValue = "true") Boolean ascending,
-            @RequestParam(required = false) Boolean distributed,
+            @RequestParam(required = false) Boolean all,
             Model model) {
 
         Pageable page;
@@ -68,17 +68,24 @@ public class AudiobooksController {
                 .path("/audiobooks");
 
 
-        builder.queryParam("distributed", true);
         if(!Objects.isNull(title)){
             builder.queryParam("title", title);
+            audiobooks = audiobookService.getAudiobooksByTitle(title, page);
         } else if(!Objects.isNull(genre)){
             builder.queryParam("genre", genre);
+            audiobooks = audiobookService.getAudiobooksByGenre(genreService.getById(genre), page);
         } else if(!Objects.isNull(author)){
             builder.queryParam("author", author);
+            audiobooks = audiobookService.getAudiobooksByCreator(creatorService.getById(author), page);
         } else if(!Objects.isNull(performer)){
             builder.queryParam("performer", performer);
+            audiobooks = audiobookService.getAudiobooksByCreator(creatorService.getById(performer), page);
         } else if(!Objects.isNull(year)){
             builder.queryParam("year", year);
+            audiobooks = audiobookService.getAudiobooksByYear(year, page);
+        } else{
+            builder.queryParam("all", true);
+            audiobooks = audiobookService.allAudiobooks(page);
         }
 
         String oldUrl = builder.build()

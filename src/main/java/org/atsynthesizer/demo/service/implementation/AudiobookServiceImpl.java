@@ -2,6 +2,8 @@ package org.atsynthesizer.demo.service.implementation;
 
 
 import org.atsynthesizer.demo.entity.Audiobook;
+import org.atsynthesizer.demo.entity.Creator;
+import org.atsynthesizer.demo.entity.Genre;
 import org.atsynthesizer.demo.repository.AudiobookRepository;
 import org.atsynthesizer.demo.service.AudiobookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,26 @@ public class AudiobookServiceImpl implements AudiobookService {
     @Transactional
     public Page<Audiobook> allAudiobooks(Pageable page) {
         return audiobookRepository.findAll(page);
+    }
+
+    @Override
+    public Page<Audiobook> getAudiobooksByTitle(String title, Pageable page) {
+        return audiobookRepository.findAllByTitleContains(title, page);
+    }
+
+    @Override
+    public Page<Audiobook> getAudiobooksByGenre(Genre genre, Pageable page) {
+        return audiobookRepository.findAllByAudiobookGenresContains(genre, page);
+    }
+
+    @Override
+    public Page<Audiobook> getAudiobooksByCreator(Creator creator, Pageable page) {
+        return audiobookRepository.findAllByAudiobookCreatorsContains(creator,  page);
+    }
+
+    @Override
+    public Page<Audiobook> getAudiobooksByYear(Long year, Pageable page) {
+        return audiobookRepository.findAllByPublicationYearEquals(year.intValue(), page);
     }
 
     @Override
