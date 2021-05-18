@@ -52,7 +52,7 @@
                                 <div id="performers" class="col">
                                     <b id="performer-title">Исполнители озвучки: </b>
                                     <th:block  th:each="itemInfo : *{audiobookCreators}">
-                                        <a style="display: inline;" class="text-dark" th:href="@{'/audiobooks?creator='+${itemInfo.id}}" th:utext="${itemInfo.title}"
+                                        <a style="display: inline;" class="text-dark" th:href="@{'/audiobooks?performer='+${itemInfo.id}}" th:utext="${itemInfo.title}"
                                            th:unless="${itemInfo.Author}">
 
                                         </a><div style="display: inline;" th:unless="${itemInfo.Author}" class="comma">, </div>

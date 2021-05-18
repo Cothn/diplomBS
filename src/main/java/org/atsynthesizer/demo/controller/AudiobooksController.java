@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,15 +39,59 @@ public class AudiobooksController {
     private CreatorService creatorService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String showAllAudiobooks(@RequestParam(defaultValue = "0") int pageNum, Model model) {
+    public String showAllAudiobooks(
+            @RequestParam(defaultValue = "0") int pageNum,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) Long genre,
+            @RequestParam(required = false) Long author,
+            @RequestParam(required = false) Long performer,
+            @RequestParam(required = false) Long year,
+            @RequestParam(required = true, defaultValue = "title") String sortBy,
+            @RequestParam(required = true, defaultValue = "true") Boolean ascending,
+            @RequestParam(required = false) Boolean distributed,
+            Model model) {
 
-        Pageable page = PageRequest.of(pageNum, PAGINATION_SIZE, Sort.by("title").ascending());
-
+        Pageable page;
+        if (ascending) {
+            page = PageRequest.of(pageNum, PAGINATION_SIZE, Sort.by(sortBy).ascending());
+        }
+        else
+        {
+            page = PageRequest.of(pageNum, PAGINATION_SIZE, Sort.by(sortBy).descending());
+        }
         Page<Audiobook> audiobooks = audiobookService.allAudiobooks(page);
+
+        UriComponentsBuilder builder = UriComponentsBuilder.newInstance()
+                .scheme("http")
+                .host("localhost")
+                .port(8088)
+                .path("/audiobooks");
+
+
+        builder.queryParam("distributed", true);
+        if(!Objects.isNull(title)){
+            builder.queryParam("title", title);
+        } else if(!Objects.isNull(genre)){
+            builder.queryParam("genre", genre);
+        } else if(!Objects.isNull(author)){
+            builder.queryParam("author", author);
+        } else if(!Objects.isNull(performer)){
+            builder.queryParam("performer", performer);
+        } else if(!Objects.isNull(year)){
+            builder.queryParam("year", year);
+        }
+
+        String oldUrl = builder.build()
+                .toUri()
+                .toString();
 
         model.addAttribute("audiobooksInfos", audiobooks.getContent());
         model.addAttribute("lastPage", audiobooks.getTotalPages());
         model.addAttribute("currentPage", pageNum);
+
+        model.addAttribute("sortParam", sortBy);
+        model.addAttribute("sortAscending", ascending);
+        model.addAttribute("oldUrl", oldUrl);
 
         return "audiobooksPage";
     }

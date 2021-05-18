@@ -59,25 +59,46 @@
         <div class="row justify-content-center" >
             <div class="card col-lg-8 col-md-10 col-sm-12" style="padding: 0px">
                 <div class="card-header " style="background-color: rgb(250, 250, 250);">
-                    <div class="row justify-content-center text-muted mb-1" >
+                    <div class="row justify-content-center text-muted mb-2" >
                         <nav aria-label="Page search">
-                            <form class="d-flex">
+                            <form class="d-flex" th:href="@{/audiobooks}"  method="get">
                                 <div class="input-group " >
-                                    <input style="outline:0; box-shadow: none;" type="search" class="form-control"  id="search" name="authorAdd"
-                                           placeholder="Поиск книги..." aria-describedby="add-author-btn">
-                                    <button type="submit" class="btn btn-success col-2">
+                                    <input style="outline:0; box-shadow: none;" required type="search" class="form-control"  id="search" name="title"
+                                           placeholder="Поиск книги..." aria-describedby="search-btn">
+                                    <button style="outline:0; box-shadow: none;" type="submit" class="btn btn-success col-2" id="search-btn">
                                         Найти
                                     </button>
                                 </div>
                             </form>
-
+                        </nav>
+                    </div>
+                    <div class="row  mb-2" >
+                        <nav aria-label="Page sort">
+                            <div class="d-flex" >
+                                <div class="input-group " >
+                                    <input hidden id="sortForm" th:value="${oldUrl}">
+                                    <button style="outline:0; box-shadow: none;" onclick="sortBooks()" class="btn btn-info col-3" id="button-addon1">
+                                        Сортировать
+                                    </button>
+                                    <select id="sortSelect" class="form-select" style="outline:0; box-shadow: none;" required  aria-describedby="button-addon1">
+                                        <option th:value="title" th:selected="${sortParam} == 'title' ? true : false">по названию книги</option>
+                                        <option th:value="rating" th:selected="${sortParam} == 'rating' ? true : false">по рейтингу книги</option>
+                                        <option th:value="publicationYear" th:selected="${sortParam} == 'publicationYear' ? true : false">по году издания книги</option>
+                                        <option th:value="addDate" th:selected="${sortParam} == 'addDate' ? true : false">по дате добавления книги</option>
+                                    </select>
+                                    <select id="ascendingSelect" class="form-select" style="outline:0; box-shadow: none;" required aria-describedby="sortSelect">
+                                        <option th:value="true" th:selected="${sortAscending}">в порядке возростания</option>
+                                        <option th:value="false" th:selected="!${sortAscending}">в порядке убывания</option>
+                                    </select>
+                                </div>
+                            </div>
                         </nav>
                     </div>
                     <div class="row justify-content-center text-muted mb-2 " >
                         <nav aria-label="Page pagination top" class="col-lg-9 col-md-12">
                             <ul class="mb-0 pagination1 pagination  justify-content-around ">
                                 <li class="page-item" th:if="${currentPage > 0}">
-                                    <a  th:text="Предыдущая"  style="font-weight: 500; background-color: rgb(250, 250, 250)"th:href="@{/audiobooks(pageNum=${currentPage}-1)}">
+                                    <a  th:text="Предыдущая"  style="font-weight: 500; background-color: rgb(250, 250, 250)"th:href="@{${oldUrl}(pageNum=${currentPage}-1, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item disabled"  style="font-weight: 500; background-color: rgb(250, 250, 250)" th:unless="${currentPage > 0}">
@@ -85,7 +106,7 @@
                                     </p>
                                 </li>
                                 <li class="page-item" th:if="${currentPage > 0}">
-                                    <a class="page-link" th:text="1" th:href="@{/audiobooks(pageNum=0)}">
+                                    <a class="page-link" th:text="1" th:href="@{${oldUrl}(pageNum=0, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item disable" th:if="${currentPage > 2}">
@@ -94,15 +115,15 @@
                                     </p>
                                 </li>
                                 <li class="page-item" th:if="${currentPage > 1}">
-                                    <a class="page-link" th:text="${currentPage}" th:href="@{/audiobooks(pageNum=${currentPage}-1)}">
+                                    <a class="page-link" th:text="${currentPage}" th:href="@{${oldUrl}(pageNum=${currentPage}-1, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item active">
-                                    <a class="page-link" th:text="${currentPage}+1" style="background-color: #ddd; color: black; border-color: #666" th:href="@{/audiobooks(pageNum=${currentPage})}">
+                                    <a class="page-link" th:text="${currentPage}+1" style="background-color: #ddd; color: black; border-color: #666" th:href="@{${oldUrl}(pageNum=${currentPage}, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item" th:if="${currentPage < (lastPage -2)}">
-                                    <a class="page-link" th:text="${currentPage}+2" th:href="@{/audiobooks(pageNum=${currentPage}+1)}">
+                                    <a class="page-link" th:text="${currentPage}+2" th:href="@{${oldUrl}(pageNum=${currentPage}+1, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item disable" th:if="${currentPage < (lastPage -3)}">
@@ -111,11 +132,11 @@
                                     </p>
                                 </li>
                                 <li class="page-item" th:if="${currentPage < (lastPage -1)}">
-                                    <a class="page-link" th:text="${lastPage}" th:href="@{/audiobooks(pageNum=${lastPage}-1)}">
+                                    <a class="page-link" th:text="${lastPage}" th:href="@{${oldUrl}(pageNum=${lastPage}-1, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item" th:if="${currentPage < (lastPage -1)}">
-                                    <a  style="font-weight: 500; background-color: rgb(250, 250, 250)"th:text="Следующая" th:href="@{/audiobooks(pageNum=${currentPage}+1)}">
+                                    <a  style="font-weight: 500; background-color: rgb(250, 250, 250)"th:text="Следующая" th:href="@{${oldUrl}(pageNum=${currentPage}+1, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item disabled" th:unless="${currentPage < (lastPage -1)}">
@@ -160,7 +181,7 @@
                                         <div id="performers" class="col">
                                             <b id="performer-title">Исполнители озвучки: </b>
                                             <th:block  th:each="itemInfo : *{audiobookCreators}">
-                                                <a style="display: inline;" class="text-dark" th:href="@{'/audiobooks?creator='+${itemInfo.id}}" th:utext="${itemInfo.title}"
+                                                <a style="display: inline;" class="text-dark" th:href="@{'/audiobooks?performer='+${itemInfo.id}}" th:utext="${itemInfo.title}"
                                                    th:unless="${itemInfo.Author}">
 
                                                 </a><div style="display: inline;" th:unless="${itemInfo.Author}" class="comma">, </div>
@@ -274,7 +295,7 @@
                         <nav aria-label="Page pagination bottom" class="col-lg-9 col-md-12">
                             <ul class="mb-0 pagination1 pagination  justify-content-around ">
                                 <li class="page-item" th:if="${currentPage > 0}">
-                                    <a  th:text="Предыдущая" style="font-weight: 500; background-color: rgb(250, 250, 250)" th:href="@{/audiobooks(pageNum=${currentPage}-1)}">
+                                    <a  th:text="Предыдущая" style="font-weight: 500; background-color: rgb(250, 250, 250)" th:href="@{${oldUrl}(pageNum=${currentPage}-1, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item disabled" style="font-weight: 500; background-color: rgb(250, 250, 250)" th:unless="${currentPage > 0}">
@@ -282,7 +303,8 @@
                                     </p>
                                 </li>
                                 <li class="page-item" th:if="${currentPage > 0}">
-                                    <a class="page-link" th:text="1" th:href="@{/audiobooks(pageNum=0)}">
+                                    <a class="page-link" th:text="1" 
+                                       th:href="@{${oldUrl}(pageNum=0, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item disable" th:if="${currentPage > 2}">
@@ -291,15 +313,15 @@
                                     </p>
                                 </li>
                                 <li class="page-item" th:if="${currentPage > 1}">
-                                    <a class="page-link" th:text="${currentPage}" th:href="@{/audiobooks(pageNum=${currentPage}-1)}">
+                                    <a class="page-link" th:text="${currentPage}" th:href="@{${oldUrl}(pageNum=${currentPage}-1, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item active">
-                                    <a class="page-link" th:text="${currentPage}+1" style="background-color: #ddd; color: black; border-color: #666" th:href="@{/audiobooks(pageNum=${currentPage})}">
+                                    <a class="page-link" th:text="${currentPage}+1" style="background-color: #ddd; color: black; border-color: #666" th:href="@{${oldUrl}(pageNum=${currentPage}, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item" th:if="${currentPage < (lastPage -2)}">
-                                    <a class="page-link" th:text="${currentPage}+2" th:href="@{/audiobooks(pageNum=${currentPage}+1)}">
+                                    <a class="page-link" th:text="${currentPage}+2" th:href="@{${oldUrl}(pageNum=${currentPage}+1, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item disable" th:if="${currentPage < (lastPage -3)}">
@@ -308,11 +330,11 @@
                                     </p>
                                 </li>
                                 <li class="page-item" th:if="${currentPage < (lastPage -1)}">
-                                    <a class="page-link" th:text="${lastPage}" th:href="@{/audiobooks(pageNum=${lastPage}-1)}">
+                                    <a class="page-link" th:text="${lastPage}" th:href="@{${oldUrl}(pageNum=${lastPage}-1, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item"style=" font-weight: 500; background-color: rgb(250, 250, 250)"  th:if="${currentPage < (lastPage -1)}">
-                                    <a style="background-color: rgb(250, 250, 250)" th:text="Следующая" th:href="@{/audiobooks(pageNum=${currentPage}+1)}">
+                                    <a style="background-color: rgb(250, 250, 250)" th:text="Следующая" th:href="@{${oldUrl}(pageNum=${currentPage}+1, sortBy=${sortParam}, ascending=${sortAscending})}">
                                     </a>
                                 </li>
                                 <li class="page-item disabled" style=" font-weight: 500; background-color: rgb(250, 250, 250)" th:unless="${currentPage < (lastPage -1)}">

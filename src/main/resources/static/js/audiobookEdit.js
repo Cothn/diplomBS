@@ -176,6 +176,17 @@ async function addRating(rating, id) {
 
 }
 
+function sortBooks() {
+
+    let url = document.getElementById('sortForm').value;
+    let sortBy = document.getElementById('sortSelect').value;
+    let ascending = document.getElementById('ascendingSelect').value;
+    let fullUrl = url+"&sortBy=" + sortBy+ "&ascending=" + ascending;
+    window.location.replace(fullUrl);
+
+}
+
+
     function sendUserInfo(){
 
         var userId= $.trim($('#id').val());
