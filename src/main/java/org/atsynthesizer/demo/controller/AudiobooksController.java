@@ -41,6 +41,9 @@ public class AudiobooksController {
     private GenreService genreService;
 
     @Autowired
+    private GenreService queryService;
+
+    @Autowired
     private CreatorService creatorService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)

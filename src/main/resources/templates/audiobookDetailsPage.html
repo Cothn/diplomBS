@@ -98,7 +98,7 @@
                                             <li><a class="dropdown-item" th:href="@{'/download/'+ *{audiobookFile.filePath}}" download th:text="*{audiobookFile.extension + ', ' + audiobookFile.size}"></a></li>
                                         </ul>
                                     </div>
-                                    <div class="btn-group"   sec:authorize="isAuthenticated()">
+                                    <div class="btn-group me-2"   sec:authorize="isAuthenticated()">
                                         <th:block sec:authorize="hasRole('USER')">
                                             <button   class="btn btn-secondary dropdown dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Оценить</button>
                                             <ul class="dropdown-menu dropdown-menu-dark " style="min-width: 6.5rem">
@@ -113,6 +113,13 @@
                                                 <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('9', '*{id}')|" >9</li>
                                                 <li style="padding-top: 0; padding-bottom: 0" class="dropdown-item" th:onClick="|addRating('10', '*{id}')|" >10</li>
                                             </ul>
+                                        </th:block>
+                                    </div>
+                                    <div class="btn-group"   sec:authorize="isAuthenticated()">
+                                        <th:block sec:authorize="hasRole('USER')">
+                                            <th:block th:unless="*{distributed}">
+                                                <a class="btn btn-outline-success" type="button" onclick="alert('Заявка на распространение аудиокниги, успешно отправлена!')" th:href="@{/query/add(audiobookId=*{id}, oldUrl=${oldUrl})}" aria-expanded="false">Распространить</a>
+                                            </th:block>
                                         </th:block>
                                     </div>
                                 </div>
@@ -213,22 +220,23 @@
             window.addEventListener('load', function() {
 
                 let authors = document.getElementById("authors").getElementsByClassName("comma");
-                authors.item(authors.length-1).remove();
+
                 if(authors.length === 1){
                     document.getElementById("author-title").innerText="Автор: ";
                 }
-
+                authors.item(authors.length-1).remove();
                 let performers = document.getElementById("performers").getElementsByClassName("comma");
-                performers.item(performers.length-1).remove();
+
                 if(performers.length === 1){
                     document.getElementById("performer-title").innerText="Озвучивает: ";
                 }
-
+                performers.item(performers.length-1).remove();
                 let genres = document.getElementById("genres").getElementsByClassName("comma");
-                genres.item(genres.length-1).remove();
+
                 if(genres.length === 1){
                     document.getElementById("genre-title").innerText="Жанр: ";
                 }
+                genres.item(genres.length-1).remove();
             }, false);
         })();
     </script>
