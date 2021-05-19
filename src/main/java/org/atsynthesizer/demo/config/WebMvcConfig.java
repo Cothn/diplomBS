@@ -16,6 +16,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         .addResourceLocations("file:///D:/" +UPLOAD_DIR);
         registry.addResourceHandler("/download/**")
                 .addResourceLocations("file:///D:/" +UPLOAD_DIR);
+        registry.addResourceHandler("/audio/**")
+                .addResourceLocations("file:///D:/" +UPLOAD_DIR);
     }
 
 

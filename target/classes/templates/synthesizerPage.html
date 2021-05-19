@@ -13,68 +13,223 @@
 
     <div th:replace="fragments/header :: header"/>
 
-    <div id="content" class="container mt-4">
+    <div id="content" class="container mt-2">
 
         <div class="row justify-content-center" >
-            <div class="card col-lg-7 col-md-9 col-sm-12">
-                <div class="card-body" >
+            <form th:action="@{/synthesizer/test}" id="test-form"
+                  method="POST" enctype="multipart/form-data"
+                  class="card col-lg-7 col-md-9 col-sm-12" style="padding: 0">
+                <div class="card-header" style="background-color: rgb(253, 253, 253);">
                     <div class="row justify-content-center" >
-                        <div class="col-11">
-                            <h3 style="text-align: center">Синтез аудиокниги</h3>
+                        <div class="col">
+                            <h3 class="card-title" style="text-align: center">Синтез аудиокниги</h3>
                         </div>
                     </div>
-                    model.addAttribute("testFilePath", "/"+currentUser.getUsername()+"/test.mp3");
-                    <form th:action="@{/synthesizer/test}"
-                          method="POST" enctype="multipart/form-data" class="col mr-0">
-                        <div class="row justify-content-center"  th:if="${errorMessage}" >
-                            <div class="alert alert-danger mt-2 "  >
-                                <p th:text="${errorMessage}"></p>
+                </div>
+                <div class="card-body pb-3" >
+                    <div class="row justify-content-center">
+                        <div class="col mr-0">
+                            <div class="row justify-content-center"  th:if="${errorMessage}" >
+                                <div class="alert alert-danger mt-2 "  >
+                                    <p th:text="${errorMessage}"></p>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center mb-3">
+                                <div class="input-group " >
+                                    <select class="form-select" style="outline:0; box-shadow: none;" name="voiceOld" required  aria-describedby="button-addon1">
+                                        <option th:each="voice : ${voices}" th:value="${voice}" th:text="${voice}"  th:selected="${#strings.equals(voiceOld, voice)}"></option>
+                                    </select>
+                                    <select class="form-select" style="outline:0; box-shadow: none;" name="speed" required  aria-describedby="button-addon1">
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-10" th:selected="${speed} == '-10'  ? true : false">0.01</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-9" th:selected="${speed} == '-9'  ? true : false">0.1</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-8" th:selected="${speed} == '-8'  ? true : false">0.2</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-7" th:selected="${speed} == '-7'  ? true : false">0.3</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-6" th:selected="${speed} == '-6'  ? true : false">0.4</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-5" th:selected="${speed} == '-5'  ? true : false">0.5</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-4" th:selected="${speed} == '-4'  ? true : false">0.6</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-3" th:selected="${speed} == '-3'  ? true : false">0.7</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-2" th:selected="${speed} == '-2'  ? true : false">0.8</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-1" th:selected="${speed} == '-1'  ? true : false">0.9</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="0" th:selected="${speed} == '0'  ? true : false">Скорость речи</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="1" th:selected="${speed} == '1'  ? true : false">1.1</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="2" th:selected="${speed} == '2'  ? true : false">1.2</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="3" th:selected="${speed} == '3'  ? true : false">1.3</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="4" th:selected="${speed} == '4'  ? true : false">1.4</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="5" th:selected="${speed} == '5'  ? true : false">1.5</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="6" th:selected="${speed} == '6'  ? true : false">1.6</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="7" th:selected="${speed} == '7'  ? true : false">1.7</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="8" th:selected="${speed} == '8'  ? true : false">1.8</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="9" th:selected="${speed} == '9'  ? true : false">1.9</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="10" th:selected="${speed} == '10'  ? true : false">2.0</option>
+                                    </select>
+                                    <select class="form-select" style="outline:0; box-shadow: none;" name="height" required  aria-describedby="button-addon1">
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-10" th:selected="${height} == '-10'  ? true : false">-10</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-9" th:selected="${height} == '-9'  ? true : false">-9</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-8" th:selected="${height} == '-8'  ? true : false">-8</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-7" th:selected="${height} == '-7'  ? true : false">-7</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-6" th:selected="${height} == '-6'  ? true : false">-6</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-5" th:selected="${height} == '-5'  ? true : false">-5</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-4" th:selected="${height} == '-4'  ? true : false">-4</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-3" th:selected="${height} == '-3'  ? true : false">-3</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-2" th:selected="${height} == '-2'  ? true : false">-2</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="-1" th:selected="${height} == '-1'  ? true : false">-1</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="0" th:selected="${height} == '0'  ? true : false">Высота голоса</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="1" th:selected="${height} == '1'  ? true : false">1</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="2" th:selected="${height} == '2'  ? true : false">2</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="3" th:selected="${height} == '3'  ? true : false">3</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="4" th:selected="${height} == '4'  ? true : false">4</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="5" th:selected="${height} == '5'  ? true : false">5</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="6" th:selected="${height} == '6'  ? true : false">6</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="7" th:selected="${height} == '7'  ? true : false">7</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="8" th:selected="${height} == '8'  ? true : false">8</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="9" th:selected="${height} == '9'  ? true : false">9</option>
+                                        <option style="padding-top: 0; padding-bottom: 0"
+                                                class="dropdown-item" value="10" th:selected="${height} == '10'  ? true : false">10</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="card-footer" style="background-color: rgb(253, 253, 253);">
+                                <div class="row justify-content-center" >
+                                    <div class="col">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center">
+                                <div class="form-group mb-2 ">
+                                    <textarea class="form-control" style="text-align: justify" required id="description" rows="4" name="text" th:text="*{text}"></textarea>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center  m-0" style="text-align: center">
+                                <input type="submit" value="Озвучить текст" onclick="onTestButtonClick()" style="padding: 2px 0" class="col btn btn-outline-secondary col btn-lg btn-block" id="button-addon1">
+                            </div>
+                            <div class="card-header pt-1 pb-1 " style="background-color: rgb(255, 255, 255); ">
+                                <div class="row justify-content-center" >
+                                    <div class="col">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="row justify-content-center mb-3">
-                            <div class="input-group " >
-                                <select class="form-select" style="outline:0; box-shadow: none;" name="voiceOld" required  aria-describedby="button-addon1">
-                                    <option th:each="voice : ${voices}" th:value="${voice}" th:text="${voice}"  th:selected="${#strings.equals(voiceOld, voice)}"></option>
-                                </select>
-                                <select class="form-select" style="outline:0; box-shadow: none;" name="speed" required  aria-describedby="button-addon1">
-                                    <option style="padding-top: 0; padding-bottom: 0"
-                                            class="dropdown-item" value="-1" th:selected="${speed} == '-1'  ? true : false">-1</option>
-                                    <option style="padding-top: 0; padding-bottom: 0"
-                                            class="dropdown-item" value="0" th:selected="${speed} == '0'  ? true : false">Скорость речи</option>
-                                    <option style="padding-top: 0; padding-bottom: 0"
-                                            class="dropdown-item" value="1" th:selected="${speed} == '1'  ? true : false">1</option>
-                                    <option style="padding-top: 0; padding-bottom: 0"
-                                            class="dropdown-item" value="10" th:selected="${speed} == '10'  ? true : false">10</option>
-                                </select>
-                                <select class="form-select" style="outline:0; box-shadow: none;" name="height" required  aria-describedby="button-addon1">
-                                    <option style="padding-top: 0; padding-bottom: 0"
-                                            class="dropdown-item" value="-1" th:selected="${height} == '-1'  ? true : false">-1</option>
-                                    <option style="padding-top: 0; padding-bottom: 0"
-                                            class="dropdown-item" value="0" th:selected="${height} == '0'  ? true : false">Высота голоса</option>
-                                    <option style="padding-top: 0; padding-bottom: 0"
-                                            class="dropdown-item" value="1" th:selected="${height} == '1'  ? true : false">1</option>
-                                    <option style="padding-top: 0; padding-bottom: 0"
-                                            class="dropdown-item" value="10" th:selected="${height} == '10'  ? true : false">10</option>
+                    </div>
 
-                                </select>
-                            </div>
+                    <div class="row d-flex justify-content-center mt-2">
+                        <audio id="player" autoplay="autoplay" preload="auto" controls th:src="@{'/audio/'+${testFilePath}(n=${timestamp})}">
+                        </audio>
+                        <div id="test-spiner" class="spinner-border" role="status" hidden="true">
+                            <span class="visually-hidden">Загрузка...</span>
                         </div>
-
-                        <div class="row justify-content-center">
-                            <div class="form-group mb-2 ">
-                                <textarea class="form-control" style="text-align: justify" required id="description" rows="4" name="text" th:text="*{text}"></textarea>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center  m-0" style="text-align: center">
-                            <input type="submit" value="Озвучить текст" style="padding: 2px 0" class="col-11 btn btn-outline-secondary col btn-lg btn-block" id="button-addon1">
-                        </div>
-                    </form>
-
+                    </div>
                     <script  src="/js/audiobookEdit.js"></script>
                 </div>
-            </div>
+                <div class="card-footer p-0" style="background-color: rgb(253, 253, 253);">
+                    <div class="row justify-content-center" >
+                        <div class="col">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-3 pb-2" >
+                    <div class="row justify-content-center">
+                        <div class="col mr-0" id="synthez-block">
+                            <div class="row justify-content-center">
+                                <div class="input-group col-12" >
+                                    <div class="form-group col-12 mb-2">
+                                        <input type="file"  onchange="changeFile()" class="form-control col-12" id="bookFileStream" name="bookFileStream"
+                                               accept="text/plain" placeholder="Нажмите для загрузки тектового файла">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row justify-content-center  m-0" style="text-align: center">
+                                <button disabled id="disableSynthez" th:text="${audiobookFilePath != null} ? 'Выберите файл для синтеза' : 'Выберите текстовый файл для синтеза аудиокниги'" style="padding: 2px 0" class="disabled col btn btn-outline-secondary col btn-lg btn-block" >
+                                </button>
+                                <input hidden id="synthezButton" type="submit" value="Начать синтез" onclick="onSynthezButtonClick()" style="padding: 2px 0" class="col btn btn-outline-secondary col btn-lg btn-block" >
+                                <a download th:if="${audiobookFilePath != null}" id="downloadButton" th:text="'Скачать аудиокнигу'"
+                                    th:href="@{/download/__${audiobookFilePath}__}" style="padding: 2px 0"
+                                    class="col btn btn-outline-success col btn-lg btn-block">
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row d-flex justify-content-center mt-1 mb-2" hidden="true">
+                            <div id="synthez-spiner"  class="spinner-border" role="status" hidden="true">
+                                <span class="visually-hidden">Загрузка...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+    <script>
+        function changeFile(){
+            document.getElementById('disableSynthez').hidden=true;
+            document.getElementById('synthezButton').hidden=false;
+        }
+
+        function onTestButtonClick(){
+            let player =document.getElementById('player');
+            player.pause();
+            player.remove();
+            document.getElementById('test-spiner').hidden=false;
+        }
+
+        function onSynthezButtonClick(){
+            let test =document.getElementById('test-form');
+            test.action = "/synthesizer/getAudiobook";
+            document.getElementById('synthez-block').hidden=true;
+            //let test =document.getElementById('test-form');
+
+            document.getElementById('synthez-spiner').hidden=false;
+        }
+
+        (function() {
+            'use strict';
+
+
+            window.addEventListener('load', function() {
+
+            }, false);
+        })();
+    </script>
 
     <footer th:replace="fragments/footer :: footer"/>
 </body>

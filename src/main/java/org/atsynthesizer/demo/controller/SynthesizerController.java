@@ -56,12 +56,15 @@ public class SynthesizerController {
             Model model) throws IOException {
 
         model.addAttribute("voiceOld", voiceOld);
+        model.addAttribute("timestamp", Timestamp.from(Instant.now()));
         model.addAttribute("speed", speed);
         model.addAttribute("voices", voices);
         model.addAttribute("height", height);
         model.addAttribute("text", "Этот текст можно заменить любым текстом по вашему желанию.\n" +
                         "В этом текстовом поле можно ввести или вставить собственный текст.\n" +
-                        "Вы можете изменить голос диктора, а также высоту голоса и скорость речи.");
+                        "Вы можете изменить голос диктора, а также скорость и высоту тона речи."
+                        +"\nLondon is the capital of Brittan."
+        );
 
         return "synthesizerPage";
     }
@@ -73,7 +76,8 @@ public class SynthesizerController {
             @RequestParam(defaultValue = "0") int height,
             @RequestParam(required = true) String text,
             @AuthenticationPrincipal UserDetails currentUser,
-            Model model) throws IOException {
+            Model model) throws IOException, InterruptedException {
+
 
         String command = "D:\\repositHub\\diplomBS\\src\\main\\util\\balcon" +
                 " -n \"RHVoice " + voiceOld + "\"" +
@@ -82,39 +86,46 @@ public class SynthesizerController {
                 " -enc utf-8" +
                 " --voice1-name Zira --voice1-langid en" +
                 " -t " + "\""+text+"\"" +
-                " -o --raw" +
-                " | D:\\repositHub\\diplomBS\\src\\main\\util\\lame -r -s 22.05 -m m -h "+
-                " - "+UPLOAD_PATH+currentUser.getUsername()+"\\test.mp3";
+                " -w "+UPLOAD_PATH+currentUser.getUsername()+"\\test.wav";
+                //" -o --raw" +
+                //" | D:\\repositHub\\diplomBS\\src\\main\\util\\lame -r -s 22.05 -m m -h "+
+                //" - "+UPLOAD_PATH+currentUser.getUsername()+"\\test.mp3";
         command = command.replace("\n", " ");
         command = command.replace("\r", "");
 
         Process pr=Runtime.getRuntime().exec(new String[]{"cmd.exe","/c", command});
 
+
         model.addAttribute("voiceOld", voiceOld);
+        model.addAttribute("timestamp", Timestamp.from(Instant.now()));
         model.addAttribute("voices", voices);
         model.addAttribute("speed", speed);
         model.addAttribute("height", height);
         model.addAttribute("text", text);
-        model.addAttribute("testFilePath", "/"+currentUser.getUsername()+"/test.mp3");
+        model.addAttribute("testFilePath", currentUser.getUsername()+"/test.wav");
+        //model.addAttribute("testFilePath", currentUser.getUsername()+"/test.mp3");
 
+        pr.waitFor();
+        //while(pr.isAlive()) {}
         return "synthesizerPage";
     }
 
     @PostMapping("/getAudiobook")
     public String getAudiobookFile(
-            @RequestParam(defaultValue = "Aleksandr") int voiceOld,
+            @RequestParam(defaultValue = "Aleksandr") String voiceOld,
             @RequestParam(defaultValue = "0") int speed,
             @RequestParam(defaultValue = "0") int height,
             @RequestParam(required = true) MultipartFile bookFileStream,
+            @RequestParam(defaultValue = "") String text,
             @AuthenticationPrincipal UserDetails currentUser,
-            Model model) throws IOException {
+            Model model) throws IOException, InterruptedException {
 
-        if((!bookFileStream.isEmpty()) && (bookFileStream.getSize() != 0))  {
-            if (this.saveBookFile(bookFileStream, currentUser).isEmpty()) {
-                return "redirect:/audiobooks/add";
-            }
+        if((bookFileStream.isEmpty()) || (bookFileStream.getSize() == 0))  {
+            return "redirect:/synthesizer";
         }
-
+        if (this.saveBookFile(bookFileStream, currentUser).isEmpty()) {
+            return "redirect:/synthesizer";
+        }
         String command = "D:\\repositHub\\diplomBS\\src\\main\\util\\balcon" +
                 " -n \"RHVoice " + voiceOld + "\"" +
                 " -s " + speed +
@@ -131,16 +142,14 @@ public class SynthesizerController {
         Process pr=Runtime.getRuntime().exec(new String[]{"cmd.exe","/c", command});
 
         model.addAttribute("voiceOld", voiceOld);
+        model.addAttribute("timestamp", Timestamp.from(Instant.now()));
         model.addAttribute("voices", voices);
         model.addAttribute("speed", speed);
         model.addAttribute("height", height);
         model.addAttribute("audiobookFilePath", "/"+currentUser.getUsername()+"/audiobook.mp3");
-        model.addAttribute("text", "Этот текст можно заменить любым текстом по вашему желанию.\n" +
-                "В этом текстовом поле можно ввести или вставить собственный текст.\n" +
-                "Вы можете изменить голос диктора, а также скорость и высоту тона речи."
-                +"\nLondon is the capital of Brittan."
-        );
+        model.addAttribute("text", text);
 
+        pr.waitFor();
         return "synthesizerPage";
     }
 
