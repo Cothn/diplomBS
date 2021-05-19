@@ -54,8 +54,8 @@ public class AudiobooksController {
             @RequestParam(required = false) Long author,
             @RequestParam(required = false) Long performer,
             @RequestParam(required = false) Long year,
-            @RequestParam(required = true, defaultValue = "title") String sortBy,
-            @RequestParam(required = true, defaultValue = "true") Boolean ascending,
+            @RequestParam(required = true, defaultValue = "addDate") String sortBy,
+            @RequestParam(required = true, defaultValue = "false") Boolean ascending,
             @RequestParam(required = false) Boolean all,
             Model model) {
 
@@ -119,8 +119,8 @@ public class AudiobooksController {
             @RequestParam(required = false) Long author,
             @RequestParam(required = false) Long performer,
             @RequestParam(required = false) Long year,
-            @RequestParam(required = true, defaultValue = "title") String sortBy,
-            @RequestParam(required = true, defaultValue = "true") Boolean ascending,
+            @RequestParam(required = true, defaultValue = "addDate") String sortBy,
+            @RequestParam(required = true, defaultValue = "false") Boolean ascending,
             @RequestParam(required = false) Boolean all,
             @AuthenticationPrincipal UserDetails currentUser,
             Model model) {

@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -32,14 +35,16 @@ public class AudiobookFileServiceImpl implements AudiobookFileService {
 
     public String getFileSize(File file) {
         long fileSize = file.length();
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("en"));
+        formatter.setMaximumFractionDigits(2);
         if(fileSize/(1024*1024*1024) > 1) {
-            return (double) fileSize / (1024 * 1024 * 1024) + " gb";
+            return "" + formatter.format((double) fileSize / (1024 * 1024 * 1024)) + " gb";
         }else if (fileSize/(1024*1024) > 1){
-            return (double) file.length()/(1024*1024)+" mb";
+            return "" + formatter.format((double) fileSize/(1024*1024))+" mb";
         }else if (fileSize/(1024) > 1){
-            return (double) file.length()/(1024)+" kb";
+            return "" + formatter.format((double) fileSize/(1024))+" kb";
         }else{
-            return file.length() + " bytes";
+            return "" + formatter.format(fileSize) + " bytes";
         }
     }
 

@@ -51,8 +51,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public boolean edit(User user) {
         Optional<User> userFromDB = userRepository.findByNickname(user.getUsername());
         if (userFromDB.isPresent() ) {
-            if (userFromDB.get().getId() == user.getId()){
-                user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            if (userFromDB.get().getId().equals(user.getId())){
+                if(!user.getPassword().isEmpty()) {
+                    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+                }
+                else{
+                    user.setPassword(userFromDB.get().getPassword());
+                }
                 user.setRole(userFromDB.get().getRole());
                 userRepository.save(user);
                 return true;
