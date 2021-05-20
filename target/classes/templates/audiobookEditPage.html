@@ -43,7 +43,7 @@
                             <div class="form-group mb-2 col-11">
                                 <label for="picturePath">Файл обложки</label>
                                 <input type="file" class="form-control" id="picture" name="picture"
-                                        accept="image/png" placeholder="Нажмите для смены обложки">
+                                        accept="image/png, image/jpeg" placeholder="Нажмите для смены обложки">
                             </div>
                         </div>
 
@@ -138,7 +138,7 @@
             'use strict';
 
             window.addEventListener('load', function() {
-                for (let year = 1920; year <= 2021; year++) {
+                for (let year = 1800; year <= 2021; year++) {
                 let options = document.createElement("OPTION");
                     document.getElementById("publicYear").appendChild(options).innerHTML = year;
                 }
