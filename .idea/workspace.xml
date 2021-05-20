@@ -48,15 +48,14 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\RepositHub\diplomBS\src\main\resources\static" />
-      <recent name="D:\RepositHub\diplomBS\src\main\resources" />
-      <recent name="D:\RepositHub\diplomBS\src\main" />
-      <recent name="D:\RepositHub\diplomBS\src\static\upload\Seva" />
-      <recent name="D:\RepositHub\diplomBS\src\static\upload\admin" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\RepositHub\diplomBS\src\main\resources\templates" />
+      <recent name="D:\RepositHub\diplomBS\src" />
+      <recent name="D:\RepositHub\diplomBS\src\main\static" />
+      <recent name="D:\RepositHub\diplomBS\src\main\resources\static\js" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="org.atsynthesizer.demo.controller" />
@@ -65,11 +64,12 @@
       <recent name="org.atsynthesizer.demo.service.implementation" />
       <recent name="org.atsynthesizer.demo.config" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\RepositHub\diplomBS\src\main\resources\templates" />
-      <recent name="D:\RepositHub\diplomBS\src" />
-      <recent name="D:\RepositHub\diplomBS\src\main\static" />
-      <recent name="D:\RepositHub\diplomBS\src\main\resources\static\js" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\RepositHub\diplomBS\src\main\resources\static" />
+      <recent name="D:\RepositHub\diplomBS\src\main\resources" />
+      <recent name="D:\RepositHub\diplomBS\src\main" />
+      <recent name="D:\RepositHub\diplomBS\src\static\upload\Seva" />
+      <recent name="D:\RepositHub\diplomBS\src\static\upload\admin" />
     </key>
   </component>
   <component name="RunManager">
@@ -100,7 +100,8 @@
       <workItem from="1621173627119" duration="39721000" />
       <workItem from="1621240056761" duration="28458000" />
       <workItem from="1621283859217" duration="82679000" />
-      <workItem from="1621454087632" duration="9858000" />
+      <workItem from="1621454087632" duration="10455000" />
+      <workItem from="1621533834217" duration="5794000" />
     </task>
     <servers />
   </component>
@@ -148,62 +149,62 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="463" y="119" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1615473969766" />
-    <state width="1323" height="185" key="GridCell.Tab.0.bottom" timestamp="1621469579465">
+    <state width="1323" height="228" key="GridCell.Tab.0.bottom" timestamp="1621481935130">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="185" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1621469579465" />
-    <state width="1323" height="185" key="GridCell.Tab.0.center" timestamp="1621469579464">
+    <state width="1323" height="228" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1621481935130" />
+    <state width="1323" height="228" key="GridCell.Tab.0.center" timestamp="1621481935130">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="185" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1621469579464" />
-    <state width="1323" height="185" key="GridCell.Tab.0.left" timestamp="1621469579464">
+    <state width="1323" height="228" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1621481935130" />
+    <state width="1323" height="228" key="GridCell.Tab.0.left" timestamp="1621481935130">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="185" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1621469579464" />
-    <state width="1323" height="185" key="GridCell.Tab.0.right" timestamp="1621469579464">
+    <state width="1323" height="228" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1621481935130" />
+    <state width="1323" height="228" key="GridCell.Tab.0.right" timestamp="1621481935130">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="185" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1621469579464" />
-    <state width="1323" height="185" key="GridCell.Tab.1.bottom" timestamp="1621469579466">
+    <state width="1323" height="228" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1621481935130" />
+    <state width="1323" height="228" key="GridCell.Tab.1.bottom" timestamp="1621481935131">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="185" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1621469579466" />
-    <state width="1323" height="185" key="GridCell.Tab.1.center" timestamp="1621469579466">
+    <state width="1323" height="228" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1621481935131" />
+    <state width="1323" height="228" key="GridCell.Tab.1.center" timestamp="1621481935130">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="185" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1621469579466" />
-    <state width="1323" height="185" key="GridCell.Tab.1.left" timestamp="1621469579465">
+    <state width="1323" height="228" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1621481935130" />
+    <state width="1323" height="228" key="GridCell.Tab.1.left" timestamp="1621481935130">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="185" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1621469579465" />
-    <state width="1323" height="185" key="GridCell.Tab.1.right" timestamp="1621469579466">
+    <state width="1323" height="228" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1621481935130" />
+    <state width="1323" height="228" key="GridCell.Tab.1.right" timestamp="1621481935130">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="185" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1621469579466" />
-    <state width="1323" height="228" key="GridCell.Tab.2.bottom" timestamp="1621458074041">
+    <state width="1323" height="228" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1621481935130" />
+    <state width="1323" height="228" key="GridCell.Tab.2.bottom" timestamp="1621481935131">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="228" key="GridCell.Tab.2.bottom/0.0.1366.728@0.0.1366.728" timestamp="1621458074041" />
-    <state width="1323" height="228" key="GridCell.Tab.2.center" timestamp="1621458074041">
+    <state width="1323" height="228" key="GridCell.Tab.2.bottom/0.0.1366.728@0.0.1366.728" timestamp="1621481935131" />
+    <state width="1323" height="228" key="GridCell.Tab.2.center" timestamp="1621481935131">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="228" key="GridCell.Tab.2.center/0.0.1366.728@0.0.1366.728" timestamp="1621458074041" />
-    <state width="1323" height="228" key="GridCell.Tab.2.left" timestamp="1621458074041">
+    <state width="1323" height="228" key="GridCell.Tab.2.center/0.0.1366.728@0.0.1366.728" timestamp="1621481935131" />
+    <state width="1323" height="228" key="GridCell.Tab.2.left" timestamp="1621481935131">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="228" key="GridCell.Tab.2.left/0.0.1366.728@0.0.1366.728" timestamp="1621458074041" />
-    <state width="1323" height="228" key="GridCell.Tab.2.right" timestamp="1621458074041">
+    <state width="1323" height="228" key="GridCell.Tab.2.left/0.0.1366.728@0.0.1366.728" timestamp="1621481935131" />
+    <state width="1323" height="228" key="GridCell.Tab.2.right" timestamp="1621481935131">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="228" key="GridCell.Tab.2.right/0.0.1366.728@0.0.1366.728" timestamp="1621458074041" />
+    <state width="1323" height="228" key="GridCell.Tab.2.right/0.0.1366.728@0.0.1366.728" timestamp="1621481935131" />
     <state x="213" y="19" key="Maven.ArtifactSearchDialog" timestamp="1621355499781">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="213" y="19" key="Maven.ArtifactSearchDialog/0.0.1366.728@0.0.1366.728" timestamp="1621355499781" />
-    <state x="163" y="0" key="SettingsEditor" timestamp="1621275753553">
+    <state x="163" y="0" key="SettingsEditor" timestamp="1621541001214">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1621275753553" />
+    <state x="163" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1621541001214" />
     <state width="691" height="372" key="XDebugger.FullValuePopup" timestamp="1621200454818">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

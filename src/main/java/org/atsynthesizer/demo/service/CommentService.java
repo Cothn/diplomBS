@@ -11,6 +11,10 @@ public interface CommentService {
     public Iterable<Comment> getAllByAudiobook(Audiobook audiobook);
 
     public void add( Comment comment);
+
+    public void delete( Comment comment);
+
+    public void edit( Comment comment);
 /*
 
 
