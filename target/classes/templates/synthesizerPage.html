@@ -180,7 +180,7 @@
                                 </div>
                             </div>
                             <div class="row justify-content-center  m-0" style="text-align: center">
-                                <button disabled id="disableSynthez" th:text="${audiobookFilePath != null} ? 'Выберите файл для синтеза' : 'Выберите текстовый файл для синтеза аудиокниги'" style="padding: 2px 0" class="disabled col btn btn-outline-secondary col btn-lg btn-block" >
+                                <button disabled id="disableSynthez" th:text="${audiobookFilePath != null} ? 'Выберите файл для синтеза' : 'Выберите текстовый файл для синтеза аудиокниги'" style="padding: 2px 0" class="disabled col btn btn-outline-dark col btn-lg btn-block" >
                                 </button>
                                 <input hidden id="synthezButton" type="submit" value="Начать синтез" onclick="onSynthezButtonClick()" style="padding: 2px 0" class="col btn btn-outline-secondary col btn-lg btn-block" >
                                 <a download th:if="${audiobookFilePath != null}" id="downloadButton" th:text="'Скачать аудиокнигу'"
