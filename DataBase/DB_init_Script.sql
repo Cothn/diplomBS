@@ -23,6 +23,7 @@ INSERT INTO `books_db`.`genre` (`Title`) VALUES ('фантастика');
 INSERT INTO `books_db`.`genre` (`Title`) VALUES ('фентези');
 INSERT INTO `books_db`.`genre` (`Title`) VALUES ('криминал');
 INSERT INTO `books_db`.`genre` (`Title`) VALUES ('детектив');
+INSERT INTO `books_db`.`genre` (`Title`) VALUES ('исторический детектив');
 
 INSERT INTO `books_db`.`audiobook_genre` (`Audiobook_Id`, `Genre_Id`) VALUES ('1', '1');
 INSERT INTO `books_db`.`audiobook_genre` (`Audiobook_Id`, `Genre_Id`) VALUES ('1', '3');
