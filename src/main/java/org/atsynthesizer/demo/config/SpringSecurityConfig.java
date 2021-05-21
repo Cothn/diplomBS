@@ -26,9 +26,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    // роль admin всегда есть доступ к /admin/**
-    // роль user всегда есть доступ к /user/**
-    // Наш кастомный "403 access denied" обработчик
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -53,6 +50,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
 
+    @Autowired
+    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
+    }
+
    /* // создаем пользоватлелей, admin и user в памяти
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -64,8 +66,5 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser("admin").password(this.bCryptPasswordEncoder().encode("password")).roles("ADMIN");
     }
 */
-    @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
-    }
+
 }
