@@ -19,7 +19,7 @@ import java.io.IOException;
 @Controller
 public class MainController {
 
-    @GetMapping(value = {"/home"})
+    @GetMapping(value = {"/", "/home"})
     public String home()  {
         return "redirect:/audiobooks";
     }
