@@ -2,19 +2,29 @@ let numberAuthors=0;
 let numberPerformers=0;
 function addAuthor(){
 
-    numberAuthors++;
+
+
+
 
     var authorsEl= document.getElementById('authors-group');
     var authorName = $.trim($('#authorAdd').val());
 
-    for (let i=1; i< numberAuthors; i++){
-        var temp= $.trim($('#author'+i).val());
-        if(temp === authorName){
-            return;
-        }
-    }
-
     if (!(authorName === "")) {
+
+        numberAuthors++;
+
+        if (numberAuthors === 1){
+            authorsEl.removeChild(document.getElementById('authors-zero'));
+        }
+
+        for (let i=1; i< numberAuthors; i++){
+            var temp= $.trim($('#author'+i).val());
+            if(temp === authorName){
+                return;
+            }
+        }
+
+
         let div = document.createElement('div');
         div.className = "input-group mb-2 col";
         div.id = 'author-group' + numberAuthors;
@@ -46,24 +56,71 @@ function deleteElById(nodeElId, elId){
     var deletedEl= document.getElementById(elId);
 
     authorsEl.removeChild(deletedEl);
-    numberAuthors--;
+
+    if(nodeElId === 'performers-group'){
+        numberPerformers--;
+        if (numberPerformers === 0){
+            let div = document.createElement('div');
+            div.className = "input-group mb-2 col";
+            div.id = 'performes-zero';
+
+            let inputBlock =
+                '<input type="text" class="form-control" ' +
+                'hidden ' +
+                'required ' +
+                'id="performer' + numberPerformers +
+                '" name="performers' +
+                '" aria-describedby="delete-performer-btn' + numberPerformers +
+                '"/>';
+
+            div.innerHTML = inputBlock;
+            authorsEl.append(div);
+        }
+    }
+    else {
+        numberAuthors--;
+        if (numberAuthors === 0){
+            let div = document.createElement('div');
+            div.className = "input-group mb-2 col";
+            div.id = 'authors-zero';
+
+            let inputBlock =
+                '<input type="text" class="form-control" ' +
+                'hidden ' +
+                'required ' +
+                'id="performer' + numberPerformers +
+                '" name="performers' +
+                '" aria-describedby="delete-performer-btn' + numberPerformers +
+                '"/>';
+
+            div.innerHTML = inputBlock ;
+            authorsEl.append(div);
+        }
+    }
+
 };
 
 function addPerformer(){
 
-    numberPerformers++;
 
     var performersEl= document.getElementById('performers-group');
     var performerName = $.trim($('#performerAdd').val());
 
-    for (let i=1; i< numberPerformers; i++){
-        var temp= $.trim($('#performer'+i).val());
-        if(temp === performerName){
-            return;
-        }
-    }
 
     if (!(performerName === "")) {
+        numberPerformers++;
+
+        if (numberPerformers === 1){
+            performersEl.removeChild(document.getElementById('performers-zero'));
+        }
+
+        for (let i=1; i< numberPerformers; i++){
+            var temp= $.trim($('#performer'+i).val());
+            if(temp === performerName){
+                return;
+            }
+        }
+
         let div = document.createElement('div');
         div.className = "input-group mb-2 col";
         div.id = 'performer-group' + numberPerformers;
