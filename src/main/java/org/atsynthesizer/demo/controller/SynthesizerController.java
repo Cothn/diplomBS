@@ -63,7 +63,7 @@ public class SynthesizerController {
         model.addAttribute("text", "Этот текст можно заменить любым текстом по вашему желанию.\n" +
                         "В этом текстовом поле можно ввести или вставить собственный текст.\n" +
                         "Вы можете изменить голос диктора, а также скорость и высоту тона речи."
-                        +"\nLondon is the capital of Brittan."
+                        +"\n"
         );
 
         return "synthesizerPage";
@@ -78,6 +78,11 @@ public class SynthesizerController {
             @AuthenticationPrincipal UserDetails currentUser,
             Model model) throws IOException, InterruptedException {
 
+        // Make sure directory exists!
+        File uploadDir = new File(UPLOAD_PATH +currentUser.getUsername());
+        if(!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
 
         String command = "D:\\repositHub\\diplomBS\\src\\main\\util\\balcon" +
                 " -n \"RHVoice " + voiceOld + "\"" +
